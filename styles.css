@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=Raleway:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+body {
+    --accent-and-buttons: #FFA51F;
+    /* --text-and-frames: #532B1E; */
+    --text-and-frames: #421C11;
+    --page-background: #FCFAF2;
+    --card-background: #EDE7D9;
+
+
+    background-color: var(--page-background);
+    color: var(--text-and-frames);
+
+    font-family: "Raleway";
+    font-weight: 500; /* Regular */
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+h1 {
+    font-family: "Cormorant";
+    font-weight: 700;
+    font-size: 48px;
+    margin-block: 0px;
+}
+
+h2 {
+    font-family: "Cormorant";
+    font-weight: 700;
+    font-size: 36px;
+    margin-block: 0px;
+}
+
+h3 {
+    font-family: "Cormorant";
+    font-weight: 700;
+    font-size: 32px;
+    margin-block: 0px;
+}
+
+p {
+    margin-block: 48px;
+}
+
+/*  */
+
+.product-name {
+    font-family: "Raleway";
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.highlight {
+    font-family: "Raleway";
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Link */
+
+a {
+    color: var(--text-and-frames);
+    font-family: "Raleway";
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Button */
+
+.btn, .btn-big, .btn-check {
+    background-color: var(--accent-and-buttons);
+    color: var(--text-and-frames);
+    border: 1px solid var(--text-and-frames);
+    border-radius: 25px;
+    padding: 8px 8px;
+    height: 48px;
+
+    font-family: "Cormorant";
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.btn {
+    font-size: 24px;
+}
+
+.btn-big {
+    font-size: 30px;
+}
+
+.btn-check {
+    vertical-align: bottom;
+    border-radius: 10px;
+    padding: 4px;
+    height: 48px;
+    width: 48px;
+}
+
+.btn-check img {
+    display: block;
+    width: 36px;
+    height: 36px;
+}
+
+/* Icon */
+
+.icon-s {
+    max-height: 38px;
+    max-width: 38px;
+}
+
+.icon-m {
+    max-height: 42px;
+    max-width: 42px;
+}
+
+.icon-l {
+    height: 48px;
+    width: 48px;
+}
+
+.icon-xl {
+    height: 56px;
+    width: 56px;
+}
+
