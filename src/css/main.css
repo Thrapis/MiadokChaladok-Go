@@ -1,15 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@500;600;700&family=Raleway:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 
-body {
+html {
     --accent-and-buttons: #FFA51F;
-    /* --text-and-frames: #532B1E; */
-    --text-and-frames: #421C11;
+    --text-and-frames: #532B1E;
     --page-background: #FCFAF2;
     --card-background: #EDE7D9;
+}
 
-
+body {
+    position: relative;
+    
     background-color: var(--page-background);
     color: var(--text-and-frames);
+
+    min-height: calc(100vh - 16px);
+
+    margin: 0;
 
     font-family: "Raleway";
     font-weight: 500; /* Regular */
@@ -42,6 +48,15 @@ p {
     margin-block: 48px;
 }
 
+.paragraph {
+    margin-block: 48px;
+}
+
+.block-row {
+    line-height: 24px;
+    margin-block: 12px;
+}
+
 /*  */
 
 .product-name {
@@ -67,17 +82,20 @@ a {
 
 /* Button */
 
-.btn, .btn-big, .btn-check {
+.btn, .btn-operator, .btn-big, .btn-check {
     background-color: var(--accent-and-buttons);
     color: var(--text-and-frames);
     border: 1px solid var(--text-and-frames);
     border-radius: 25px;
-    padding: 8px 8px;
+    padding: 8px 16px;
+    margin: 16px;
     height: 48px;
 
     font-family: "Cormorant";
     font-weight: 700;
     font-size: 24px;
+    line-height: 1;
+    vertical-align: top;
 }
 
 .btn {
@@ -88,8 +106,19 @@ a {
     font-size: 30px;
 }
 
+.btn-operator {
+    font-size: 24px;
+    padding: 0;
+    height: 24px;
+    width: 24px;
+}
+
+.btn-operator span {
+    position: relative;
+    top: -3px;
+}
+
 .btn-check {
-    vertical-align: bottom;
     border-radius: 10px;
     padding: 4px;
     height: 48px;

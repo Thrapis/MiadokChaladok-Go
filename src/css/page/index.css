@@ -1,0 +1,39 @@
+
+.slideshow-backer {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 100vw;
+}
+
+.slide {
+    align-items: center;
+}
+
+.slide .btn {
+    width: max-content;
+    margin-block: auto 80px;
+}
+
+.page-content {
+    margin-top: 592px;
+}
+
+.best-suggestions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 32px 0;
+}
+
+.products-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.products-list .product-card {
+    width: 33.333333333333%;
+}

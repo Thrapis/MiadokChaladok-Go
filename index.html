@@ -3,66 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="styles.css" rel="stylesheet"/>
-    <title>Elements List</title>
+    <link href="/src/css/main.css" rel="stylesheet"/>
+    <link href="/src/css/components.css" rel="stylesheet"/>
+    <link href="/src/css/page/index.css" rel="stylesheet"/>
+    <link href="/src/libs/slideshow/miadok-slideshow.css" rel="stylesheet"/>
+    <script src="/src/libs/slideshow/miadok-slideshow.js"></script>
+    <title>Home</title>
 </head>
 <body>
 
-    <p>
-        <h1>Header 1</h1>
-        <h2>Header 2</h2>
-        <h3>Header 3</h3>
+    <div class="slideshow-backer">
+        <div class="miadok-slideshow-container">
+            <div class="slide selected" style="background-image: url(/images/slideshow/img-1.jpg);">
+                <button href="#" class="btn">Падабраць падарунак на Пасху!</button>
+            </div>
+            <div class="slide" style="background-image: url(/images/slideshow/img-2.jpg);">
+    
+            </div>
+            <div class="slide" style="background-image: url(/images/slideshow/img-3.jpg);">
+    
+            </div>
+        </div>
+    </div>
 
-        <div>
-            Some regular text Some regular text Some regular text Some regular text Some regular text Some regular text Some regular text Some regular text 
+    <div class="page-layout">
+        <header>
+            <a class="header-logo-link" href="/index.html">
+                <img src="icons/large/honey-accent.png" />
+            </a>
+            <div class="header-group">
+                <a href="#">
+                    <h2>Каталог</h2>
+                </a>
+                <a href="#">
+                    <h2>Кантакты і дастаўка</h2>
+                </a>
+                <a href="#">
+                    <h2>Пра нас</h2>
+                </a>
+            </div>
+            <div class="header-group">
+                <a href="#">
+                    <img src="/icons/linear/magniglass.png" />
+                </a>
+                <a href="#">
+                    <img src="/icons/linear/cart.png" />
+                </a>
+            </div>
+        </header>
+
+        <div class="page-content">
+            
+            <div class="best-suggestions">
+                <h2>Найлепшыя прапановы</h2>
+
+                <div class="products-list">
+                    <div class="product-card">
+                        <img class="product-image" src="images/products/product-1.jpg"/>
+                        <div class="product-control">
+                            <div class="product-name-and-volume">
+                                <div class="highlight">Рапсавы мёд</div>
+                                <div class="product-volume-list">
+                                    <span class="product-volume">100 мл</span>
+                                    <span class="product-volume">350 мл</span>
+                                    <span class="product-volume">500 мл</span>
+                                </div>
+                            </div>
+                            <div class="product-price-and-cart-button">
+                                <div class="product-price">16,00 - 17,00 р</div>
+                                <button class="btn product-cart-button">у кошык</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img class="product-image" src="images/products/product-2.jpg"/>
+                        <div class="product-control">
+                            <div class="product-name-and-volume">
+                                <div class="highlight">Рапсавы мёд</div>
+                                <div class="product-volume-list">
+                                    <span class="product-volume">450 мл</span>
+                                    <span class="product-volume">650 мл</span>
+                                </div>
+                            </div>
+                            <div class="product-price-and-cart-button">
+                                <div class="product-price">16,00 - 17,00 р</div>
+                                <button class="btn product-cart-button">у кошык</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <img class="product-image" src="images/products/product-set-1.jpg"/>
+                        <div class="product-control">
+                            <div class="product-name-and-volume">
+                                <div class="highlight">Набор “Трыплет”</div>
+                                <div class="product-volume-list">
+                                    <span>3 банкі мёду + паштоўка</span>
+                                </div>
+                            </div>
+                            <div class="product-price-and-cart-button">
+                                <div class="product-price">16,00 - 17,00 р</div>
+                                <button class="btn product-cart-button">у кошык</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
-        <div class="product-name">
-            Product name
-        </div>
-
-        <div class="highlight">
-            Highlighted text
-        </div>
-
-        <a href="#">
-            Link
-        </a>
-    </p>
-
-    <p>
-        <button class="btn-big" type="button">
-            Big button
-        </button>
-
-        <button class="btn" type="button">
-            Simple button
-        </button>
-
-        <button class="btn-check" type="button">
-            <img src="icons/check.png" />
-        </button>
-    </p>
-
-    <p>
-        <div style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap; width: 180px;">
-            <img class="icon-s" src="icons/instagram.png" />
-            <img class="icon-s" src="icons/telegram.png" />
-            <img class="icon-s" src="icons/pinterest.png" />
-            <img class="icon-s" src="icons/twitter.png" />
-
-            <img class="icon-m" src="icons/geopin.png" />
-            <img class="icon-m" src="icons/clock.png" />
-            <img class="icon-m" src="icons/phone.png" />
-            <img class="icon-m" src="icons/envelope.png" />
-        </div>
-
-        <div style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap; width: 180px;">
-            <img class="icon-l" src="icons/box.png" />
-            <img class="icon-xl" src="icons/truck.png" />
-            <img class="icon-l" src="icons/tent.png" />
-        </div>
-    </p>
-
+        <footer>
+            <div class="footer-logo-side">
+                <img src="icons/large/honey-card.png" />
+            </div>
+            <div class="footer-row">
+                <div class="footer-column">
+                    <h2>Кантакты</h2>
+                    <div class="footer-category-list">
+                        <div class="footer-category-element">
+                            <img src="icons/medium/geopin.png" />
+                            <span>г. Мінск, вул. Савецкая, 23</span>
+                        </div>
+                        <div class="footer-category-element">
+                            <img src="icons/medium/clock.png" />
+                            <span>10:00 - 21:00</span>
+                        </div>
+                        <div class="footer-category-element">
+                            <img src="icons/medium/phone.png" />
+                            <span>+375 (44) 116-06-22</span>
+                        </div>
+                        <div class="footer-category-element">
+                            <img src="icons/medium/envelope.png" />
+                            <span>miadokhaladok@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h2>Каталог</h2>
+                    <div class="footer-category-list">
+                        <div class="footer-category-element">
+                            <a href="#">Класічны мёд</a>
+                        </div>
+                        <div class="footer-category-element">
+                            <a href="#">Мёд у сотах</a>
+                        </div>
+                        <div class="footer-category-element">
+                            <a href="#">Наборы</a>
+                        </div>
+                        <div class="footer-category-element">
+                            <a href="#">Іншыя прадукты</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h2>Пра нас</h2>
+                    <div class="footer-category-list">
+                        <div class="footer-category-element">
+                            <a href="#">Гісторыя пасекі</a>
+                        </div>
+                        <div class="footer-category-element">
+                            <a href="#">Дакументацыя</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h2>Дастаўка і аплата</h2>
+                    <div class="footer-category-list">
+                        <div class="footer-category-element">
+                            <a href="#">Віды і ўмовы дастаўкі</a>
+                        </div>
+                        <div class="footer-category-element">
+                            <a href="#">Віды аплаты</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-over">
+                <div class="footer-social">
+                    <a href="#">
+                        <img src="icons/linear/instagram.png" />
+                    </a>
+                    <a href="#">
+                        <img src="icons/linear/telegram.png" />
+                    </a>
+                    <a href="#">
+                        <img src="icons/linear/pinterest.png" />
+                    </a>
+                    <a href="#">
+                        <img src="icons/linear/twitter.png" />
+                    </a>
+                </div>
+                <img src="images/methods.png" />
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
