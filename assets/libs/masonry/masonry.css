@@ -1,0 +1,29 @@
+
+.masonry-container {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .masonry-container {
+        display: flex;
+        flex-flow: column wrap;
+    }
+
+    .masonry-block:nth-child(2n+1) { order: 1; }
+    .masonry-block:nth-child(2n+2) { order: 2; }
+
+    .masonry-container::before {
+        content: "";
+        flex-basis: 100%;
+        width: 0;
+        order: 1;
+    }
+}
+
+.masonry-block ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-block: 0px;
+}

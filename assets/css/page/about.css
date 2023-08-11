@@ -1,0 +1,29 @@
+
+.page-content {
+    padding-block: 32px 16px;
+    max-height: 960px;
+}
+
+.masonry-block {
+    margin-bottom: 23px;
+}
+
+.image-block {
+    height: 260px;
+    width: calc(50% - 12px);
+}
+
+.block {
+    padding: 32px;
+    width: calc(50% - 64px - 12px);
+}
+
+.block h2 {
+    padding-bottom: 16px;
+}
+
+.block .btn {
+    width: 100%;
+    margin-inline: 0;
+    margin-bottom: 0;
+}
