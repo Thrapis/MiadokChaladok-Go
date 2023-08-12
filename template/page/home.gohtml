@@ -3,57 +3,11 @@
                 
         <div class="best-suggestions">
             <h2 class="best-suggestions-title">Найлепшыя прапановы</h2>
+
             <div class="products-list">
-                <div class="product-card">
-                    <img class="product-image" src="/static/images/products/product-1.jpg"/>
-                    <div class="product-control">
-                        <div class="product-name-and-volume">
-                            <div class="highlight">Рапсавы мёд</div>
-                            <div class="product-volume-list">
-                                <span class="product-volume">100 мл</span>
-                                <span class="product-volume">350 мл</span>
-                                <span class="product-volume">500 мл</span>
-                            </div>
-                        </div>
-                        <div class="product-price-and-cart-button">
-                            <div class="product-price">16,00 - 17,00 р</div>
-                            <button class="btn product-cart-button">у кошык</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img class="product-image" src="/static/images/products/product-2.jpg"/>
-                    <div class="product-control">
-                        <div class="product-name-and-volume">
-                            <div class="highlight">Рапсавы мёд</div>
-                            <div class="product-volume-list">
-                                <span class="product-volume">450 мл</span>
-                                <span class="product-volume">650 мл</span>
-                            </div>
-                        </div>
-                        <div class="product-price-and-cart-button">
-                            <div class="product-price">16,00 - 17,00 р</div>
-                            <button class="btn product-cart-button">у кошык</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img class="product-image" src="/static/images/products/product-set-1.jpg"/>
-                    <div class="product-control">
-                        <div class="product-name-and-volume">
-                            <div class="highlight">Набор “Трыплет”</div>
-                            <div class="product-volume-list">
-                                <span>3 банкі мёду + паштоўка</span>
-                            </div>
-                        </div>
-                        <div class="product-price-and-cart-button">
-                            <div class="product-price">16,00 - 17,00 р</div>
-                            <button class="btn product-cart-button">у кошык</button>
-                        </div>
-                    </div>
-                </div>
+                {{range .Recommendations}}
+                    {{template "productCard" .}}
+                {{end}}
             </div>
         </div>
 
@@ -70,7 +24,7 @@
                 <div class="complex-block-text">
                     Николай и Александр работали плечом к плечу, чтобы расширить пасеку Онисимовых. Они постоянно экспериментировали с разными методами содержания пчел и улучшения условий для их развития. Они заботились о своих пчелах, создавая специальные рамки, где они могли свободно строить соты и собирать мед. Они также выращивали разнообразные цветы и растения на окружающих участках, чтобы обеспечить пчелам разнообразный и питательный пыльцевой и нектарный источник.
                 </div>
-                <a href="/about.html" class="btn">Абраць падарунак</a>
+                <a href="/about" class="btn">Абраць падарунак</a>
             </div>
         </div>
 
@@ -106,7 +60,7 @@
                 <div class="complex-block-text">
                     Николай и Александр работали плечом к плечу, чтобы расширить пасеку Онисимовых. Они постоянно экспериментировали с разными методами содержания пчел и улучшения условий для их развития. Они заботились о своих пчелах, создавая специальные рамки, где они могли свободно строить соты и собирать мед. Они также выращивали разнообразные цветы и растения на окружающих участках, чтобы обеспечить пчелам разнообразный и питательный пыльцевой и нектарный источник.
                 </div>
-                <a href="/about.html" class="btn">Падрабязней</a>
+                <a href="/about" class="btn">Падрабязней</a>
             </div>
         </div>
 

@@ -181,7 +181,8 @@ footer {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    width: 50%;
 }
 
 .product-volume-list {
@@ -204,7 +205,8 @@ footer {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    width: 50%;
 }
 
 .product-price {
