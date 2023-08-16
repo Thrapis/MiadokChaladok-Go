@@ -8,18 +8,21 @@ type examplePageData struct {
 	Base BasePageData
 }
 
+const examplePageTitle = "Прыклад"
+const examplePageName = "example"
+
 func Example(w http.ResponseWriter, r *http.Request) {
 
 	data := examplePageData{
 		BasePageData{
-			PageName:   "example",
-			PageTitle:  "Прыклад",
+			PageName:   examplePageName,
+			PageTitle:  examplePageTitle,
 			ShowFooter: true,
 			ShowSlider: false,
 		},
 	}
 
-	contentPath := getPagePath("example")
+	contentPath := getPagePath(examplePageName)
 
 	executeTotalTemplate(w, data, contentPath)
 }
