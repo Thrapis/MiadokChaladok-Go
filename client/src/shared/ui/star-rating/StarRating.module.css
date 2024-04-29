@@ -1,0 +1,26 @@
+
+.block {
+    display: flex;
+    flex-direction: row;
+}
+
+.singleWrapper {
+    cursor: pointer;
+    height: 100%;
+}
+
+.input {
+    display: none;
+}
+
+.star {
+    display: inline-block;
+    min-height: 14px;
+    min-width: 14px;
+    height: 2em;
+    width: 2em;
+    margin: 0 .25em;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+}

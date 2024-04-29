@@ -1,0 +1,83 @@
+
+.button {
+    cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+
+    white-space: nowrap;
+
+    color: var(--text-and-frames);
+    text-decoration: none;
+
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Size */
+
+.button.small {
+    height: 24px;
+    padding: .5em;
+}
+
+.button.medium, .button {
+    height: 32px;
+    padding: .5em;
+}
+
+.button.large {
+    height: 48px;
+    padding: .5em;
+}
+
+/* Width */
+
+.height.small {
+    width: 24px;
+}
+
+.height.medium {
+    width: 36px;
+}
+
+.height.large {
+    width: 48px;
+}
+
+.fluid {
+    width: fit-content;
+}
+
+/* Shape */
+
+.square {
+    border-radius: 0.5em;
+}
+
+.square.small {
+    border-radius: 0.25em;
+}
+
+.round {
+    border-radius: 3em;
+}
+
+/* Theme */
+
+.button.contained, .button {
+    background-color: var(--accent-and-buttons);
+    border: 1px solid var(--text-and-frames);
+}
+
+.button.outlined {
+    background-color: transparent;
+    border: 1px solid var(--text-and-frames);
+}
+
+.button.text {
+    background-color: transparent;
+    border: 1px transparent;
+}

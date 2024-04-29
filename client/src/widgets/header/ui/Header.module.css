@@ -1,0 +1,42 @@
+header {
+    position: relative;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2em;
+
+    background-color: var(--accent-and-buttons);
+    border: 1px solid var(--text-and-frames);
+    border-radius: 15px;
+
+    white-space: nowrap;
+
+    height: 72px;
+    margin: 1em;
+
+    z-index: 10;
+}
+
+.headerLogoLink {
+    height: 100%;
+}
+
+.headerLogoLink img {
+    height: inherit;
+}
+
+.headerGroup {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1em, 4vw, 4em);
+}
+
+header a:not(:hover) {
+    text-decoration: none;
+}
+
+.headerGroup img {
+    height: 40px;
+}

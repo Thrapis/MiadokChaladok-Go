@@ -1,0 +1,24 @@
+.pageContent {
+    display: flex;
+    justify-content: center;
+
+    padding-block: 32px 16px;
+}
+
+.errorBlock {
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+}
+
+.errorNumber {
+    font-size: 200px;
+    text-align: center;
+    cursor: default;
+}
+
+.errorComment {
+    font-size: 36px;
+    text-align: center;
+    margin-block: 24px;
+}

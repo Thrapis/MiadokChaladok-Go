@@ -1,0 +1,144 @@
+.pageContent {
+    padding: 32px 16px 16px 16px;
+}
+
+.carouselSpace {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.contentSpace {
+    margin-top: calc(674px - 106px);
+}
+
+
+/* Suggestions */
+
+.bestSuggestions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 32px 0;
+}
+
+.bestSuggestionsTitle {
+    margin-block: 32px 16px;
+}
+
+.productsList {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.productsList > * {
+    width: 33.333333333333%;
+}
+
+/*  */
+
+.howToGetSpace {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 32px 0;
+}
+
+.howToGetTitle {
+    margin-bottom: 16px;
+}
+
+.howToGetList {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+}
+
+.howToGetStage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 16px;
+    width: 33.33333333%;
+    max-height: 288px;
+
+    cursor: default;
+}
+
+.howToGetStage > img {
+    max-height: 190px;
+    object-fit: contain;
+}
+
+.howToGetStageName {
+    align-self: center;
+    margin-top: 16px;
+}
+
+
+.contactsAndMap {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    margin: 32px 0;
+}
+
+.contactsAndMap > div:first-child {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    width: 40%;
+}
+
+.contactsAndMap > div:last-child {
+    position: relative;
+    padding: 0;
+    width: 60%;
+}
+
+.contactsAndMap > div > img {
+    position: absolute;
+    object-fit: cover;
+    border-radius: 25px;
+    width: 100%;
+    height: 100%;
+}
+
+.contactColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+    width: min-content;
+    white-space: nowrap;
+}
+
+.contactRow > img {
+    width: 18px;
+}
+
+.contactRow > span {
+    vertical-align: top;
+    font-weight: 400;
+}
+
+.socialRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.socialRow a {
+    text-decoration: none;
+    margin-inline: 2px;
+}
+
+.socialRow img {
+    max-height: 34px;
+}

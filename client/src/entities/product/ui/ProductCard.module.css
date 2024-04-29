@@ -1,0 +1,78 @@
+.productCard {
+    background-color: var(--card-background);
+    border: solid 1px var(--text-and-frames);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+
+    margin: 4px;
+
+    overflow: hidden;
+}
+
+.productImage {
+    object-fit: cover;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 408px;
+}
+
+.productControl {
+    border-top: solid 1px var(--text-and-frames);
+    display: flex;
+    flex-direction: row;
+    min-height: 60px;
+    padding: 4px;
+}
+
+.productNameAndVolume {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* flex-grow: 1; */
+    width: 50%;
+}
+
+.productVolumeList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.productVolumeOption {
+    white-space: nowrap !important;
+    font-size: 16px !important;
+}
+
+.productVolumeOnlyOption  {
+    border: 0 !important;
+    background-color: transparent !important;
+    margin: 0;
+    /* white-space: nowrap !important; */
+    font-size: 16px !important;
+}
+
+.productPriceAndCartButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    /* flex-grow: 1; */
+    width: 50%;
+}
+
+.productPrice {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.productCartButton {
+    padding-block: 2px 4px;
+    margin: 0;
+    height: 24px;
+    width: 60%;
+    white-space: nowrap;
+    font-size: 16px;
+}
