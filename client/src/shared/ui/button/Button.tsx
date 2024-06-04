@@ -7,13 +7,12 @@ type Props = {
     className?: string
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
     children: ReactNode
-    type?: 'button' | 'submit' | 'reset' | 'link'
+    type?: 'button' | 'submit' | 'reset'
     size?: 'small' | 'medium' | 'large'
     width?: 'height' | 'fluid'
     shape?: 'square' | 'round'
     theme?: 'contained' | 'outlined' | 'text'
     disabled?: boolean
-    href?: string
 }
 
 export const Button = ({
@@ -25,43 +24,23 @@ export const Button = ({
     width = 'fluid',
     shape = 'square',
     theme = 'contained', 
-    disabled = false,
-    href
+    disabled = false
 } : Props) => {
-
-    if (type == 'link') {
-        return (
-            <a
-                className={cn(
-                    css.button,
-                    css[`${size}`], 
-                    css[`${width}`], 
-                    css[`${shape}`], 
-                    css[`${theme}`],
-                    className
-                )}
-                href={href}
-            >
-                {children}
-            </a>
-        )
-    } else {
-        return (
-            <button 
-                type={type}
-                className={cn(
-                    css.button,
-                    css[`${size}`], 
-                    css[`${width}`], 
-                    css[`${shape}`], 
-                    css[`${theme}`],
-                    className
-                )}
-                onClick={onClick}
-                disabled={disabled}
-            >
-                {children}   
-            </button>
-        );
-    }
+    return (
+        <button 
+            type={type}
+            className={cn(
+                css.button,
+                css[`${size}Size`],
+                css[`${width}Width`],
+                css[`${shape}Shape`],
+                css[`${theme}Theme`],
+                className
+            )}
+            onClick={onClick}
+            disabled={disabled}
+        >
+            {children}   
+        </button>
+    );
 };

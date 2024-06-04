@@ -1,0 +1,20 @@
+.pageContent {
+    padding: 0px 16px;
+}
+
+.productsList {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    padding: 16px 0;
+}
+
+.productsList:not(:has(.productCard)) {
+    display: flex;
+    justify-content: center;
+}
+
+.productCard {
+    box-sizing: border-box;
+}

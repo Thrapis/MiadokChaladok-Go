@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Button, TextField } from "shared/ui";
+import { Button, InputField } from "shared/ui";
 import css from './LoginForm.module.css';
 
 type Inputs = {
@@ -36,9 +36,9 @@ export const SignInForm = () => {
 
     return(
         <form style={{display: "flex", flexDirection: "column", gap: "16px"}} onSubmit={handleSubmit(onSubmit)}>
-            <label style={{display: "flex", flexDirection: "column", gap: "4px"}}>
+            {/* <label style={{display: "flex", flexDirection: "column", gap: "4px"}}>
                 Email
-                <TextField 
+                <InputField 
                     type='email'
                     register={{...register("email", { required: "Email Address is required" })}}
                     errorMessage={errors["email"]?.message}
@@ -47,12 +47,12 @@ export const SignInForm = () => {
             
             <label style={{display: "flex", flexDirection: "column", gap: "4px"}}>
                 Password
-                <TextField 
+                <InputField 
                     type='password' 
                     register={{...register("password", { required: "Password is required" })}} 
                     errorMessage={errors["password"]?.message}
                 />
-            </label>
+            </label> */}
 
             <Button type='submit'>Submit</Button>
         </form>

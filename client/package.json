@@ -10,6 +10,7 @@
     "@types/node": "^16.18.81",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
+    "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "compose-function": "^3.0.3",
     "jquery": "^3.7.1",

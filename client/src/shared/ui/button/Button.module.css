@@ -12,72 +12,96 @@
     color: var(--text-and-frames);
     text-decoration: none;
 
-    font-size: 16px;
     line-height: 1;
 }
 
 /* Size */
 
-.button.small {
+.smallSize {
     height: 24px;
-    padding: .5em;
 }
 
-.button.medium, .button {
+.mediumSize {
     height: 32px;
-    padding: .5em;
 }
 
-.button.large {
+.largeSize {
     height: 48px;
-    padding: .5em;
 }
 
 /* Width */
 
-.height.small {
+.heightWidth.smallSize {
     width: 24px;
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
-.height.medium {
-    width: 36px;
+.heightWidth.mediumSize {
+    width: 32px;
+    padding: 2px;
+    font-size: 20px;
+    font-weight: 600;
 }
 
-.height.large {
+.heightWidth.largeSize {
     width: 48px;
+    padding: 4px;
+    font-size: 24px;
+    font-weight: 700;
 }
 
-.fluid {
+.fluidWidth.smallSize {
     width: fit-content;
+    padding: 0px 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.fluidWidth.mediumSize {
+    width: fit-content;
+    padding: 2px 16px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.fluidWidth.largeSize {
+    width: fit-content;
+    padding: 4px 24px;
+    font-size: 24px;
+    font-weight: 700;
 }
 
 /* Shape */
 
-.square {
-    border-radius: 0.5em;
+.squareShape {
+    border-radius: 8px;
 }
 
-.square.small {
-    border-radius: 0.25em;
+.squareShape.smallSize {
+    border-radius: 4px;
 }
 
-.round {
-    border-radius: 3em;
+.roundShape {
+    border-radius: 48px;
 }
 
 /* Theme */
 
-.button.contained, .button {
+.containedTheme {
     background-color: var(--accent-and-buttons);
     border: 1px solid var(--text-and-frames);
 }
 
-.button.outlined {
+.outlinedTheme {
     background-color: transparent;
     border: 1px solid var(--text-and-frames);
 }
 
-.button.text {
+.textTheme.heightWidth, 
+.textTheme.fluidWidth {
     background-color: transparent;
     border: 1px transparent;
+    padding-inline: 0;
 }

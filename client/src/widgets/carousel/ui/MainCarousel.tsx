@@ -8,9 +8,7 @@ import css from './MainCarousel.module.css';
 
 import { ROUTE_CONSTANTS } from 'shared/config';
 
-import {
-    Button
-} from 'shared/ui';
+import { Button, Link } from 'shared/ui';
 
 export const MainCarousel = () => {
     var settings = {
@@ -35,15 +33,15 @@ export const MainCarousel = () => {
             <div className={css.item}>
                 <img className={css.backgroundImage} src='/images/slideshow/img-1.jpg'/>
 
-                <Button 
-                    type='link'
-                    href={ROUTE_CONSTANTS.ABOUT}
-                    size='small'
+                <Link
+                    href={ROUTE_CONSTANTS.ABOUT.ROUTE}
+                    size='medium'
                     shape='round'
+                    theme='contained'
                     className={css.link}
                 >
                     Падабраць падарунак на Пасху!
-                </Button>
+                </Link>
             </div>
             <div className={css.item}>
                 <img className={css.backgroundImage} src='/images/slideshow/img-2.jpg'/>

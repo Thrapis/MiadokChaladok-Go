@@ -3,26 +3,16 @@ import { SignInForm } from 'features/authentication/sign-in';
 import css from './ElementsTest.module.css';
 
 import { 
-    Button, Icon, TextField,
-    TextArea, Checkable, Dropdown, StarRating
+    Button, Icon, InputField,
+    TextArea, Checkable, InputSelect, StarRating
 } from 'shared/ui';
-
-class Honey {
-    constructor(
-        public id: number, 
-        public name: string
-    ) {}
-    toString(): string {
-        return `${this.name}`;
-    }
-}
 
 export const ElementsTest = () => {
     const list = [
-        new Honey(1, 'Ліпавы'),
-        new Honey(2, 'Каштанавы'),
-        new Honey(3, 'Кліновы'),
-        new Honey(4, 'Абліпіхавы'),
+        {'value': '1', 'title': 'Ліпавы'},
+        {'value': '2', 'title': 'Каштанавы'},
+        {'value': '3', 'title': 'Кліновы'},
+        {'value': '4', 'title': 'Абліпіхавы'},
     ];
 
     return(
@@ -51,8 +41,8 @@ export const ElementsTest = () => {
                         </Button>
                     </div>
                     <div className={css.block}>
-                        <TextField type='text' placeholder='Імя...' name='name'/>
-                        <TextField type='password' placeholder='Пароль' name='password'/>
+                        <InputField type='text' placeholder='Імя...' name='name'/>
+                        <InputField type='password' placeholder='Пароль' name='password'/>
                         <TextArea
                             placeholder='Камментар...'
                             annotation='даўжыня максімум 500 сімвалаў'
@@ -63,17 +53,17 @@ export const ElementsTest = () => {
                         />
                     </div>
                     <div className={css.block}>
-                        <Checkable type='checkbox' labelText='Click it' name='check' defaultValue='true'/>
-                        <Checkable type='radio' labelText='Click it 1' name='radio' defaultValue='r1'/>
-                        <Checkable type='radio' labelText='Click it 2' name='radio' defaultValue='r2' defaultChecked={true}/>
-                        <Checkable type='radio' labelText='Click it 3' name='radio' defaultValue='r3'/>
+                        <Checkable type='checkbox' labelText='Click it' name='check' value='true'/>
+                        <Checkable type='radio' labelText='Click it 1' name='radio' value='r1'/>
+                        <Checkable type='radio' labelText='Click it 2' name='radio' value='r2' checked={true}/>
+                        <Checkable type='radio' labelText='Click it 3' name='radio' value='r3'/>
                     </div>
                     <div className={css.block}>
-                        <Dropdown 
-                            optionList={list} 
+                        <InputSelect 
+                            options={list} 
+                            selected={list[0]}
                             name='honeyType'
                             className={css.dropdown}
-                            onChange={() => console.log('dropdown changed')}
                             size='small'
                         />
                     </div>

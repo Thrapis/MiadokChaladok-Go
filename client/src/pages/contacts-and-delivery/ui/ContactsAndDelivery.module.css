@@ -1,0 +1,15 @@
+.pageContent {
+    padding: 0px 16px;
+}
+
+.subtitleWithIcon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+}
+
+.textList {
+    padding: 0 0 0 1em;
+}

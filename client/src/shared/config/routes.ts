@@ -1,9 +1,23 @@
 export const ROUTE_CONSTANTS = {
-    HOME: "/",
-    CATALOG: "/catalog",
-    CONTACTS_AND_DELIVERY: "/contacts-and-delivery",
-    ABOUT: "/about",
-    TEST_ELEMENTS: "/test",
-    // PRODUCT: "/product/:productId",
-    NOT_FOUND: "/404",
+    HOME: {
+        ROUTE: "/",
+        NAME: "Галоўная"
+    },
+    CATALOG: {
+        ROUTE: "/catalog", 
+        NAME: "Каталог"
+    },
+    CONTACTS_AND_DELIVERY: {
+        ROUTE: "/contacts-and-delivery", 
+        NAME: "Кантакты і дастаўка"
+    },
+    ABOUT: {
+        ROUTE: "/about", 
+        NAME: "Пра нас"
+    },
+    // PRODUCT: {ROUTE: "/product/:productId", NAME: "Прадукт"},
+    NOT_FOUND: {
+        ROUTE: "/404", 
+        NAME: "Старонка не знойдзена"
+    },
 };

@@ -5,12 +5,56 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    height: min-content;
+    width: min-content;
 }
 
 .icon {
     height: 100%;
     width: 100%;
-    min-height: 14px;
-    min-width: 14px;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Orientation */
+
+.inlineOrientation {
+    display: inline-flex;
+}
+
+.blockOrientation {
+    display: flex;
+}
+
+/* Size */
+
+.xsmallSize {
+    min-height: 12px;
+    min-width: 12px;
+}
+
+.smallSize {
+    min-height: 16px;
+    min-width: 16px;
+}
+
+.mediumSize {
+    min-height: 20px;
+    min-width: 20px;
+}
+
+.largeSize {
+    min-height: 24px;
+    min-width: 24px;
+}
+
+.xlargeSize {
+    min-height: 28px;
+    min-width: 28px;
+}
+
+.xxlargeSize {
+    min-height: 32px;
+    min-width: 32px;
 }

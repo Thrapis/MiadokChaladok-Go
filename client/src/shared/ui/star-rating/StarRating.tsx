@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import css from './StarRating.module.css'
 
@@ -6,12 +6,14 @@ type Prop = {
     stars?: number
     name?: string
     defaultValue?: number
+    onChange?: (selected: number) => void
 }
 
 export const StarRating = ({
     stars = 5,
     name,
-    defaultValue = 0
+    defaultValue = 0,
+    onChange
 }: Prop) => {
     const [totalStars, setTotalStars] = useState(stars);
     const [rating, setRating] = useState(defaultValue <= stars ? defaultValue : stars);
@@ -34,7 +36,10 @@ export const StarRating = ({
                             type="radio"
                             name={name}
                             value={currentRating}
-                            onChange={() => setRating(currentRating)}
+                            onChange={() => {
+                                setRating(currentRating)
+                                onChange?.(currentRating)
+                            }}
                             checked={rating === currentRating}
                         />
                         <div

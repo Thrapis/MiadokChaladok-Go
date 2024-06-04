@@ -10,6 +10,7 @@ import (
 
 func main() {
 	//fmt.Println(filepath.Abs("configs"))
+
 	startServer()
 }
 
@@ -24,7 +25,10 @@ func startServer() {
 	app.POST("/to-cart/product/", routes.ProductToCart)
 	//R
 	app.GET("/product/:id", routes.GetProductById)
-	app.GET("/product/suggestions/:maxCount", routes.GetProductSuggestions)
+	app.GET("/product/suggestions/:limit", routes.GetProductSuggestions)
+	app.GET("/product/search/:limit", routes.GetProductsByFilter)
+
+	app.GET("/filter/lists", routes.GetFilterData)
 	//U
 	//D
 

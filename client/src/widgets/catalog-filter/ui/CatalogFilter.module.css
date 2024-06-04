@@ -1,0 +1,130 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    
+    padding: 16px 0;
+}
+
+.controls, .controlPanels {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.productTypeContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+}
+
+.filterPanel, .sortPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    
+    background-color: var(--card-background);
+    border-radius: 25px;
+    padding: 24px;
+}
+
+.filterPanel {
+    margin-right: auto;
+}
+
+.sortPanel {
+    margin-left: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.panelFields {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.panelButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 24px;
+}
+
+.filterPanel > .panelButtons {
+    align-self: flex-end;
+}
+
+.sortPanel > .panelButtons {
+    align-self: flex-start;
+}
+
+.controlPanelColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.controlButton {
+    border-width: 2px !important;
+}
+
+.closeButton {
+    padding: 0 !important;
+}
+
+.paramterTitle {
+    font-family: 'Raleway';
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.checkList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.checkLabel {
+    font-weight: 400 !important;
+}
+
+.rangeJoin {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid var(--text-and-frames);
+    border-radius: 5px;
+}
+
+.rangeFieldFrom > input,
+.rangeFieldTo > input {
+    border: 0;
+    border-radius: 0;
+    width: 60px !important;
+    font-size: 16px !important;
+}
+
+.rangeFieldFrom > input::placeholder,
+.rangeFieldTo > input::placeholder {
+    font-size: 16px !important;
+    text-align: center !important;
+}
+
+.rangeFieldFrom > input {
+    border-right: 1px solid var(--text-and-frames);
+}
+
+/* .rangeFieldTo > input {
+
+} */
+
+.dropdown {
+    width: 240px;
+}

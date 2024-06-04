@@ -1,7 +1,12 @@
 package data
 
+import "miadok-chaladok/internal/entity"
+
 type Product struct {
-	Id        int64  `json:"id"`
-	Name      string `json:"name"`
-	ImagePath string `json:"imagePath"`
+	entity.GormModel
+	CategoryID uint     `json:"categoryId"`
+	TasteID    uint     `json:"tasteId"`
+	Name       string   `json:"name"`
+	ImagePath  string   `json:"imagePath"`
+	Options    []Option `json:"options"`
 }

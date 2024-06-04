@@ -1,0 +1,102 @@
+
+.group {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    line-height: 1;
+}
+
+.input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: relative;
+    width: .666666667em;
+    height: .666666667em;
+    border: solid 1px var(--text-and-frames);
+    background-color: transparent;
+}
+
+.label {
+    padding: 4px;
+    color: var(--text-and-frames);
+}
+
+/* Radio button */
+
+.input[type='radio'] ~ .checkmark {
+    border-radius: 100%;
+}
+
+.input[type='radio']:checked ~ .checkmark:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: '';
+
+    width: .5em;
+    height: .5em;
+    margin: auto;
+
+    border-radius: 100%;
+    background-color: var(--text-and-frames);
+}
+
+/* Size */
+
+.smallSize {
+    height: 24px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.mediumSize {
+    height: 32px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.largeSize {
+    height: 48px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Theme */
+
+.defaultTheme .checkmark {
+    display: block;
+}
+
+.buttonTheme .checkmark {
+    display: none;
+}
+
+.buttonTheme .label {
+    border: solid 1px var(--text-and-frames);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.buttonTheme .input:checked ~ .label {
+    background-color: var(--accent-and-buttons);
+}

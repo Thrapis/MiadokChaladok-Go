@@ -4,6 +4,7 @@ import { Header } from "widgets/header";
 import { Footer } from "widgets/footer";
 
 import css from "./Layout.module.css";
+import { Breadcrumbs } from "widgets/breadcrumbs";
 
 export const Layout = () => {
     return(

@@ -1,8 +1,4 @@
 export { ROUTE_CONSTANTS } from "./routes";
-
-export const PAGE_NAMES = {
-    ABOUT: "About",
-    FETCH: "Fetch",
-    HOME: "Home",
-    PAGE_NOT_FOUND: "Page Not Found",
-};
+export { SOCIAL_LINKS } from "./socials";
+export { CONTACT_DATA } from "./contacts";
+export { SOURCES } from "./sources";

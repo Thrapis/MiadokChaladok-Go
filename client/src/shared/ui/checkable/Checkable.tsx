@@ -1,45 +1,43 @@
 import cn from 'classnames';
 
-import { useState } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-
 import css from './Checkable.module.css';
 
 export type Props = {
     labelClassName?: string
-    onChange?: () => void
+    onChange?: (checked: boolean) => void
+    onClick?: (e: React.MouseEvent<HTMLInputElement>) => void
     type: 'checkbox' | 'radio'
+    size?: 'small' | 'medium' | 'large'
     theme?: 'default' | 'button'
     name?: string
-    defaultValue?: string
-    defaultChecked?: boolean
+    value?: string
+    checked?: boolean
     labelText?: string
-    register?: UseFormRegisterReturn
     errorMessage?: string
 }
 
 export const Checkable = ({
     labelClassName,
     onChange, 
-    type, 
-    name,
+    onClick, 
+    type,
+    size = 'medium',
     theme = 'default',
-    defaultValue,
-    defaultChecked = false, 
-    labelText,
-    register,
-    errorMessage
+    name,
+    value,
+    checked = false, 
+    labelText
 }: Props) => {
     return(
-        <label className={cn(css.wrapper, css[`${theme}Theme`])}>
+        <label className={cn(css.wrapper, css[`${theme}Theme`], css[`${size}Size`])}>
             <input
                 className={cn(css.input)}
-                onChange={onChange}
+                onChange={(e) => {onChange?.(e.target.checked)}}
+                onClick={onClick}
                 type={type}
                 name={name}
-                defaultValue={defaultValue}
-                defaultChecked={defaultChecked}
-                {...register}
+                value={value}
+                checked={checked}
             />
             <span className={css.checkmark}></span>
             <span className={cn(css.label, labelClassName)}>

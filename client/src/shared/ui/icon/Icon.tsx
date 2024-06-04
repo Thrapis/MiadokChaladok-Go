@@ -5,6 +5,8 @@ import css from './Icon.module.css'
 export type IconType =
   | 'cart'
   | 'check'
+  | 'filter'
+  | 'sort'
   | 'magniglass'
   | 'x'
   | 'star-empty'
@@ -14,25 +16,34 @@ export type IconType =
   | 'pinterest'
   | 'telegram'
   | 'twitter'
+  | 'loading-animated'
+  | 'tent-colored'
+  | 'box-colored'
+  | 'truck-colored'
 
 export type Props = {
     className?: string
-    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
     type: IconType
+    size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+    orientation?: 'inline' | 'block'
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void
 }
 
-export const Icon = (props: Props) => {
+export const Icon = ({
+    className,
+    type,
+    size = 'medium',
+    orientation = 'block',
+    onClick
+}: Props) => {
     return(
         <div
-            className={cn(
-                css.root,
-                props.className
-            )}
-            onClick={props.onClick}
+            className={cn(css.root, css[`${orientation}Orientation`], className)}
+            onClick={onClick}
         >
             <div
-                className={css.icon}
-                style={{ backgroundImage: `url("/svg/${props.type}.svg")` }}
+                className={cn(css.icon, css[`${size}Size`])}
+                style={{ backgroundImage: `url("/svg/${type}.svg")` }}
             />
         </div>
     )

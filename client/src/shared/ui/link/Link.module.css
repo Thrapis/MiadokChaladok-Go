@@ -1,0 +1,136 @@
+
+.link {
+    cursor: pointer;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+
+    white-space: nowrap;
+
+    color: var(--text-and-frames);
+
+    line-height: 1;
+}
+
+/* Size */
+
+.fitSize {
+    height: fit-content;
+}
+
+.smallSize {
+    height: 24px;
+}
+
+.mediumSize {
+    height: 32px;
+}
+
+.largeSize {
+    height: 48px;
+}
+
+/* Width */
+
+.heightWidth {
+    aspect-ratio: 1 / 1;
+}
+
+.heightWidth.fitSize {
+    width: fit-content;
+}
+
+.heightWidth.smallSize {
+    width: 24px;
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.heightWidth.mediumSize {
+    width: 32px;
+    padding: 2px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.heightWidth.largeSize {
+    width: 48px;
+    padding: 4px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.fluidWidth.fitSize {
+    width: fit-content;
+    padding: 0px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.fluidWidth.smallSize {
+    width: fit-content;
+    padding: 0px 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.fluidWidth.mediumSize {
+    width: fit-content;
+    padding: 2px 16px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.fluidWidth.largeSize {
+    width: fit-content;
+    padding: 4px 24px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Shape */
+
+.squareShape {
+    border-radius: 8px;
+}
+
+.squareShape.smallSize {
+    border-radius: 4px;
+}
+
+.roundShape {
+    border-radius: 48px;
+}
+
+/* Theme */
+
+.containedTheme {
+    background-color: var(--accent-and-buttons);
+    border: 1px solid var(--text-and-frames);
+    text-decoration: none;
+}
+
+.outlinedTheme {
+    background-color: transparent;
+    border: 1px solid var(--text-and-frames);
+    text-decoration: none;
+}
+
+.textTheme.heightWidth, 
+.textTheme.fluidWidth {
+    background-color: transparent;
+    border: 1px transparent;
+    padding-inline: 0;
+    text-decoration: none;
+}
+
+.textTheme.heightWidth:hover, .textTheme.heightWidth:focus, 
+.textTheme.fluidWidth:hover, .textTheme.fluidWidth:focus {
+    background-color: transparent;
+    border: 1px transparent;
+    padding-inline: 0;
+    text-decoration: underline;
+}

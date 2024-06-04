@@ -1,0 +1,103 @@
+
+.group {
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    line-height: 1;
+}
+
+.input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: relative;
+    width: .666666667em;
+    height: .666666667em;
+    border: solid 1px var(--text-and-frames);
+    background-color: transparent;
+}
+
+.label {
+    padding: 4px;
+    color: var(--text-and-frames);
+}
+
+/* Checkbox */
+
+.input[type='checkbox'] ~ .checkmark {
+    border-radius: .25em;
+}
+
+.input[type='checkbox']:checked ~ .checkmark:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: .125em;
+    left: 0.05em;
+    content: '';
+    width: .25em;
+    height: .5em;
+    margin: auto;
+    border: solid var(--text-and-frames);
+    border-width: 0 .125em .125em 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* Size */
+
+.smallSize {
+    height: 24px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.mediumSize {
+    height: 32px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.largeSize {
+    height: 48px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* Theme */
+
+.defaultTheme .checkmark {
+    display: block;
+}
+
+.buttonTheme .checkmark {
+    display: none;
+}
+
+.buttonTheme .label {
+    border: solid 1px var(--text-and-frames);
+    border-radius: 16px;
+    text-align: center;
+}
+
+.buttonTheme .input:checked ~ .label {
+    background-color: var(--accent-and-buttons);
+}

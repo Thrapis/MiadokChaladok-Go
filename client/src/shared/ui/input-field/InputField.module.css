@@ -1,0 +1,28 @@
+.inputField {
+    box-sizing: border-box;
+    height: 24px;
+    padding: .25em;
+    
+    border: 1px solid var(--text-and-frames);
+    border-radius: 10px;
+    color: var(--text-and-frames);
+    background-color: transparent;
+
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.inputField:focus {
+    outline: none;
+}
+
+.annotation {
+    padding: .25em;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.incorrect * {
+    color: var(--incorrect);
+    border-color: var(--incorrect);
+}

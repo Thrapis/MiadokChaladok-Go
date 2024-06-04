@@ -1,78 +1,79 @@
-.productCard {
+.card {
     background-color: var(--card-background);
     border: solid 1px var(--text-and-frames);
     border-radius: 25px;
     display: flex;
     flex-direction: column;
 
-    margin: 4px;
-
     overflow: hidden;
 }
 
-.productImage {
+.image {
     object-fit: cover;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     height: 408px;
 }
 
-.productControl {
+.control {
     border-top: solid 1px var(--text-and-frames);
     display: flex;
     flex-direction: row;
     min-height: 60px;
-    padding: 4px;
+    padding: 8px;
+    padding-top: 16px;
 }
 
-.productNameAndVolume {
+.nameAndVolume {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    /* flex-grow: 1; */
+    gap: 8px;
     width: 50%;
 }
 
-.productVolumeList {
+.name {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.volumeList {
     display: flex;
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 4px;
 }
 
-.productVolumeOption {
+.volumeOption {
     white-space: nowrap !important;
-    font-size: 16px !important;
 }
 
-.productVolumeOnlyOption  {
+.volumeOnlyOption  {
+    cursor: default !important;
     border: 0 !important;
     background-color: transparent !important;
     margin: 0;
-    /* white-space: nowrap !important; */
-    font-size: 16px !important;
 }
 
-.productPriceAndCartButton {
+.priceAndCartButton {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    /* flex-grow: 1; */
+    gap: 8px;
     width: 50%;
 }
 
-.productPrice {
-    font-size: 24px;
+.price {
+    font-size: 22px;
     font-weight: 500;
 }
 
-.productCartButton {
-    padding-block: 2px 4px;
+.cartButton {
     margin: 0;
-    height: 24px;
-    width: 60%;
     white-space: nowrap;
-    font-size: 16px;
+    width: 60% !important;
 }

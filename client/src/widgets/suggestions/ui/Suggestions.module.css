@@ -1,0 +1,26 @@
+.bestSuggestions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 32px 0;
+}
+
+.bestSuggestionsTitle {
+    margin-block: 32px 16px;
+}
+
+.productsList {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+}
+
+.productsList:not(:has(.productCard)) {
+    display: flex;
+    justify-content: center;
+}
+
+.productCard {
+    box-sizing: border-box;
+}

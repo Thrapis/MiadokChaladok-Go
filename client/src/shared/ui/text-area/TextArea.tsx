@@ -4,7 +4,7 @@ import css from './TextArea.module.css'
 
 export type Props = {
     className?: string
-    onChange?: () => void
+    onChange?: (entered: string) => void
     name?: string
     rows?: number
     cols?: number
@@ -14,13 +14,22 @@ export type Props = {
     annotation?: string
 }
 
-export const TextArea = (props: Props) => {
-    const resize = props.resize ? props.resize : 'both'
+export const TextArea = ({
+    className,
+    onChange,
+    name,
+    rows,
+    cols,
+    maxLength,
+    resize = 'both',
+    placeholder,
+    annotation
+}: Props) => {
     return(
         <div 
             className={cn(
                 css.wrapper,
-                props.className
+                className
             )}
         >
             <textarea 
@@ -28,16 +37,16 @@ export const TextArea = (props: Props) => {
                     css.textArea,
                     css[`${resize}Resize`]
                 )}
-                onChange={props.onChange}
-                name={props.name}
-                rows={props.rows}
-                cols={props.cols}
-                maxLength={props.maxLength}
-                placeholder={props.placeholder}
+                onChange={(e) => onChange?.(e.target.value)}
+                name={name}
+                rows={rows}
+                cols={cols}
+                maxLength={maxLength}
+                placeholder={placeholder}
             >
             </textarea>
             <div className={css.annotation}>
-                {props.annotation}
+                {annotation}
             </div>
         </div>
     )

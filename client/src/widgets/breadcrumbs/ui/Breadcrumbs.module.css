@@ -1,0 +1,34 @@
+
+.breadcrumbsContainer {
+    display: block;
+}
+
+.breadcrumbs {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+}
+
+.crumb::before {
+    content: '/';
+    padding: 0 .25em;
+}
+
+.crumb:first-of-type::before {
+    content: '';
+    padding: 0;
+}
+
+.crumbLink {
+    padding: 0 !important;
+    font-size: 16px !important;
+    font-family: 'Raleway' !important;
+}
+
+.crumbText {
+    padding: 0 !important;
+    font-size: 16px !important;
+    font-family: 'Raleway' !important;
+    cursor: default;
+}
