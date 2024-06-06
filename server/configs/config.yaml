@@ -1,0 +1,15 @@
+---
+
+debug: true
+redis:
+  host:
+  port:
+  password:
+  db:
+database:
+  driver: "postgres"
+  host: "localhost"
+  port: 5432
+  user: "miadok_manager"
+  password: "54321"
+  dbname: "miadok_db"

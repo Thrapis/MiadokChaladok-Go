@@ -1,25 +1,34 @@
-FROM golang:1.20-alpine
+## Build
+FROM golang:1.20-alpine as build
 WORKDIR /app
 
-# add some necessary packages
-RUN apk update && \
-    apk add libc-dev && \
-    apk add gcc && \
-    apk add make
+# Add some necessary packages
+# RUN apk update && \
+#     apk add libc-dev && \
+#     apk add gcc && \
+#     apk add make
 
-# prevent the re-installation of vendors at every change in the source code
-COPY ./go.mod go.sum ./
+# Pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
+COPY ./server/go.mod ./server/go.sum ./
 RUN go mod download && go mod verify
 
-# Install Compile Daemon for go. We'll use it to watch changes in go files
-#RUN go get github.com/githubnemo/CompileDaemon
-RUN go install -mod=mod github.com/githubnemo/CompileDaemon
+# github.com/Thrapis/MiadokChaladok-Go/cmd/
+ADD ./server .
+RUN CGO_ENABLED=0 go build -v -o /main /app/cmd/main.go
 
-COPY . .
-COPY ./entrypoint.sh /entrypoint.sh
+## Deploy
+FROM alpine:latest
+WORKDIR /server-app
 
-# wait-for-it requires bash, which alpine doesn't ship with by default. Use wait-for instead
-ADD https://raw.githubusercontent.com/eficode/wait-for/v2.1.0/wait-for /usr/local/bin/wait-for
-RUN chmod +rx /usr/local/bin/wait-for /entrypoint.sh
+# Wait package for waiting db
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
+RUN chmod +x /wait
 
-ENTRYPOINT [ "sh", "/entrypoint.sh" ]
+# Copy server application necessery files
+COPY --from=build /main /server-app/main
+COPY ./server/static /server-app/static
+COPY ./server/configs/config-for-docker.yaml /server-app/configs/config.yaml
+
+# Expose port, wait for db and execute application
+EXPOSE 8080
+CMD /wait && /server-app/main

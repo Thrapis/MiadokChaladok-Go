@@ -1,15 +1,15 @@
 import cn from 'classnames'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from 'axios';
 
 import css from './CatalogFilter.module.css';
 
-import { Button, Icon} from 'shared/ui';
+import { Button, Icon } from 'shared/ui';
+
 import { FilterPanel } from './FilterPanel';
 import { SortPanel } from './SortPanel';
 import { FilterInputs } from '../model';
-import { SOURCES } from 'shared/config';
 
 export const CatalogFilter = () => {
     const [isFilterPanelVisible, setFilterPanelVisible] = useState(false);
@@ -18,35 +18,34 @@ export const CatalogFilter = () => {
     const {
         control,
         handleSubmit,
-        watch,
-        formState: { errors },
+        // watch,
+        // formState: { errors },
     } = useForm<FilterInputs>()
 
-    // useEffect(() => {
-    //     watch((value, { name, type }) => {
-    //         // console.log(value, name, type)
-    //         if (name == "categoryIds" && type == 'change') {
-    //             // setCategoryIds(value.categoryIds)
-    //         }
-    //     })
-    // }, [watch])
+    // watch((value, { name, type }) => {
+    //     // console.log(value, name, type)
+    //     if (name == "categoryIds" && type == 'change') {
+    //         // setCategoryIds(value.categoryIds)
+    //     }
+    // })
 
     const onFilterFormSubmit: SubmitHandler<FilterInputs> = (data) => {
         console.log(data)
         let body = JSON.stringify(data)
-        axios.post(`${SOURCES.API}/catalog/filter/`, body)
+        const url = `${process.env.REACT_APP_API_SOURCE}/catalog/filter`
+        axios.post(url, body)
     }
 
     return (
-        <form 
+        <form
             className={css.container}
-            onSubmit={handleSubmit(onFilterFormSubmit)}        
+            onSubmit={handleSubmit(onFilterFormSubmit)}
         >
             <div className={css.controls}>
-                <Button 
-                    type='button' 
-                    shape='round' 
-                    size='large' 
+                <Button
+                    type='button'
+                    shape='round'
+                    size='large'
                     className={css.controlButton}
                     onClick={() => {
                         setFilterPanelVisible(prev => !prev)
@@ -72,15 +71,15 @@ export const CatalogFilter = () => {
                     </Button>
                 </div>
 
-                <Button 
-                    type='button' 
-                    shape='round' 
-                    size='large' 
+                <Button
+                    type='button'
+                    shape='round'
+                    size='large'
                     className={css.controlButton}
                     onClick={() => {
                         setSortPanelVisible(prev => !prev)
                         setFilterPanelVisible(false)
-                    }}  
+                    }}
                 >
                     <span>Сартыроўка</span>
                     <Icon type='sort'></Icon>
@@ -91,13 +90,13 @@ export const CatalogFilter = () => {
                 css.controlPanels,
                 (!isFilterPanelVisible && !isSortPanelVisible) && css.hidden
             )}>
-                <FilterPanel 
+                <FilterPanel
                     setVisibility={setFilterPanelVisible}
                     control={control}
                     className={isFilterPanelVisible ? '' : css.hidden}
                 />
 
-                <SortPanel 
+                <SortPanel
                     setVisibility={setSortPanelVisible}
                     control={control}
                     className={isSortPanelVisible ? '' : css.hidden}

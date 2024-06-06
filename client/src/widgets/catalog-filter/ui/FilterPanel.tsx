@@ -1,13 +1,14 @@
 import cn from 'classnames'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Control, Controller } from 'react-hook-form';
 import axios from 'axios';
 
 import css from './CatalogFilter.module.css';
 
 import { Button, Icon, Checkable, InputField, CheckboxGroup } from 'shared/ui';
-import { SOURCES } from 'shared/config';
+import { ResponseData } from 'shared/model';
+
 import { Category, Taste, ShipmentMethod } from 'entities';
-import { Control, Controller } from 'react-hook-form';
 
 import { FilterInputs } from '../model';
 
@@ -15,12 +16,6 @@ type Props = {
     setVisibility: Dispatch<SetStateAction<boolean>>
     className?: string
     control: Control<FilterInputs>
-}
-
-type FilterListsResponse = {
-    categories: Category[]
-    tastes: Taste[]
-    shipmentMethods: ShipmentMethod[]
 }
 
 export const FilterPanel = ({
@@ -34,10 +29,19 @@ export const FilterPanel = ({
     const [shipmentMethods, setShipmentMethods] = useState<ShipmentMethod[] | null>(null);
 
     async function fetchFilterLists() {
-        const response = await axios.get<FilterListsResponse>(`${SOURCES.API}/filter/lists`)
-        setCategories(response.data.categories)
-        setTastes(response.data.tastes)
-        setShipmentMethods(response.data.shipmentMethods)
+        type FilterLists = {
+            categories: Category[]
+            tastes: Taste[]
+            shipmentMethods: ShipmentMethod[]
+        }
+
+        const url = `${process.env.REACT_APP_API_SOURCE}/filter/lists`
+        const response = await axios.get<ResponseData>(url)
+        const lists = response.data.Data as FilterLists
+        
+        setCategories(lists.categories)
+        setTastes(lists.tastes)
+        setShipmentMethods(lists.shipmentMethods)
         setLoading(false)
     }
 

@@ -1,89 +1,47 @@
 package database
 
 import (
-	"fmt"
 	"miadok-chaladok/internal/entity/data"
 	"miadok-chaladok/internal/entity/viewmodel"
 
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-func GetProductDtoById(id uint) *viewmodel.ProductDto {
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
-	db, err := gorm.Open(postgres.Open(dsn), gormConfig)
-	if err != nil {
-		panic(err)
-	}
-
-	sqlDB, err := db.DB()
-	defer sqlDB.Close()
-
+func GetProductDtoById(db *gorm.DB, id uint) (*viewmodel.ProductDto, error) {
 	var product data.Product
-	db.Preload("Options").First(product, "ID = ?", id)
+	result := db.Preload("Options").First(product, "ID = ?", id)
 
-	dto := viewmodel.ToProductDto(&product)
-
-	return dto
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return viewmodel.ToProductDto(&product), nil
 }
 
-func GetProductDtosByFilter(limit int) []*viewmodel.ProductDto {
+func GetProductDtosByFilter(db *gorm.DB, limit int) ([]*viewmodel.ProductDto, error) {
 	if limit == 0 {
 		limit = 3
 	}
 
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
-	db, err := gorm.Open(postgres.Open(dsn), gormConfig)
-	if err != nil {
-		panic(err)
+	var products []*data.Product
+	result := db.Preload("Options").Limit(limit).Find(&products)
+
+	if result.Error != nil {
+		return nil, result.Error
 	}
-
-	sqlDB, err := db.DB()
-	defer sqlDB.Close()
-
-	var products []data.Product
-	db.Preload("Options").Limit(limit).Find(&products)
-
-	var result = make([]*viewmodel.ProductDto, 0, limit)
-
-	for _, v := range products {
-		dto := viewmodel.ToProductDto(&v)
-		result = append(result, dto)
-	}
-
-	return result
+	return viewmodel.ToProductDtos(products), nil
 }
 
-func GetSuggestedProductDtos(limit int) []*viewmodel.ProductDto {
+func GetSuggestedProductDtos(db *gorm.DB, limit int) ([]*viewmodel.ProductDto, error) {
 	if limit == 0 {
 		limit = 3
 	}
 
-	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname)
-	db, err := gorm.Open(postgres.Open(dsn), gormConfig)
-	if err != nil {
-		panic(err)
-	}
-
-	sqlDB, err := db.DB()
-	if err != nil {
-		panic(err)
-	}
-	defer sqlDB.Close()
-
-	var products []data.Product
-	db.Joins("left join \"Suggestions\" s on s.\"ProductID\" = \"Products\".\"ID\"").
+	var products []*data.Product
+	result := db.Joins("left join \"Suggestions\" s on s.\"ProductID\" = \"Products\".\"ID\"").
 		Preload("Options").Limit(limit).Find(&products)
 
-	var result = make([]*viewmodel.ProductDto, 0, limit)
-
-	for _, v := range products {
-		dto := viewmodel.ToProductDto(&v)
-		result = append(result, dto)
+	if result.Error != nil {
+		return nil, result.Error
 	}
-
-	return result
+	return viewmodel.ToProductDtos(products), nil
 }

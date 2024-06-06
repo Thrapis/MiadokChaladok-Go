@@ -1,3 +1,8 @@
+\connect miadok_db;
+
+/* -------------- */
+BEGIN;
+
 CREATE EXTENSION citext;
 CREATE DOMAIN email AS citext
     CHECK ( value ~
@@ -444,3 +449,5 @@ INSERT INTO "Suggestions" ("ProductID", "Notes", "CreatedAt", "UpdatedAt")
 VALUES (1, N'Найлепшая прапанова', localtimestamp, localtimestamp),
        (2, N'Найлепшая прапанова', localtimestamp, localtimestamp),
        (3, N'Найлепшая прапанова', localtimestamp, localtimestamp);
+
+COMMIT;

@@ -1,9 +1,8 @@
-# Use root/example as user/password credentials
-version: '3.7'
+version: '3.9'
 services:
   db:
     container_name: "miadok_db"
-    platform: linux/x86_64
+    # platform: linux/x86_64
     build:
       context: .
       dockerfile: db.Dockerfile
@@ -11,27 +10,46 @@ services:
       - default
     restart: always
     ports:
-      - "3306:3306"
+      - "3306:5432"
     environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: "12345"
-      MYSQL_DATABASE: "miadok"
-      MYSQL_USER: "command_user"
-      MYSQL_PASSWORD: "keycode23"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345
     volumes:
-      - mysql_data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
+      - type: tmpfs
+        target: /dev/shm
+        tmpfs:
+          size: 134217728 # 128*2^20 bytes = 128Mb
+  # redis:
+  #   image: "redis:7-alpine"
+  #   container_name: redis-server
   api:
-    container_name: "miadok_web_app"
+    container_name: "miadok_api"
     build:
       context: .
       dockerfile: app.Dockerfile
+    networks:
+      - default
     ports:
       - "8080:8080"
     depends_on:
       - db
+    environment:
+      WAIT_HOSTS: db:5432
+      # STORAGE_HOST: redis
+    volumes:
+      - .:/app/
+  web:
+    container_name: "miadok_web"
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    environment:
+      WAIT_HOSTS: api:8080
     volumes:
       - .:/app/
 networks:
   default:
-volumes:
-  mysql_data:

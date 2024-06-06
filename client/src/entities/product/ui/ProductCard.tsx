@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
 import { Button, RadioGroup } from "shared/ui";
@@ -7,7 +7,6 @@ import { Button, RadioGroup } from "shared/ui";
 import { ProductDto } from 'entities/product/';
 
 import css from './ProductCard.module.css';
-import { SOURCES } from 'shared/config/sources';
 import axios from 'axios';
 import { Option } from 'entities/Option';
 
@@ -33,7 +32,7 @@ export const ProductCard = ({
     className,
     dto
 }: Props) => {
-    // const [selectedId, setSelectedId] = useState<number>()
+    const [optionPrice, setOptionPrice] = useState<string>(dto.priceSpread)
 
     const {
         control,
@@ -43,19 +42,22 @@ export const ProductCard = ({
         getValues
     } = useForm<Inputs>()
 
-    useEffect(() => {
-        watch((value, { name, type }) => {
-            // console.log(value.optionId, name, type)
-            if (name === "optionId" && type === 'change') {
-                // setSelectedId(value.optionId)
-            }
-        })
-    }, [watch])
+    watch((value, { name, type }) => {
+        // console.log(value.optionId, name, type)
+        if (name === "optionId" && type === 'change') {
+            const price = value.optionId
+                ? `${dto.optionList.find(o => o.id === getValues().optionId)?.price.toFixed(2)}`
+                : dto.priceSpread
+
+            setOptionPrice(price)
+        }
+    })
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         // console.log(data)
         let body = JSON.stringify(data)
-        axios.post(`${SOURCES.API}/to-cart/product/`, body)
+        const url = `${process.env.REACT_APP_API_SOURCE}/to-cart/product`
+        axios.post(url, body)
     }
 
     return (
@@ -74,7 +76,7 @@ export const ProductCard = ({
             />
 
             <img className={css.image}
-                src={`${SOURCES.IMAGES}${dto.imagePath}`}
+                src={`${process.env.REACT_APP_IMAGES_SOURCE}${dto.imagePath}`}
                 title={dto.productName}
                 alt={dto.productName}
             />
@@ -114,14 +116,7 @@ export const ProductCard = ({
                     />
                 </div>
                 <div className={css.priceAndCartButton}>
-                    <div className={css.price}>
-                        {
-                            getValues().optionId ?
-                                dto.optionList.find(o => o.id === getValues().optionId)?.price.toFixed(2)
-                                :
-                                dto.priceSpread
-                        } р.
-                    </div>
+                    <div className={css.price}>{`${optionPrice} р.`}</div>
                     <Button
                         type='submit'
                         shape='round'

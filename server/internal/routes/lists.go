@@ -1,32 +1,45 @@
 package routes
 
 import (
+	"miadok-chaladok/internal/config"
 	"miadok-chaladok/internal/database"
+	"miadok-chaladok/pkg/api"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func GetAllCategories(c *gin.Context) {
-	categories := database.GetAllCategories()
+	db := config.GetDb()
+	categories, err := database.GetAllCategories(db)
 
-	c.JSON(http.StatusOK, gin.H{"categories": categories})
+	if err != nil {
+		api.RespondJSON(c, http.StatusNotFound, categories)
+	}
+	api.RespondJSON(c, http.StatusOK, categories)
 }
 
 func GetAllTastes(c *gin.Context) {
-	tastes := database.GetAllTastes()
+	db := config.GetDb()
+	tastes, err := database.GetAllTastes(db)
 
-	c.JSON(http.StatusOK, gin.H{"tastes": tastes})
+	if err != nil {
+		api.RespondJSON(c, http.StatusNotFound, tastes)
+	}
+	api.RespondJSON(c, http.StatusOK, tastes)
 }
 
 func GetFilterData(c *gin.Context) {
-	categories := database.GetAllCategories()
-	tastes := database.GetAllTastes()
-	methods := database.GetAllShipmentMethods()
+	db := config.GetDb()
+	categories, _ := database.GetAllCategories(db)
+	tastes, _ := database.GetAllTastes(db)
+	methods, _ := database.GetAllShipmentMethods(db)
 
-	c.JSON(http.StatusOK, gin.H{
+	payload := gin.H{
 		"categories":      categories,
 		"tastes":          tastes,
 		"shipmentMethods": methods,
-	})
+	}
+
+	api.RespondJSON(c, http.StatusOK, payload)
 }

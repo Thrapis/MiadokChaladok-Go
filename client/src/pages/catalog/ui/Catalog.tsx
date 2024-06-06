@@ -4,24 +4,21 @@ import axios from 'axios';
 
 import css from './Catalog.module.css';
 
-import { SOURCES } from 'shared/config/sources';
 import { Breadcrumbs } from 'widgets/breadcrumbs';
-import { Button, Link, Icon } from 'shared/ui';
+import { Icon } from 'shared/ui';
+import { ResponseData } from 'shared/model';
 
 import { ProductDto, ProductCard } from 'entities/product/';
 import { CatalogFilter } from 'widgets/catalog-filter';
-
-type SearchResponse = {
-    products: ProductDto[]
-}
 
 export const Catalog = () => {
     const [loading, setLoading] = useState(true);
     const [suggestions, setSuggestions] = useState<ProductDto[] | null>(null);
 
     async function fetchSuggestions() {
-        const response = await axios.get<SearchResponse>(`${SOURCES.API}/product/search/12`)
-        setSuggestions(response.data.products)
+        const url = `${process.env.REACT_APP_API_SOURCE}/product/search/12`
+        const response = await axios.get<ResponseData>(url)
+        setSuggestions(response.data.Data as ProductDto[])
         setLoading(false)
     }
 

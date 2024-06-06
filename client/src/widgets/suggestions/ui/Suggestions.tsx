@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import css from './Suggestions.module.css';
 
-import { ProductDto, ProductCard } from 'entities/product/';
 import { Icon } from 'shared/ui';
-import { SOURCES } from 'shared/config/sources';
+import { ResponseData } from 'shared/model';
 
-type SuggestsResponse = {
-    products: ProductDto[]
-}
+import { ProductDto, ProductCard } from 'entities/product/';
 
 export const SuggestionsBlock = () => {
     const [loading, setLoading] = useState(true);
     const [suggestions, setSuggestions] = useState<ProductDto[] | null>(null);
 
     async function fetchSuggestions() {
-        const response = await axios.get<SuggestsResponse>(`${SOURCES.API}/product/suggestions/3`)
-        setSuggestions(response.data.products)
+        const url = `${process.env.REACT_APP_API_SOURCE}/product/suggestions/3`
+        const response = await axios.get<ResponseData>(url)
+        setSuggestions(response.data.Data as ProductDto[])
         setLoading(false)
     }
 

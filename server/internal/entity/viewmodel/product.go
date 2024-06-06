@@ -14,6 +14,15 @@ type ProductDto struct {
 	OptionList  []data.Option `json:"optionList"`
 }
 
+func ToProductDtos(products []*data.Product) []*ProductDto {
+	var productDtos = make([]*ProductDto, 0, len(products))
+	for _, v := range products {
+		dto := ToProductDto(v)
+		productDtos = append(productDtos, dto)
+	}
+	return productDtos
+}
+
 func ToProductDto(product *data.Product) *ProductDto {
 	card := &ProductDto{
 		ProductId:   product.ID,
