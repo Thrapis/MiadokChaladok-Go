@@ -10,16 +10,16 @@ CREATE DOMAIN email AS citext
 
 /* ----------------- */
 
-CREATE TABLE "Categories"
+CREATE TABLE Categories
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "Name"      VARCHAR(64) NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE  -- GORM default
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Name      VARCHAR(64) NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE  -- GORM default
 );
 
-INSERT INTO "Categories" ("Name", "CreatedAt", "UpdatedAt")
+INSERT INTO Categories (Name, Created_At, Updated_At)
 VALUES (N'Класічны мёд', localtimestamp, localtimestamp),
        (N'Мёд у сотах', localtimestamp, localtimestamp),
        (N'Наборы', localtimestamp, localtimestamp),
@@ -27,17 +27,17 @@ VALUES (N'Класічны мёд', localtimestamp, localtimestamp),
 
 /* ----------------- */
 
-CREATE TABLE "Tastes"
+CREATE TABLE Tastes
 (
-    "ID"          BIGSERIAL PRIMARY KEY,    -- GORM default
-    "Name"        VARCHAR(64)  NOT NULL,
-    "Description" VARCHAR(256) NOT NULL,
-    "CreatedAt"   TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt"   TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt"   TIMESTAMP WITH TIME ZONE  -- GORM default
+    ID          BIGSERIAL PRIMARY KEY,    -- GORM default
+    Name        VARCHAR(64)  NOT NULL,
+    Description VARCHAR(256) NOT NULL,
+    Created_At   TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At   TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At   TIMESTAMP WITH TIME ZONE  -- GORM default
 );
 
-INSERT INTO "Tastes" ("Name", "Description", "CreatedAt", "UpdatedAt")
+INSERT INTO Tastes (Name, Description, Created_At, Updated_At)
 VALUES (N'Не вызначана', N'Не вызначана або нельга з''есці', localtimestamp, localtimestamp),
        (N'Грэчкавы', N'Нейтральны, з лёгкай вастрынкай', localtimestamp, localtimestamp),
        (N'Ліпавы', N'Востра-салодкі', localtimestamp, localtimestamp),
@@ -47,79 +47,79 @@ VALUES (N'Не вызначана', N'Не вызначана або нельг�
 
 /* ----------------- */
 
-CREATE TABLE "Products"
+CREATE TABLE Products
 (
-    "ID"         BIGSERIAL PRIMARY KEY,    -- GORM default
-    "CategoryID" BIGINT       NOT NULL,
-    "TasteID"    BIGINT       NOT NULL,
-    "Name"       VARCHAR(64)  NOT NULL,
-    "ImagePath"  TEXT         NOT NULL,
-    "Expiration" VARCHAR(256) NOT NULL,
-    "CreatedAt"  TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt"  TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt"  TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("CategoryID") REFERENCES "Categories" ("ID"),
-    FOREIGN KEY ("TasteID") REFERENCES "Tastes" ("ID")
+    ID         BIGSERIAL PRIMARY KEY,    -- GORM default
+    Category_ID BIGINT       NOT NULL,
+    Taste_ID    BIGINT       NOT NULL,
+    Name       VARCHAR(64)  NOT NULL,
+    Image_Path  TEXT         NOT NULL,
+    Expiration VARCHAR(256) NOT NULL,
+    Created_At  TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At  TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At  TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Category_ID) REFERENCES Categories (ID),
+    FOREIGN KEY (Taste_ID) REFERENCES Tastes (ID)
 );
 
-INSERT INTO "Products" ("Name", "ImagePath", "CategoryID", "TasteID", "Expiration", "CreatedAt", "UpdatedAt")
-VALUES (N'Рапсавы мёд К1', N'/static/images/products/product-1.jpg', 1, 6, N'2 гады пасля ўскрыцця', localtimestamp,
-        localtimestamp),                                           -- ID: 1
-       (N'Рапсавы мёд К2', N'/static/images/products/product-2.jpg', 1, 6, N'2 гады пасля ўскрыцця', localtimestamp,
-        localtimestamp),                                           -- ID: 2
+INSERT INTO Products (Name, Image_Path, Category_ID, Taste_ID, Expiration, Created_At, Updated_At)
+VALUES (N'Рапсавы мёд К1', N'/static/images/products/product-1.jpg', 1, 6, N'2 гады пасля ўскрыцця',
+        localtimestamp + (1 * interval '1 minute'), localtimestamp + (1 * interval '1 minute')),         -- ID: 1
+       (N'Рапсавы мёд К2', N'/static/images/products/product-2.jpg', 1, 6, N'2 гады пасля ўскрыцця',
+        localtimestamp + (2 * interval '1 minute'), localtimestamp + (2 * interval '1 minute')),         -- ID: 2
        (N'Набор “Трыплет”', N'/static/images/products/product-set-1.jpg', 3, 1, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
-       (N'Пярга', N'/static/images/products/bee-pollen.jpg', 2, 4, N'1 год пасля ўскрыцця', localtimestamp,
-        localtimestamp),
+        localtimestamp + (3 * interval '1 minute'), localtimestamp + (3 * interval '1 minute')),
+       (N'Пярга', N'/static/images/products/bee-pollen.jpg', 2, 4, N'1 год пасля ўскрыцця',
+        localtimestamp + (4 * interval '1 minute'), localtimestamp + (4 * interval '1 minute')),
        (N'Ажынавы мёд', N'/static/images/products/blackberry-12oz.jpg', 1, 5, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (5 * interval '1 minute'), localtimestamp + (5 * interval '1 minute')),
        (N'Лугавы мёд', N'/static/images/products/buckwheat-honey-16oz.jpg', 1, 4, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (6 * interval '1 minute'), localtimestamp + (6 * interval '1 minute')),
        (N'Мёд з іван-чая', N'/static/images/products/fireweed-honey-12oz.jpg', 1, 4, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (7 * interval '1 minute'), localtimestamp + (7 * interval '1 minute')),
        (N'Пальметто мёд', N'/static/images/products/palmetto-honey-12oz.jpg', 1, 3, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (8 * interval '1 minute'), localtimestamp + (8 * interval '1 minute')),
        (N'Канюшынавы мёд', N'/static/images/products/pure-clover-honey-12oz.jpg', 1, 4, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (9 * interval '1 minute'), localtimestamp + (9 * interval '1 minute')),
        (N'Журавінавы мёд', N'/static/images/products/pure-cranberry-honey-16oz.jpg', 1, 5, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (10 * interval '1 minute'), localtimestamp + (10 * interval '1 minute')),
        (N'Малінавы мёд', N'/static/images/products/raspberry-honey-16oz.jpg', 1, 5, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (11 * interval '1 minute'), localtimestamp + (11 * interval '1 minute')),
        (N'Грэчкавы мёд', N'/static/images/products/sage-honey-16oz.jpg', 1, 2, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
+        localtimestamp + (12 * interval '1 minute'), localtimestamp + (12 * interval '1 minute')),
        (N'Мёд кіслы', N'/static/images/products/sourwood-honey-12oz.jpg', 1, 5, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
-       (N'Праполіс "Навагодні"', N'/static/images/products/tasmanian-christmas-bush-honey.jpg', 2, 2,
-        N'1 год пасля ўскрыцця', localtimestamp, localtimestamp),
-       (N'Праполіс "Тасманскі"', N'/static/images/products/tasmanian-leatherwood-honey-w.jpg', 2, 3,
-        N'1 год пасля ўскрыцця', localtimestamp, localtimestamp),
+        localtimestamp + (13 * interval '1 minute'), localtimestamp + (13 * interval '1 minute')),
+       (N'Праполіс Навагодні', N'/static/images/products/tasmanian-christmas-bush-honey.jpg', 2, 2, N'1 год пасля ўскрыцця',
+        localtimestamp + (14 * interval '1 minute'), localtimestamp + (14 * interval '1 minute')),
+       (N'Праполіс Тасманскі', N'/static/images/products/tasmanian-leatherwood-honey-w.jpg', 2, 3, N'1 год пасля ўскрыцця',
+        localtimestamp + (15 * interval '1 minute'), localtimestamp + (15 * interval '1 minute')),
        (N'Тупело мёд', N'/static/images/products/tupelo-honey-12oz.jpg', 1, 3, N'2 гады пасля ўскрыцця',
-        localtimestamp, localtimestamp),
-       (N'Рапсавы мёд у сотах', N'/static/images/products/wildflower-honey-w-comb-1.jpg', 2, 6,
-        N'2 гады пасля ўскрыцця', localtimestamp, localtimestamp), -- ID: 17
-       (N'Шэсць пакетаў мёду', N'/static/images/products/honey-sampler-six-pack-1.jpg', 3, 1,
-        N'2 гады пасля ўскрыцця', localtimestamp, localtimestamp),
-       (N'Трыо аматараў гарачага мёду', N'/static/images/products/hot-honey-gift-set.jpg', 3, 1,
-        N'2 гады пасля ўскрыцця', localtimestamp, localtimestamp),
-       (N'Цёплы і ўтульны мядовы набор', N'/static/images/products/warm-cozy-honey-gift-set.jpg', 3, 1,
-        N'2 гады пасля ўскрыцця', localtimestamp, localtimestamp);
+        localtimestamp + (16 * interval '1 minute'), localtimestamp + (16 * interval '1 minute')),
+       (N'Рапсавы мёд у сотах', N'/static/images/products/wildflower-honey-w-comb-1.jpg', 2, 6, N'2 гады пасля ўскрыцця',
+        localtimestamp + (17 * interval '1 minute'), localtimestamp + (17 * interval '1 minute')), -- ID: 17
+       (N'Шэсць пакетаў мёду', N'/static/images/products/honey-sampler-six-pack-1.jpg', 3, 1, N'2 гады пасля ўскрыцця',
+        localtimestamp + (18 * interval '1 minute'), localtimestamp + (18 * interval '1 minute')),
+       (N'Трыо аматараў гарачага мёду', N'/static/images/products/hot-honey-gift-set.jpg', 3, 1, N'2 гады пасля ўскрыцця',
+        localtimestamp + (19 * interval '1 minute'), localtimestamp + (19 * interval '1 minute')),
+       (N'Цёплы і ўтульны мядовы набор', N'/static/images/products/warm-cozy-honey-gift-set.jpg', 3, 1, N'2 гады пасля ўскрыцця',
+        localtimestamp + (20 * interval '1 minute'), localtimestamp + (20 * interval '1 minute'));
 
 /* ----------------- */
 
-CREATE TABLE "Options"
+CREATE TABLE Options
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "ProductID" BIGINT      NOT NULL,
-    "Name"      VARCHAR(64) NOT NULL,
-    "Volume"    FLOAT       NOT NULL,
-    "Price"     FLOAT       NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("ProductID") REFERENCES "Products" ("ID")
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Product_ID BIGINT      NOT NULL,
+    Name      VARCHAR(64) NOT NULL,
+    Volume    FLOAT       NOT NULL,
+    Price     FLOAT       NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Product_ID) REFERENCES Products (ID)
 );
 
-INSERT INTO "Options" ("ProductID", "Name", "Volume", "Price", "CreatedAt", "UpdatedAt")
+INSERT INTO Options (Product_ID, Name, Volume, Price, Created_At, Updated_At)
 VALUES (1, N'100 мл', 100, 12.00, localtimestamp, localtimestamp),
        (1, N'350 мл', 350, 15.00, localtimestamp, localtimestamp),
        (1, N'500 мл', 500, 20.00, localtimestamp, localtimestamp),
@@ -165,18 +165,18 @@ VALUES (1, N'100 мл', 100, 12.00, localtimestamp, localtimestamp),
 
 /* ----------------- */
 
-CREATE TABLE "Media"
+CREATE TABLE Media
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "ProductID" BIGINT NOT NULL,
-    "Path"      TEXT   NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("ProductID") REFERENCES "Products" ("ID")
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Product_ID BIGINT NOT NULL,
+    Path      TEXT   NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Product_ID) REFERENCES Products (ID)
 );
 
-INSERT INTO "Media" ("ProductID", "Path", "CreatedAt", "UpdatedAt")
+INSERT INTO Media (Product_ID, Path, Created_At, Updated_At)
 VALUES (17, N'/static/images/media/comb-media-1.jpg', localtimestamp, localtimestamp),
        (17, N'/static/images/media/comb-media-2.jpg', localtimestamp, localtimestamp),
        (17, N'/static/images/media/comb-media-3.jpg', localtimestamp, localtimestamp),
@@ -184,35 +184,35 @@ VALUES (17, N'/static/images/media/comb-media-1.jpg', localtimestamp, localtimes
 
 /* ----------------- */
 
-CREATE TABLE "ShipmentMethods"
+CREATE TABLE Shipment_Methods
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "Name"      VARCHAR(64) NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE  -- GORM default
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Name      VARCHAR(64) NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE  -- GORM default
 );
 
-INSERT INTO "ShipmentMethods" ("Name", "CreatedAt", "UpdatedAt")
+INSERT INTO Shipment_Methods (Name, Created_At, Updated_At)
 VALUES (N'Поштай па Беларусі', localtimestamp, localtimestamp),
        (N'Кур’ерам па Мінску', localtimestamp, localtimestamp),
        (N'Хуткая дастаўка (1-2 дні)', localtimestamp, localtimestamp);
 
 /* ----------------- */
 
-CREATE TABLE "Products_ShipmentMethods"
+CREATE TABLE Products_Shipment_Methods
 (
-    "ID"               BIGSERIAL PRIMARY KEY,    -- GORM default
-    "ProductID"        BIGINT NOT NULL,
-    "ShipmentMethodID" BIGINT NOT NULL,
-    "CreatedAt"        TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt"        TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt"        TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("ProductID") REFERENCES "Products" ("ID"),
-    FOREIGN KEY ("ShipmentMethodID") REFERENCES "ShipmentMethods" ("ID")
+    ID               BIGSERIAL PRIMARY KEY,    -- GORM default
+    Product_ID        BIGINT NOT NULL,
+    Shipment_Method_ID BIGINT NOT NULL,
+    Created_At        TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At        TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At        TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Product_ID) REFERENCES Products (ID),
+    FOREIGN KEY (Shipment_Method_ID) REFERENCES Shipment_Methods (ID)
 );
 
-INSERT INTO "Products_ShipmentMethods" ("ProductID", "ShipmentMethodID", "CreatedAt", "UpdatedAt")
+INSERT INTO Products_Shipment_Methods (Product_ID, Shipment_Method_ID, Created_At, Updated_At)
 VALUES (1, 1, localtimestamp, localtimestamp),
        (1, 2, localtimestamp, localtimestamp),
        (1, 3, localtimestamp, localtimestamp),
@@ -264,20 +264,20 @@ VALUES (1, 1, localtimestamp, localtimestamp),
 
 /* ----------------- */
 
-CREATE TABLE "Shops"
+CREATE TABLE Shops
 (
-    "ID"             BIGSERIAL PRIMARY KEY,    -- GORM default
-    "Name"           VARCHAR(64)  NOT NULL,
-    "Address"        VARCHAR(256) NOT NULL,
-    "OpeningHours"   VARCHAR(32)  NOT NULL,
-    "Phone"          VARCHAR(20)  NOT NULL,
-    "StorageAddress" VARCHAR(256) NOT NULL,
-    "CreatedAt"      TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt"      TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt"      TIMESTAMP WITH TIME ZONE  -- GORM default
+    ID             BIGSERIAL PRIMARY KEY,    -- GORM default
+    Name           VARCHAR(64)  NOT NULL,
+    Address        VARCHAR(256) NOT NULL,
+    Opening_Hours   VARCHAR(32)  NOT NULL,
+    Phone          VARCHAR(20)  NOT NULL,
+    Storage_Address VARCHAR(256) NOT NULL,
+    Created_At      TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At      TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At      TIMESTAMP WITH TIME ZONE  -- GORM default
 );
 
-INSERT INTO "Shops" ("Name", "Address", "OpeningHours", "Phone", "StorageAddress", "CreatedAt", "UpdatedAt")
+INSERT INTO Shops (Name, Address, Opening_Hours, Phone, Storage_Address, Created_At, Updated_At)
 VALUES (N'Крама на Савецкай 23',
         N'г. Мінск, вул. Савецкая, 23',
         N'10:00 - 21:00', N'+375 (29) 118-06-35',
@@ -285,21 +285,21 @@ VALUES (N'Крама на Савецкай 23',
 
 /* ----------------- */
 
-CREATE TABLE "Shops_Options"
+CREATE TABLE Shops_Options
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "ShopID"    BIGINT NOT NULL,
-    "OptionID"  BIGINT NOT NULL,
-    "InStock"   INT    NOT NULL,
-    "InStorage" INT    NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("ShopID") REFERENCES "Shops" ("ID"),
-    FOREIGN KEY ("OptionID") REFERENCES "Options" ("ID")
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Shop_ID    BIGINT NOT NULL,
+    Option_ID  BIGINT NOT NULL,
+    In_Stock   INT    NOT NULL,
+    In_Storage INT    NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Shop_ID) REFERENCES Shops (ID),
+    FOREIGN KEY (Option_ID) REFERENCES Options (ID)
 );
 
-INSERT INTO "Shops_Options" ("ShopID", "OptionID", "InStock", "InStorage", "CreatedAt", "UpdatedAt")
+INSERT INTO Shops_Options (Shop_ID, Option_ID, In_Stock, In_Storage, Created_At, Updated_At)
 VALUES (1, 1, 30, 12, localtimestamp, localtimestamp),
        (1, 2, 24, 0, localtimestamp, localtimestamp),
        (1, 3, 32, 4, localtimestamp, localtimestamp),
@@ -345,62 +345,62 @@ VALUES (1, 1, 30, 12, localtimestamp, localtimestamp),
 
 /* ----------------- */
 
-CREATE TABLE "PromoCodes"
+CREATE TABLE Promo_Codes
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "Name"      VARCHAR(16) UNIQUE NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE  -- GORM default
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Name      VARCHAR(16) UNIQUE NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE  -- GORM default
 );
 
-INSERT INTO "PromoCodes" ("Name", "CreatedAt", "UpdatedAt")
+INSERT INTO Promo_Codes (Name, Created_At, Updated_At)
 VALUES (N'CRAZYBEE', localtimestamp, localtimestamp);
 
 /* ----------------- */
 
-CREATE TABLE "Orders"
+CREATE TABLE Orders
 (
-    "ID"               BIGSERIAL PRIMARY KEY,    -- GORM default
-    "CustomerName"     VARCHAR(64)  NOT NULL,
-    "Email"            email        NOT NULL,
-    "Phone"            VARCHAR(20)  NOT NULL,
-    "PaymentNumber"    UUID UNIQUE DEFAULT gen_random_uuid(),
-    "PaymentDate"      TIMESTAMP WITH TIME ZONE,
-    "Address"          VARCHAR(256) NOT NULL,
-    "Comment"          VARCHAR(500) NOT NULL,
-    "PromoCode"        VARCHAR(16) DEFAULT NULL,
-    "ShipmentMethodID" BIGINT       NOT NULL,
-    "DeliveryDate"     TIMESTAMP WITH TIME ZONE,
-    "CreatedAt"        TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt"        TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt"        TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("ShipmentMethodID") REFERENCES "ShipmentMethods" ("ID")
+    ID               BIGSERIAL PRIMARY KEY,    -- GORM default
+    Customer_Name     VARCHAR(64)  NOT NULL,
+    Email            email        NOT NULL,
+    Phone            VARCHAR(20)  NOT NULL,
+    Payment_Number    UUID UNIQUE DEFAULT gen_random_uuid(),
+    Payment_Date      TIMESTAMP WITH TIME ZONE,
+    Address          VARCHAR(256) NOT NULL,
+    Comment          VARCHAR(500) NOT NULL,
+    Promo_Code        VARCHAR(16) DEFAULT NULL,
+    Shipment_Method_ID BIGINT       NOT NULL,
+    Delivery_Date     TIMESTAMP WITH TIME ZONE,
+    Created_At        TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At        TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At        TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Shipment_Method_ID) REFERENCES Shipment_Methods (ID)
 );
 
-INSERT INTO "Orders" ("CustomerName", "Email", "Phone", "PaymentNumber",
-                      "PaymentDate", "Address", "Comment",
-                      "ShipmentMethodID", "DeliveryDate", "CreatedAt", "UpdatedAt")
+INSERT INTO Orders (Customer_Name, Email, Phone, Payment_Number,
+                      Payment_Date, Address, Comment,
+                      Shipment_Method_ID, Delivery_Date, Created_At, Updated_At)
 VALUES (N'Gziegoz Bzezdzeszczukevicz', N'gzbze@gmail.com', N'+375(11)72-72-372', gen_random_uuid(),
         localtimestamp, N'g. Maladzieczna, vul. Vilienskaja, d. 19g', N'Liepszy mied va usim sviecie!',
         1, localtimestamp, localtimestamp, localtimestamp);
 
 /* ----------------- */
 
-CREATE TABLE "Order_Options"
+CREATE TABLE Orders_Options
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "OrderID"   BIGINT NOT NULL,
-    "OptionID"  BIGINT NOT NULL,
-    "Quantity"  INT    NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("OrderID") REFERENCES "Orders" ("ID"),
-    FOREIGN KEY ("OptionID") REFERENCES "Options" ("ID")
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Order_ID   BIGINT NOT NULL,
+    Option_ID  BIGINT NOT NULL,
+    Quantity  INT    NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Order_ID) REFERENCES Orders (ID),
+    FOREIGN KEY (Option_ID) REFERENCES Options (ID)
 );
 
-INSERT INTO "Order_Options" ("OrderID", "OptionID", "Quantity", "CreatedAt", "UpdatedAt")
+INSERT INTO Orders_Options (Order_ID, Option_ID, Quantity, Created_At, Updated_At)
 VALUES (1, 38, 5, localtimestamp, localtimestamp),
        (1, 39, 3, localtimestamp, localtimestamp),
        (1, 2, 13, localtimestamp, localtimestamp),
@@ -408,23 +408,23 @@ VALUES (1, 38, 5, localtimestamp, localtimestamp),
 
 /* ----------------- */
 
-CREATE TABLE "Reviews"
+CREATE TABLE Reviews
 (
-    "ID"         BIGSERIAL PRIMARY KEY,    -- GORM default
-    "ProductID"  BIGINT       NOT NULL,
-    "OrderID"    BIGINT       NOT NULL,
-    "AuthorName" VARCHAR(64)  NOT NULL,
-    "BuyDate"    DATE         NOT NULL,
-    "Rating"     SMALLINT     NOT NULL,
-    "Comment"    VARCHAR(500) NOT NULL,
-    "CreatedAt"  TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt"  TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt"  TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("ProductID") REFERENCES "Products" ("ID"),
-    FOREIGN KEY ("OrderID") REFERENCES "Orders" ("ID")
+    ID         BIGSERIAL PRIMARY KEY,    -- GORM default
+    Product_ID  BIGINT       NOT NULL,
+    Order_ID    BIGINT       NOT NULL,
+    Author_Name VARCHAR(64)  NOT NULL,
+    Buy_Date    DATE         NOT NULL,
+    Rating     SMALLINT     NOT NULL,
+    Comment    VARCHAR(500) NOT NULL,
+    Created_At  TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At  TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At  TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Product_ID) REFERENCES Products (ID),
+    FOREIGN KEY (Order_ID) REFERENCES Orders (ID)
 );
 
-INSERT INTO "Reviews" ("ProductID", "OrderID", "AuthorName", "BuyDate", "Rating", "Comment")
+INSERT INTO Reviews (Product_ID, Order_ID, Author_Name, Buy_Date, Rating, Comment)
 VALUES (1, 1, N'Валянцін', to_date('24.05.2023', 'DD.MM.YYYY'), 5,
         N'Раней я аддаваў перавагу Tupelo Honey, а не Sourwood, пакуль не атрымаў бутэльку вашага Sourwood Honey на Каляды. Мёд з кіслага дрэва заўсёды добры, але ваш быў абсалютна лепшым мёдам, які я калі-небудзь спрабаваў. Калі я не ем лыжкай, я больш за ўсё люблю на чарнічных аладках.'),
        (2, 1, N'Валянцін', to_date('24.05.2023', 'DD.MM.YYYY'), 5,
@@ -434,18 +434,18 @@ VALUES (1, 1, N'Валянцін', to_date('24.05.2023', 'DD.MM.YYYY'), 5,
 
 /* ----------------- */
 
-CREATE TABLE "Suggestions"
+CREATE TABLE Suggestions
 (
-    "ID"        BIGSERIAL PRIMARY KEY,    -- GORM default
-    "ProductID" BIGINT NOT NULL,
-    "Notes"     TEXT   NOT NULL,
-    "CreatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "UpdatedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    "DeletedAt" TIMESTAMP WITH TIME ZONE, -- GORM default
-    FOREIGN KEY ("ProductID") REFERENCES "Products" ("ID")
+    ID        BIGSERIAL PRIMARY KEY,    -- GORM default
+    Product_ID BIGINT NOT NULL,
+    Notes     TEXT   NOT NULL,
+    Created_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Updated_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    Deleted_At TIMESTAMP WITH TIME ZONE, -- GORM default
+    FOREIGN KEY (Product_ID) REFERENCES Products (ID)
 );
 
-INSERT INTO "Suggestions" ("ProductID", "Notes", "CreatedAt", "UpdatedAt")
+INSERT INTO Suggestions (Product_ID, Notes, Created_At, Updated_At)
 VALUES (1, N'Найлепшая прапанова', localtimestamp, localtimestamp),
        (2, N'Найлепшая прапанова', localtimestamp, localtimestamp),
        (3, N'Найлепшая прапанова', localtimestamp, localtimestamp);

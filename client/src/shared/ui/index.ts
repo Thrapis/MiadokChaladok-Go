@@ -8,3 +8,4 @@ export { InputSelect } from './input-select/InputSelect';
 export { StarRating } from './star-rating/StarRating';
 export { RadioGroup } from './radio-group/RadioGroup';
 export { CheckboxGroup } from './checkbox-group/CheckboxGroup';
+export { Pagination } from './pagination/Pagination';

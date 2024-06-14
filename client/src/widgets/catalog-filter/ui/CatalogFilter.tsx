@@ -1,7 +1,6 @@
 import cn from 'classnames'
-import { useState } from 'react';
-import { useForm, SubmitHandler } from "react-hook-form";
-import axios from 'axios';
+import { RefObject, useEffect, useRef, useState } from 'react';
+import { useForm, SubmitHandler, Control, UseFormHandleSubmit } from "react-hook-form";
 
 import css from './CatalogFilter.module.css';
 
@@ -11,29 +10,24 @@ import { FilterPanel } from './FilterPanel';
 import { SortPanel } from './SortPanel';
 import { FilterInputs } from '../model';
 
-export const CatalogFilter = () => {
+type Props = {
+    control: Control<FilterInputs>
+    handleSubmit: UseFormHandleSubmit<FilterInputs, FilterInputs>
+    onFilterChange: (data: FilterInputs, page: number) => {}
+}
+
+export const CatalogFilter = ({
+    control,
+    handleSubmit,
+    onFilterChange,
+} : Props) => {
     const [isFilterPanelVisible, setFilterPanelVisible] = useState(false);
     const [isSortPanelVisible, setSortPanelVisible] = useState(false);
 
-    const {
-        control,
-        handleSubmit,
-        // watch,
-        // formState: { errors },
-    } = useForm<FilterInputs>()
-
-    // watch((value, { name, type }) => {
-    //     // console.log(value, name, type)
-    //     if (name == "categoryIds" && type == 'change') {
-    //         // setCategoryIds(value.categoryIds)
-    //     }
-    // })
-
     const onFilterFormSubmit: SubmitHandler<FilterInputs> = (data) => {
-        console.log(data)
-        let body = JSON.stringify(data)
-        const url = `${process.env.REACT_APP_API_SOURCE}/catalog/filter`
-        axios.post(url, body)
+        setFilterPanelVisible(false)
+        setSortPanelVisible(false)
+        onFilterChange(data, 1)
     }
 
     return (

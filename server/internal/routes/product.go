@@ -2,8 +2,9 @@ package routes
 
 import (
 	"fmt"
+	"math"
 	"miadok-chaladok/internal/config"
-	"miadok-chaladok/internal/database"
+	dbp "miadok-chaladok/internal/database/product"
 	"miadok-chaladok/pkg/api"
 	"net/http"
 	"strconv"
@@ -16,12 +17,13 @@ func GetProductById(c *gin.Context) {
 	productId, _ := strconv.ParseUint(productIdString, 0, 64)
 
 	db := config.GetDb()
-	product, err := database.GetProductDtoById(db, uint(productId))
+	product, err := dbp.GetProductDtoById(db, uint(productId))
 
 	if err != nil {
-		api.RespondJSON(c, http.StatusNotFound, product)
+		api.RespondJSON(c, http.StatusNotFound, product, nil)
+		return
 	}
-	api.RespondJSON(c, http.StatusOK, product)
+	api.RespondJSON(c, http.StatusOK, product, nil)
 }
 
 func GetProductSuggestions(c *gin.Context) {
@@ -29,25 +31,63 @@ func GetProductSuggestions(c *gin.Context) {
 	limit, _ := strconv.ParseInt(maxCountString, 0, 64)
 
 	db := config.GetDb()
-	products, err := database.GetSuggestedProductDtos(db, int(limit))
+	products, err := dbp.GetSuggestedProductDtos(db, int(limit))
 
 	if err != nil {
-		api.RespondJSON(c, http.StatusNotFound, products)
+		api.RespondJSON(c, http.StatusNotFound, products, nil)
+		return
 	}
-	api.RespondJSON(c, http.StatusOK, products)
+	api.RespondJSON(c, http.StatusOK, products, nil)
+}
+
+func GetProducts(c *gin.Context) {
+	pageString := c.Query("page")
+	page, _ := strconv.ParseUint(pageString, 10, 64)
+	pageSizeString := c.Query("pageSize")
+	pageSize, _ := strconv.ParseUint(pageSizeString, 10, 64)
+
+	var dafaultFilters = dbp.FilterParameters{
+		IgnoreFilters: true,
+		SortType:      dbp.SortByPopular,
+	}
+
+	db := config.GetDb()
+	products, meta, err := dbp.GetProductDtosByFilter(db, dafaultFilters, int(page), int(pageSize))
+
+	if err != nil {
+		api.RespondJSON(c, http.StatusNotFound, products, meta)
+		return
+	}
+	api.RespondJSON(c, http.StatusOK, products, meta)
 }
 
 func GetProductsByFilter(c *gin.Context) {
-	maxCountString := c.Params.ByName("limit")
-	limit, _ := strconv.ParseInt(maxCountString, 0, 64)
+	pageString := c.Query("page")
+	page, _ := strconv.ParseUint(pageString, 10, 64)
+	pageSizeString := c.Query("pageSize")
+	pageSize, _ := strconv.ParseUint(pageSizeString, 10, 64)
+
+	var requestBody = dbp.FilterParameters{
+		PriceFrom:  -1,
+		PriceTo:    math.MaxFloat32,
+		VolumeFrom: -1,
+		VolumeTo:   math.MaxFloat32,
+		SortType:   dbp.SortByPopular,
+	}
+
+	err := c.BindJSON(&requestBody)
+	if err != nil {
+		panic(err)
+	}
 
 	db := config.GetDb()
-	products, err := database.GetProductDtosByFilter(db, int(limit))
+	products, meta, err := dbp.GetProductDtosByFilter(db, requestBody, int(page), int(pageSize))
 
 	if err != nil {
-		api.RespondJSON(c, http.StatusNotFound, products)
+		api.RespondJSON(c, http.StatusNotFound, products, meta)
+		return
 	}
-	api.RespondJSON(c, http.StatusOK, products)
+	api.RespondJSON(c, http.StatusOK, products, meta)
 }
 
 func ProductToCart(c *gin.Context) {
@@ -65,5 +105,5 @@ func ProductToCart(c *gin.Context) {
 	fmt.Print("Option: ")
 	fmt.Println(request)
 
-	api.RespondJSON(c, http.StatusOK, nil)
+	api.RespondJSON(c, http.StatusOK, nil, nil)
 }

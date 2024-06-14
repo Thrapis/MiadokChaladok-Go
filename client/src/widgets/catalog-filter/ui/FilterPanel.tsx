@@ -68,6 +68,7 @@ export const FilterPanel = ({
                                 <Controller
                                     control={control}
                                     name="categoryIds"
+                                    defaultValue={categories?.map((category: Category) => category.id)}
                                     render={
                                         ({ field: { onChange, name, value } }) => {
                                             const options = categories?.map(
@@ -102,6 +103,7 @@ export const FilterPanel = ({
                                 <Controller
                                     control={control}
                                     name="tasteIds"
+                                    defaultValue={tastes?.map((taste: Taste) => taste.id)}
                                     render={
                                         ({ field: { onChange, name, value } }) => {
                                             const options = tastes?.map(

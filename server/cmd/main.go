@@ -19,6 +19,21 @@ func main() {
 	cfg := config.GetConfig()
 	fmt.Println(cfg)
 
+	// var requestBody = dbp.FilterParameters{
+	// 	CategoryIds: []uint{1, 2, 3, 4},
+	// 	TasteIds:    []uint{1, 2, 3, 4, 5, 6},
+	// 	PriceFrom:   -1,
+	// 	PriceTo:     math.MaxFloat32,
+	// 	VolumeFrom:  -1,
+	// 	VolumeTo:    math.MaxFloat32,
+	// 	SortType:    dbp.SortByReview,
+	// }
+	// res, meta, _ := dbp.GetProductDtosByFilter(config.GetDb(), requestBody, 1, 6)
+	// fmt.Printf("\n\n--- %+v ---\n\n", meta)
+	// for _, v := range res {
+	// 	fmt.Println(v.ProductId, v.ProductName)
+	// }
+
 	// Executing of application workflow
 	startServer(cfg)
 }
@@ -52,7 +67,9 @@ func startServer(cfg *config.Config) {
 	//R
 	app.GET("/product/:id", routes.GetProductById)
 	app.GET("/product/suggestions/:limit", routes.GetProductSuggestions)
-	app.GET("/product/search/:limit", routes.GetProductsByFilter)
+
+	app.GET("/search/products", routes.GetProducts)
+	app.POST("/search/products", routes.GetProductsByFilter)
 
 	app.GET("/filter/lists", routes.GetFilterData)
 	//U

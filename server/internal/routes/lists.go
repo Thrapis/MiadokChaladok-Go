@@ -14,9 +14,10 @@ func GetAllCategories(c *gin.Context) {
 	categories, err := database.GetAllCategories(db)
 
 	if err != nil {
-		api.RespondJSON(c, http.StatusNotFound, categories)
+		api.RespondJSON(c, http.StatusNotFound, categories, nil)
+		return
 	}
-	api.RespondJSON(c, http.StatusOK, categories)
+	api.RespondJSON(c, http.StatusOK, categories, nil)
 }
 
 func GetAllTastes(c *gin.Context) {
@@ -24,9 +25,10 @@ func GetAllTastes(c *gin.Context) {
 	tastes, err := database.GetAllTastes(db)
 
 	if err != nil {
-		api.RespondJSON(c, http.StatusNotFound, tastes)
+		api.RespondJSON(c, http.StatusNotFound, tastes, nil)
+		return
 	}
-	api.RespondJSON(c, http.StatusOK, tastes)
+	api.RespondJSON(c, http.StatusOK, tastes, nil)
 }
 
 func GetFilterData(c *gin.Context) {
@@ -35,11 +37,11 @@ func GetFilterData(c *gin.Context) {
 	tastes, _ := database.GetAllTastes(db)
 	methods, _ := database.GetAllShipmentMethods(db)
 
-	payload := gin.H{
+	data := gin.H{
 		"categories":      categories,
 		"tastes":          tastes,
 		"shipmentMethods": methods,
 	}
 
-	api.RespondJSON(c, http.StatusOK, payload)
+	api.RespondJSON(c, http.StatusOK, data, nil)
 }

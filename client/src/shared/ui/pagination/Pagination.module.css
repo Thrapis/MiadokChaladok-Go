@@ -1,0 +1,66 @@
+
+.list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+
+    width: 100%;
+
+    font-size: 18px;
+}
+
+.element {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5em;
+
+    user-select:none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.element .button {
+    cursor: pointer;
+
+    background-color: var(--accent-and-buttons);
+    border: 1px solid var(--text-and-frames);
+    color: var(--text-and-frames);
+    text-decoration: none;
+
+    border-radius: 4px;
+    padding: 6px 16px;
+
+    line-height: 1;
+}
+
+.element.hidden {
+    display: none;
+}
+
+/* .hidden + .element::before {
+    display: block;
+    content: '...';
+} */
+
+.element:has(+.hidden)::after {
+    cursor: default;
+    pointer-events: none;
+    content: '...';
+
+    display: block;
+}
+
+.current {
+    cursor: default;
+    pointer-events: none;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.element.disabled .button {
+    cursor: default;
+    pointer-events: none;
+}

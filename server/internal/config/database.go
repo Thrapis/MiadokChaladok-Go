@@ -10,8 +10,9 @@ import (
 )
 
 var gormConfig = &gorm.Config{
+	// Logger:         logger.Default.LogMode(logger.Info),
 	NamingStrategy: schema.NamingStrategy{
-		NoLowerCase: true, // skip the snake_casing of names
+		// NoLowerCase: true, // skip the snake_casing of names
 		// NameReplacer:  strings.NewReplacer("CID", "Cid"), // use name replacer to change struct/field name before convert it to db name
 	},
 }
