@@ -1,8 +1,10 @@
 import cn from 'classnames'
 
-import css from './Pagination.module.css';
+import css from './Pagination.module.css'
 
-import { PaginationMeta } from "shared/model"
+import { typesApi } from "shared/types"
+
+type PaginationMeta = typesApi.PaginationMeta
 
 type Props = {
     paginationMeta: PaginationMeta
@@ -46,7 +48,7 @@ export const Pagination = ({
                         className={cn(
                             css.element,
                             isHidden(value) && css.hidden,
-                            value == paginationMeta.Page && css.current
+                            value === paginationMeta.Page && css.current
                         )}
                         key={crypto.randomUUID()}
                     >

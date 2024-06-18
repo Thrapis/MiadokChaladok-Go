@@ -1,1 +1,1 @@
-export { SuggestionsBlock } from './ui/Suggestions';
+export * as suggestionsUi from './ui'

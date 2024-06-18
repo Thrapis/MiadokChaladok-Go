@@ -1,5 +1,3 @@
-import { SignInForm } from 'features/authentication/sign-in';
-
 import css from './ElementsTest.module.css';
 
 import { 
@@ -17,26 +15,24 @@ export const ElementsTest = () => {
 
     return(
         <>
-            <SignInForm />
-
             <form style={{display: "none"}} className={css.container} method='POST' action='/send'>
                     <div className={css.block}>
-                        <Button onClick={() => alert("fuck")} size='large' width='height'>
+                        <Button onClick={() => alert("Халера!")} size='large' width='height'>
                             <Icon type='check'/>
                         </Button>
-                        <Button onClick={() => alert("fuck")} size='small' width='height' theme='outlined'>
+                        <Button onClick={() => alert("Халера!")} size='small' width='height' theme='outlined'>
                             <Icon type='magniglass'/>
                         </Button>
-                        <Button onClick={() => alert("fuck")} theme='text' width='height'>
+                        <Button onClick={() => alert("Халера!")} theme='text' width='height'>
                             <Icon type='x'/>
                         </Button>
-                        <Button onClick={() => alert("fuck")} size='small' width='fluid' theme='contained' shape='round'>
+                        <Button onClick={() => alert("Халера!")} size='small' width='fluid' theme='contained' shape='round'>
                             <Icon type='twitter'/><span>Ціўтар нах</span>
                         </Button>
-                        <Button onClick={() => alert("fuck")} size='medium' width='fluid' theme='outlined' shape='round'>
+                        <Button onClick={() => alert("Халера!")} size='medium' width='fluid' theme='outlined' shape='round'>
                             <Icon type='twitter'/><span>Ціўтар нах</span>
                         </Button>
-                        <Button onClick={() => alert("fuck")} size='large' width='fluid' theme='contained' shape='round'>
+                        <Button onClick={() => alert("Халера!")} size='large' width='fluid' theme='contained' shape='round'>
                             <Icon type='twitter'/><span>Ціўтар нах</span>
                         </Button>
                     </div>

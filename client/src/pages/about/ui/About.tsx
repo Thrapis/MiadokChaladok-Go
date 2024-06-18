@@ -1,12 +1,11 @@
-import cn from 'classnames'
-import css from './About.module.css';
+import css from './About.module.css'
 
-import { useNavigate } from "react-router-dom";
+import { ROUTE_CONSTANTS } from 'shared/config'
+import { Link } from 'shared/ui'
 
-import { ROUTE_CONSTANTS } from 'shared/config';
+import { breadcrumbsUi } from 'widgets/breadcrumbs'
 
-import { Button, Link } from 'shared/ui';
-import { Breadcrumbs } from 'widgets/breadcrumbs';
+const { Breadcrumbs } = breadcrumbsUi
 
 export const About = () => {
     return (
@@ -15,7 +14,7 @@ export const About = () => {
 
             <div className={css.masonry}>
                 <div className={css.imageBlock}>
-                    <img src="/images/about/about-1.jpeg" />
+                    <img src="/images/about/about-1.jpeg" alt='Тры пасечніка стаяць на фоне пасекі' />
                 </div>
                 <div className={css.textBlock}>
                     <div className={css.headText}>
@@ -50,10 +49,10 @@ export const About = () => {
                     </Link>
                 </div>
                 <div className={css.imageBlock}>
-                    <img src="/images/about/about-2.jpeg" />
+                    <img src="/images/about/about-2.jpeg" alt='Вітрыны крам' />
                 </div>
                 <div className={css.imageBlock}>
-                    <img src="/images/about/about-3.jpeg" />
+                    <img src="/images/about/about-3.jpeg" alt='Пасечнік працуе на песеке' />
                 </div>
                 <div className={css.textBlock}>
                     <div className={css.headText}>

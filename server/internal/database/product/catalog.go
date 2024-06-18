@@ -5,7 +5,7 @@ import (
 	"math"
 	"miadok-chaladok/internal/entity/data"
 	"miadok-chaladok/internal/entity/viewmodel"
-	"miadok-chaladok/pkg/api"
+	"miadok-chaladok/pkg/api/meta"
 
 	"gorm.io/gorm"
 )
@@ -34,7 +34,7 @@ type FilterParameters struct {
 	SortType          SortType `json:"sortType"`
 }
 
-func GetProductDtosByFilter(db *gorm.DB, filters FilterParameters, page, pageSize int) ([]*viewmodel.ProductDto, *api.PaginationMeta, error) {
+func GetProductDtosByFilter(db *gorm.DB, filters FilterParameters, page, pageSize int) ([]*viewmodel.ProductDto, *meta.PaginationMeta, error) {
 	if page == 0 {
 		page = 1
 	}
@@ -123,7 +123,7 @@ func GetProductDtosByFilter(db *gorm.DB, filters FilterParameters, page, pageSiz
 	}
 
 	totalPages := int(math.Ceil(float64(count) / float64(pageSize)))
-	meta := api.NewPagintionMeta(page, pageSize, totalPages)
+	meta := meta.NewPagintionMeta(page, pageSize, totalPages)
 	dtos := viewmodel.ToProductDtos(products)
 
 	return dtos, meta, nil

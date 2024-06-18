@@ -1,0 +1,6 @@
+export { Category } from './Category'
+export { Option } from './Option'
+export { Product } from './Product'
+export { ShipmentMethod } from './ShipmentMethod'
+export { Suggestion } from './Suggestion'
+export { Taste } from './Taste'

@@ -1,0 +1,23 @@
+.card {
+    background-color: var(--card-background);
+    border: solid 1px var(--text-and-frames);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.image {
+    object-fit: cover;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 408px;
+}
+
+.control {
+    border-top: solid 1px var(--text-and-frames);
+    min-height: 60px;
+    padding: 8px;
+    padding-top: 16px;
+}

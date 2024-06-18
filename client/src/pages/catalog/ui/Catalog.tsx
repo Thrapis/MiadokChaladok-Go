@@ -1,71 +1,62 @@
+import { useEffect, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import cn from 'classnames'
-import { createRef, forwardRef, RefObject, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 
-import css from './Catalog.module.css';
+import css from './Catalog.module.css'
 
-import { Breadcrumbs } from 'widgets/breadcrumbs';
-import { Icon, Pagination } from 'shared/ui';
-import { ResponseData, PaginationMeta } from 'shared/model';
-import { FormatString } from 'shared/utils';
+import { Icon, Pagination } from 'shared/ui'
+import { apiProduct } from 'shared/api'
+import { typesApi, typesForms } from 'shared/types'
 
-import { ProductDto, ProductCard } from 'entities/product/';
-import { CatalogFilter, FilterInputs } from 'widgets/catalog-filter';
-import { useForm } from 'react-hook-form';
+import { ProductDto } from 'entities'
+
+import { productCardUi } from 'widgets/product-card'
+
+import { breadcrumbsUi } from 'widgets/breadcrumbs'
+import { catalogFilterUi } from 'features/catalog-filter'
+
+const { Breadcrumbs } = breadcrumbsUi
+const { CatalogFilter } = catalogFilterUi
+const { ProductCard } = productCardUi
+
+const { GetCatalogProducts, GetCatalogProductsByFilter } = apiProduct
+type PaginationMeta = typesApi.PaginationMeta
+type FilterForm = typesForms.FilterForm
+
+const PAGE_SIZE = 12
 
 const INIT_PAGE = 1
-const INIT_PAGE_SIZE = 12
 const INIT_TOTAL_PAGES = INIT_PAGE
-const filterUrlTemplate = `${process.env.REACT_APP_API_SOURCE}/search/products?page={0}&pageSize={1}`
 
 export const Catalog = () => {
     const [loading, setLoading] = useState(true)
     const [products, setProducts] = useState<ProductDto[] | null>(null)
     const [paginationMeta, setPaginationMeta] = useState<PaginationMeta>({
-        Page: INIT_PAGE, PageSize: INIT_PAGE_SIZE, TotalPages: INIT_TOTAL_PAGES
+        Page: INIT_PAGE, PageSize: PAGE_SIZE, TotalPages: INIT_TOTAL_PAGES
     })
 
     const {
         control,
         handleSubmit,
         getValues,
-        // watch,
-        // formState: { errors },
-    } = useForm<FilterInputs>()
+    } = useForm<FilterForm>()
 
-    // watch((value, { name, type }) => {
-    //     // console.log(value, name, type)
-    //     if (name == "categoryIds" && type == 'change') {
-    //         // setCategoryIds(value.categoryIds)
-    //     }
-    // })
-
-    const anchorRef = useRef<HTMLDivElement>(null);
+    const anchorRef = useRef<HTMLDivElement>(null)
 
     async function fetchProducts() {
-        const url = FormatString(filterUrlTemplate, INIT_PAGE, INIT_PAGE_SIZE)
-        const response = await axios.get<ResponseData>(url)
+        const response = await GetCatalogProducts(INIT_PAGE, PAGE_SIZE)
         setProducts(response.data.Data as ProductDto[])
         setPaginationMeta(response.data.Meta as PaginationMeta)
         setLoading(false)
     }
 
-    async function onFilterChange(data: FilterInputs, page: number) {
-        // setLoading(true)
-
-        // console.log(data)
-
-        const body = JSON.stringify(data)
-        const url = FormatString(filterUrlTemplate, page, paginationMeta.PageSize)
-        const response = await axios.post<ResponseData>(url, body)
+    async function onFilterChange(filter: FilterForm, page: number) {
+        const response = await GetCatalogProductsByFilter(filter, page, PAGE_SIZE)
         setPaginationMeta(response.data.Meta as PaginationMeta)
         setProducts(response.data.Data as ProductDto[])
-
-        // setLoading(false)
     }
 
     async function onPaginationPageChange(value: number) {
-        // console.log(value)
         await onFilterChange(getValues(), value)
     }
 
@@ -98,9 +89,9 @@ export const Catalog = () => {
                     loading ? (
                         <Icon type='loading-animated' size='xxlarge' />
                     ) : (
-                        products?.map((suggest: ProductDto) => (
+                        products?.map((dto: ProductDto) => (
                             <ProductCard
-                                dto={suggest}
+                                dto={dto}
                                 key={crypto.randomUUID()}
                                 className={css.productCard}
                             />
@@ -109,7 +100,10 @@ export const Catalog = () => {
                 }
             </div>
 
-            <Pagination paginationMeta={paginationMeta} onChange={onPaginationPageChange} />
+            <Pagination 
+                paginationMeta={paginationMeta}
+                onChange={onPaginationPageChange}
+            />
         </div>
     )
 }

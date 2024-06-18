@@ -1,10 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom"
 
-import { Header } from "widgets/header";
-import { Footer } from "widgets/footer";
+import css from "./Layout.module.css"
 
-import css from "./Layout.module.css";
-import { Breadcrumbs } from "widgets/breadcrumbs";
+import { headerUi } from "widgets/header"
+import { footerUi } from "widgets/footer"
+
+const { Header } = headerUi
+const { Footer } = footerUi
 
 export const Layout = () => {
     return(

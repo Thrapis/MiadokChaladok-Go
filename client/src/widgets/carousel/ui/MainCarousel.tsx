@@ -8,7 +8,7 @@ import css from './MainCarousel.module.css';
 
 import { ROUTE_CONSTANTS } from 'shared/config';
 
-import { Button, Link } from 'shared/ui';
+import { Link } from 'shared/ui';
 
 export const MainCarousel = () => {
     var settings = {
@@ -31,7 +31,7 @@ export const MainCarousel = () => {
             dotsClass={css.pagination}
         >
             <div className={css.item}>
-                <img className={css.backgroundImage} src='/images/slideshow/img-1.jpg'/>
+                <img className={css.backgroundImage} src='/images/slideshow/img-1.jpg' alt='Выява з мёдам 1'/>
 
                 <Link
                     href={ROUTE_CONSTANTS.ABOUT.ROUTE}
@@ -44,10 +44,10 @@ export const MainCarousel = () => {
                 </Link>
             </div>
             <div className={css.item}>
-                <img className={css.backgroundImage} src='/images/slideshow/img-2.jpg'/>
+                <img className={css.backgroundImage} src='/images/slideshow/img-2.jpg' alt='Выява з мёдам 2'/>
             </div>
             <div className={css.item}>
-                <img className={css.backgroundImage} src='/images/slideshow/img-3.jpg'/>
+                <img className={css.backgroundImage} src='/images/slideshow/img-3.jpg' alt='Выява з мёдам 3'/>
             </div>
         </Slider>
     )

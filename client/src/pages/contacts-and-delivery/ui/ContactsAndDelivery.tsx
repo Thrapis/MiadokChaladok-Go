@@ -1,12 +1,14 @@
 import cn from 'classnames'
-import css from './ContactsAndDelivery.module.css';
+import css from './ContactsAndDelivery.module.css'
 
-import { ROUTE_CONSTANTS } from 'shared/config';
-import { Button, Link, Icon } from 'shared/ui';
-import {
-    ContactsAndMap
-} from "widgets";
-import { Breadcrumbs } from 'widgets/breadcrumbs';
+import { ROUTE_CONSTANTS } from 'shared/config'
+import { Link, Icon } from 'shared/ui'
+
+import { breadcrumbsUi } from 'widgets/breadcrumbs'
+import { contactsAndMapUi } from "widgets/contacts-and-map"
+
+const { Breadcrumbs } = breadcrumbsUi
+const { ContactsAndMap } = contactsAndMapUi
 
 export const ContactsAndDelivery = () => {
     return (

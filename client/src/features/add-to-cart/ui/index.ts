@@ -1,0 +1,1 @@
+export { CardAddToCart } from './CardAddToCart'

@@ -1,18 +1,19 @@
 import cn from 'classnames'
-import { useEffect, useState } from 'react';
 
-import css from './Home.module.css';
+import css from './Home.module.css'
 
-import { Icon, Link } from 'shared/ui';
-import { ROUTE_CONSTANTS } from 'shared/config';
-import { 
-    MainCarousel, 
-    SuggestionsBlock, 
-    ContactsAndMap 
-} from "widgets";
+import { Icon, Link } from 'shared/ui'
+import { ROUTE_CONSTANTS } from 'shared/config'
+
+import { carouselUi } from "widgets/carousel"
+import { suggestionsUi } from "widgets/suggestions"
+import { contactsAndMapUi } from "widgets/contacts-and-map"
+
+const { MainCarousel } = carouselUi
+const { SuggestionsBlock } = suggestionsUi
+const { ContactsAndMap } = contactsAndMapUi
 
 export const Home = () => {
-    const [error, setError] = useState<string | null>(null);
 
     return (
         <div className={cn(css.pageContent)}>
@@ -34,11 +35,11 @@ export const Home = () => {
                         <div className={"complex-block-text"}>
                             Мікалай і Аляксандр працавалі плячом да пляча, каб пашырыць пчальнік Анісімавых. Яны ўвесь час эксперыментавалі з рознымі метадамі ўтрымання пчол і паляпшэнні ўмоў для іх развіцця. Яны клапаціліся аб сваіх пчолах, ствараючы спецыяльныя рамкі, дзе яны маглі свабодна будаваць соты і збіраць мёд. Яны таксама вырошчвалі разнастайныя кветкі і расліны на навакольных участках, каб забяспечыць пчолам разнастайную і пажыўную пылковай і нектарную крыніцу.
                         </div>
-                        <Link 
-                            shape='round' 
-                            width='fluid' 
+                        <Link
+                            shape='round'
+                            width='fluid'
                             theme='contained'
-                            className={'complex-block-link'} 
+                            className={'complex-block-link'}
                             href={ROUTE_CONSTANTS.ABOUT.ROUTE}
                         >
                             Абраць падарунак
@@ -76,11 +77,11 @@ export const Home = () => {
                         <div className={"complex-block-text"}>
                             Мікалай і Аляксандр працавалі плячом да пляча, каб пашырыць пчальнік Анісімавых. Яны ўвесь час эксперыментавалі з рознымі метадамі ўтрымання пчол і паляпшэнні ўмоў для іх развіцця. Яны клапаціліся аб сваіх пчолах, ствараючы спецыяльныя рамкі, дзе яны маглі свабодна будаваць соты і збіраць мёд. Яны таксама вырошчвалі разнастайныя кветкі і расліны на навакольных участках, каб забяспечыць пчолам разнастайную і пажыўную пылковай і нектарную крыніцу.
                         </div>
-                        <Link 
-                            shape='round' 
-                            width='fluid' 
-                            theme='contained' 
-                            className={'complex-block-link'} 
+                        <Link
+                            shape='round'
+                            width='fluid'
+                            theme='contained'
+                            className={'complex-block-link'}
                             href={ROUTE_CONSTANTS.ABOUT.ROUTE}
                         >
                             Падрабязней
