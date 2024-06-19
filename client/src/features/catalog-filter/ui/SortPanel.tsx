@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import { Control, Controller } from 'react-hook-form'
 
 import css from './CatalogFilter.module.css'
@@ -12,12 +12,14 @@ import { SortList } from '../model'
 type FilterForm = typesForms.FilterForm
 
 type Props = {
+    resetToDefault: () => void
     setVisibility: Dispatch<SetStateAction<boolean>>
     className?: string
     control: Control<FilterForm>
 }
 
 export const SortPanel = ({
+    resetToDefault,
     setVisibility,
     control,
     className
@@ -31,16 +33,18 @@ export const SortPanel = ({
                     <Controller
                         control={control}
                         name="sortType"
-                        defaultValue={parseInt(SortList[0].value)}
-                        render={({ field: { onChange, value } }) => (
-                            <InputSelect 
-                                options={SortList} 
-                                selected={SortList.find(el => el.value === value?.toString()) || null}
-                                size='medium' 
-                                className={css.dropdown}
-                                onChange={(newValue) => onChange(parseInt(newValue))}
-                            />
-                        )}
+                        render={({ field: { onChange, value } }) => {
+                            const selected = SortList.find(el => el.value === `${value}`) || null
+                            return (
+                                <InputSelect
+                                    options={SortList}
+                                    selected={selected}
+                                    size='medium'
+                                    className={css.dropdown}
+                                    onChange={(newValue) => onChange(parseInt(newValue))}
+                                />
+                            )
+                        }}
                     />
                 </div>
                 <div className={css.controlPanelColumn}>
@@ -57,8 +61,8 @@ export const SortPanel = ({
             </div>
 
             <div className={css.panelButtons}>
-                <Button type='button' theme='outlined' size='large' shape='round'>
-                    Ачысціць
+                <Button type='button' theme='outlined' size='large' shape='round' onClick={resetToDefault}>
+                    Cкінуць
                 </Button>
                 <Button type='submit' size='large' shape='round'>
                     Прымяніць

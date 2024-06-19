@@ -1,4 +1,5 @@
 export type FilterForm = {
+    ignoreFilters: boolean
     categoryIds: number[]
     tasteIds: number[]
     priceFrom: number

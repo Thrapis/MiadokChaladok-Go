@@ -1,12 +1,5 @@
 
-class ShipmentMethod {
-	id: number;
-	name: string;
-
-    constructor(id: number, name: string) {
-        this.id = id;
-        this.name = name;
-    }
+export type ShipmentMethod = {
+	id: number
+	name: string
 }
-
-export { ShipmentMethod }

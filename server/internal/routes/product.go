@@ -40,27 +40,6 @@ func GetProductSuggestions(c *gin.Context) {
 	api.RespondJSON(c, http.StatusOK, products, nil)
 }
 
-func GetProducts(c *gin.Context) {
-	pageString := c.Query("page")
-	page, _ := strconv.ParseUint(pageString, 10, 64)
-	pageSizeString := c.Query("pageSize")
-	pageSize, _ := strconv.ParseUint(pageSizeString, 10, 64)
-
-	var dafaultFilters = dbp.FilterParameters{
-		IgnoreFilters: true,
-		SortType:      dbp.SortByPopular,
-	}
-
-	db := config.GetDb()
-	products, meta, err := dbp.GetProductDtosByFilter(db, dafaultFilters, int(page), int(pageSize))
-
-	if err != nil {
-		api.RespondJSON(c, http.StatusNotFound, products, meta)
-		return
-	}
-	api.RespondJSON(c, http.StatusOK, products, meta)
-}
-
 func GetProductsByFilter(c *gin.Context) {
 	pageString := c.Query("page")
 	page, _ := strconv.ParseUint(pageString, 10, 64)

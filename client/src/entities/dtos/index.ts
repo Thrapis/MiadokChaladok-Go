@@ -1,1 +1,2 @@
-export { ProductDto } from './ProductDto'
+export { type ProductDto } from './ProductDto'
+export { type CatalogFilterDto } from './FilterDto'

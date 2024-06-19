@@ -1,36 +1,81 @@
 import cn from 'classnames'
-import { useState } from 'react'
-import { SubmitHandler, Control, UseFormHandleSubmit } from "react-hook-form"
+import { useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from "react-hook-form"
 
 import css from './CatalogFilter.module.css'
 
 import { Button, Icon } from 'shared/ui'
 import { typesForms } from 'shared/types'
+import { apiStatic } from 'shared/api'
+import { CatalogFilterDto, Category } from 'entities'
 
 import { FilterPanel } from './FilterPanel'
 import { SortPanel } from './SortPanel'
+import { ArraysSoftEqual } from 'shared/lib'
+import { SortList } from '../model'
 
+const { GetFilterLists } = apiStatic
 type FilterForm = typesForms.FilterForm
 
 type Props = {
-    control: Control<FilterForm>
-    handleSubmit: UseFormHandleSubmit<FilterForm, FilterForm>
-    onFilterChange: (data: FilterForm, page: number) => {}
+    onFilterChange: (data: FilterForm) => {}
 }
 
 export const CatalogFilter = ({
-    control,
-    handleSubmit,
     onFilterChange,
-} : Props) => {
-    const [isFilterPanelVisible, setFilterPanelVisible] = useState(false);
-    const [isSortPanelVisible, setSortPanelVisible] = useState(false);
+}: Props) => {
+    const [isFilterPanelVisible, setFilterPanelVisible] = useState(false)
+    const [isSortPanelVisible, setSortPanelVisible] = useState(false)
+    const [catalogFilters, setCatalogFilters] = useState<CatalogFilterDto>()
 
-    const onFilterFormSubmit: SubmitHandler<FilterForm> = (data) => {
+    useEffect(() => {
+        const defaults = {
+            categoryIds: catalogFilters?.categories?.map(c => c.id),
+            tasteIds: catalogFilters?.tastes?.map(t => t.id),
+            sortType: parseInt(SortList[0].value)
+        }
+        reset(defaults)
+    }, [catalogFilters])
+
+    const {
+        control,
+        handleSubmit,
+        reset,
+        getValues,
+        setValue,
+    } = useForm<FilterForm>()
+
+    async function fetchFilterLists() {
+        const response = await GetFilterLists()
+        const filterLists = response.data.Data as CatalogFilterDto
+        setCatalogFilters(filterLists)
+    }
+
+    useEffect(() => {
+        fetchFilterLists()
+    }, [])
+
+    const onFilterFormSubmit: SubmitHandler<FilterForm> = (filter) => {
         setFilterPanelVisible(false)
         setSortPanelVisible(false)
-        onFilterChange(data, 1)
+        onFilterChange(filter)
     }
+
+    function isSelectedCategoryButton(categoryId: number) {
+        const categoryIds = getValues("categoryIds")
+        return ArraysSoftEqual(categoryIds, [categoryId])
+    }
+
+    function onCategoryButtonClick(categoryId: number) {
+        const categoryIds = getValues("categoryIds")
+        if (ArraysSoftEqual(categoryIds, [categoryId])) {
+            setValue("categoryIds", catalogFilters?.categories?.map(c => c.id) || [])
+        } else {
+            setValue("categoryIds", [categoryId])
+        }
+    }
+
+    const resetToDefault = () => reset()
 
     return (
         <form
@@ -45,6 +90,7 @@ export const CatalogFilter = ({
                     className={css.controlButton}
                     onClick={() => {
                         setFilterPanelVisible(prev => !prev)
+                        resetToDefault()
                         setSortPanelVisible(false)
                     }}
                 >
@@ -53,18 +99,21 @@ export const CatalogFilter = ({
                 </Button>
 
                 <div className={css.productTypeContainer}>
-                    <Button type='button' shape='round' size='large' theme='outlined' className={css.controlButton}>
-                        Класічны
-                    </Button>
-                    <Button type='button' shape='round' size='large' theme='outlined' className={css.controlButton}>
-                        У сотах
-                    </Button>
-                    <Button type='button' shape='round' size='large' theme='outlined' className={css.controlButton}>
-                        Іншыя прадукты
-                    </Button>
-                    <Button type='button' shape='round' size='large' theme='outlined' className={css.controlButton}>
-                        Падарункавыя наборы
-                    </Button>
+                    {
+                        catalogFilters?.categories?.map((category: Category) => (
+                            <Button
+                                type='submit'
+                                shape='round'
+                                size='large'
+                                theme={isSelectedCategoryButton(category.id) ? 'contained' : 'outlined'}
+                                className={css.controlButton}
+                                key={crypto.randomUUID()}
+                                onClick={() => onCategoryButtonClick(category.id)}
+                            >
+                                {category.name}
+                            </Button>
+                        ))
+                    }
                 </div>
 
                 <Button
@@ -74,6 +123,7 @@ export const CatalogFilter = ({
                     className={css.controlButton}
                     onClick={() => {
                         setSortPanelVisible(prev => !prev)
+                        resetToDefault()
                         setFilterPanelVisible(false)
                     }}
                 >
@@ -87,15 +137,18 @@ export const CatalogFilter = ({
                 (!isFilterPanelVisible && !isSortPanelVisible) && css.hidden
             )}>
                 <FilterPanel
+                    resetToDefault={resetToDefault}
                     setVisibility={setFilterPanelVisible}
-                    control={control}
                     className={isFilterPanelVisible ? '' : css.hidden}
+                    control={control}
+                    catalogFilters={catalogFilters}
                 />
 
                 <SortPanel
+                    resetToDefault={resetToDefault}
                     setVisibility={setSortPanelVisible}
-                    control={control}
                     className={isSortPanelVisible ? '' : css.hidden}
+                    control={control}
                 />
             </div>
         </form>

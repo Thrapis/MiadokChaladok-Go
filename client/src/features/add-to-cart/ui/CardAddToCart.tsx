@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 
 import cn from 'classnames'
@@ -40,15 +40,18 @@ export const CardAddToCart = ({
         getValues
     } = useForm<AddToCartForm>()
 
-    watch((value, { name, type }) => {
-        if (name === "optionId" && type === 'change') {
-            const price = value.optionId
-                ? `${dto.optionList.find(o => o.id === getValues().optionId)?.price.toFixed(2)}`
-                : dto.priceSpread
-
-            setOptionPrice(price)
-        }
-    })
+    useEffect(() => {
+        const subscription = watch((value, { name, type }) => {
+            if (name === "optionId" && type === 'change') {
+                const price = value.optionId
+                    ? `${dto.optionList.find(o => o.id === getValues("optionId"))?.price.toFixed(2)}`
+                    : dto.priceSpread
+    
+                setOptionPrice(price)
+            }
+        })
+        return subscription.unsubscribe()
+    }, [watch, dto.optionList, dto.priceSpread])
 
     const onSubmit: SubmitHandler<AddToCartForm> = async (form) => {
         const response = await AddProductToCart(form)

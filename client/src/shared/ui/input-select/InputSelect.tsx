@@ -33,16 +33,20 @@ export const InputSelect = ({
     mode = 'rows',
     status = 'default',
 }: SelectProps) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedValue, setSelectedValue] = useState(selected?.value);
-    const rootRef = useRef<HTMLDivElement>(null);
+    const [isOpen, setIsOpen] = useState(false)
+    const [selectedValue, setSelectedValue] = useState(selected?.value)
+    const rootRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        setSelectedValue(selected?.value)
+    }, [selected])
 
     useEffect(() => {
         const handleClick = (event: MouseEvent) => {
             const { target } = event;
             if (target instanceof Node && !rootRef.current?.contains(target)) {
-                isOpen && onClose?.();
-                setIsOpen(false);
+                isOpen && onClose?.()
+                setIsOpen(false)
             }
         };
 
@@ -51,17 +55,17 @@ export const InputSelect = ({
         return () => {
             window.removeEventListener("click", handleClick);
         };
-    }, [onClose]);
+    }, [isOpen])
 
     const handleOptionClick = (value: Option['value']) => {
-        setIsOpen(false);
+        setIsOpen(false)
         setSelectedValue(value)
-        onChange?.(value);
-    };
+        onChange?.(value)
+    }
 
     const handlePlaceHolderClick: MouseEventHandler<HTMLDivElement> = () => {
-        setIsOpen((prev) => !prev);
-    };
+        setIsOpen((prev) => !prev)
+    }
 
     return (
         <div
@@ -82,7 +86,7 @@ export const InputSelect = ({
                 tabIndex={0}
             >
                 <span className={css.selectedText}>
-                    {options.find(o => o.value == selectedValue)?.title || placeholder}
+                    {options.find(o => o.value === selectedValue)?.title || placeholder}
                 </span>
                 <div className={css.icon} style={{ backgroundImage: `url("/svg/chevron-down.svg")` }}></div>
             </div>
@@ -109,7 +113,7 @@ type OptionProps = {
     option: Option;
     size?: 'small' | 'medium' | 'large'
     onClick: (value: Option['value']) => void;
-};
+}
 
 const OptionElement = ({
     option: { value, title },
@@ -134,5 +138,5 @@ const OptionElement = ({
         >
             {title}
         </li>
-    );
-};
+    )
+}

@@ -68,7 +68,6 @@ func startServer(cfg *config.Config) {
 	app.GET("/product/:id", routes.GetProductById)
 	app.GET("/product/suggestions/:limit", routes.GetProductSuggestions)
 
-	app.GET("/search/products", routes.GetProducts)
 	app.POST("/search/products", routes.GetProductsByFilter)
 
 	app.GET("/filter/lists", routes.GetFilterData)

@@ -7,7 +7,7 @@ export type Props = {
     onChange?: (entered: string) => void
     type?: 'text' | 'password' | 'search' | 'tel' | 'email' | 'number'
     name?: string
-    defaultValue?: string
+    value?: string
     placeholder?: string
     maxLength?: number
     min?: number
@@ -21,7 +21,7 @@ export const InputField = ({
     onChange,
     type = 'text',
     name,
-    defaultValue = '',
+    value,
     placeholder,
     maxLength,
     min,
@@ -45,7 +45,7 @@ export const InputField = ({
                 onChange={(e) => onChange?.(e.target.value)}
                 type={type} 
                 name={name}
-                defaultValue={defaultValue}
+                value={value}
                 placeholder={placeholder} 
                 maxLength={maxLength}
                 min={min}

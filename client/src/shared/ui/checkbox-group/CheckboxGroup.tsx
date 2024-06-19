@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { ArraysSoftEqual } from 'shared/lib';
 
 import css from './CheckboxGroup.module.css';
 
@@ -29,8 +30,8 @@ const Option = ({
     groupName,
     onChange
 }: OptionProps) => {
-    const handleChange = () => onChange?.(value);
-    const isChecked = selected.includes(value);
+    const handleChange = () => onChange?.(value)
+    const isChecked = selected.includes(value)
 
     return (
         <label
@@ -55,8 +56,55 @@ const Option = ({
                 {title}
             </span>
         </label>
-    );
-};
+    )
+}
+
+type AllToggleOptionProps = {
+    size?: 'small' | 'medium' | 'large'
+    theme?: 'default' | 'button'
+    className?: string
+
+    options: OptionType[]
+    selected: OptionType["value"][]
+    title: string
+    onChange?: (values: string[]) => void
+}
+
+const AllToggleOption = ({
+    size = 'medium',
+    theme = 'default',
+    className,
+    options,
+    selected,
+    title,
+    onChange
+}: AllToggleOptionProps) => {
+    const handleChange = () => onChange?.(isChecked ? [] : options.map(o => o.value))
+    const isChecked = ArraysSoftEqual(options.map(o => o.value), selected)
+
+    return (
+        <label
+            className={cn(
+                css.wrapper,
+                css[`${theme}Theme`],
+                css[`${size}Size`])
+            }
+            tabIndex={0}
+        >
+            <input
+                className={cn(css.input)}
+                onChange={handleChange}
+                type='checkbox'
+                tabIndex={-1}
+                checked={isChecked}
+            />
+            <span className={css.checkmark}></span>
+            <span className={cn(css.label, className)}>
+                {title}
+            </span>
+        </label>
+    )
+}
 
 export type CheckboxGroupProps = {
     className?: string
@@ -65,9 +113,11 @@ export type CheckboxGroupProps = {
     theme?: 'default' | 'button'
 
     name: string
-    options: OptionType[];
-    selected: OptionType["value"][];
-    onChange?: (value: string[]) => void;
+    options: OptionType[]
+    selected: OptionType["value"][]
+    checkAllOption?: boolean
+    checkAllTitle?: string
+    onChange?: (value: string[]) => void
 }
 
 export const CheckboxGroup = ({
@@ -78,16 +128,29 @@ export const CheckboxGroup = ({
     name,
     options,
     selected,
+    checkAllOption,
+    checkAllTitle = 'Усе',
     onChange,
 }: CheckboxGroupProps) => {
     const handleChange = (value: string) => {
-        const newSelected = selected.includes(value) ? 
-            selected.filter(i => i !== value) : [ ...selected, value ]
+        const newSelected = selected.includes(value) ?
+            selected.filter(i => i !== value) : [...selected, value]
         onChange?.(newSelected)
     };
 
     return (
         <div className={cn(css.group, className)}>
+            {
+                checkAllOption && <AllToggleOption
+                    size={size}
+                    theme={theme}
+                    className={optionClassName}
+                    options={options}
+                    selected={selected}
+                    title={checkAllTitle}
+                    onChange={values => onChange?.(values)}
+                />
+            }
             {options.map(({ value, title }) => (
                 <Option
                     size={size}

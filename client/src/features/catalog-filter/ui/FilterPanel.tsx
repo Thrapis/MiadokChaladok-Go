@@ -5,48 +5,34 @@ import cn from 'classnames'
 import css from './CatalogFilter.module.css'
 
 import { Button, Icon, Checkable, InputField, CheckboxGroup } from 'shared/ui'
-import { Category, Taste, ShipmentMethod } from 'entities'
-import { apiStatic } from 'shared/api'
+import { CatalogFilterDto, Category, Taste, ShipmentMethod } from 'entities'
 import { typesForms } from 'shared/types'
 
-const { GetFilterLists } = apiStatic
 type FilterForm = typesForms.FilterForm
 
 type Props = {
+    resetToDefault: () => void
     setVisibility: Dispatch<SetStateAction<boolean>>
     className?: string
     control: Control<FilterForm>
+
+    catalogFilters: CatalogFilterDto | undefined
 }
 
 export const FilterPanel = ({
+    resetToDefault,
     setVisibility,
     className,
     control,
+    catalogFilters,
 }: Props) => {
-    const [loading, setLoading] = useState(true);
-    const [categories, setCategories] = useState<Category[] | null>(null);
-    const [tastes, setTastes] = useState<Taste[] | null>(null);
-    const [shipmentMethods, setShipmentMethods] = useState<ShipmentMethod[] | null>(null);
-
-    async function fetchFilterLists() {
-        type FilterLists = {
-            categories: Category[]
-            tastes: Taste[]
-            shipmentMethods: ShipmentMethod[]
-        }
-
-        const response = await GetFilterLists()
-        const lists = response.data.Data as FilterLists
-        
-        setCategories(lists.categories)
-        setTastes(lists.tastes)
-        setShipmentMethods(lists.shipmentMethods)
-        setLoading(false)
-    }
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetchFilterLists()
-    }, [])
+        if (catalogFilters) {
+            setLoading(false)
+        }
+    }, [catalogFilters])
 
     return (
         <div className={cn(css.filterPanel, className)}>
@@ -58,19 +44,12 @@ export const FilterPanel = ({
                         <div className={css.controlPanelColumn}>
                             <h3 className={css.paramterTitle}>Катэгорыі</h3>
                             <div className={css.checkList}>
-                                <Checkable
-                                    type='checkbox'
-                                    size='small'
-                                    labelText='Усе'
-                                    labelClassName={css.checkLabel}
-                                />
                                 <Controller
                                     control={control}
                                     name="categoryIds"
-                                    defaultValue={categories?.map((category: Category) => category.id)}
                                     render={
                                         ({ field: { onChange, name, value } }) => {
-                                            const options = categories?.map(
+                                            const options = catalogFilters?.categories?.map(
                                                 (category: Category) => ({ 'value': `${category.id}`, 'title': category.name })
                                             ) || []
                                             return (
@@ -83,6 +62,8 @@ export const FilterPanel = ({
                                                     onChange={newValue => onChange(newValue.map(v => parseInt(v)))}
                                                     className={css.checkList}
                                                     optionClassName={css.checkLabel}
+                                                    checkAllOption
+                                                    checkAllTitle='Усе'
                                                 />
                                             )
                                         }
@@ -93,19 +74,12 @@ export const FilterPanel = ({
                         <div className={css.controlPanelColumn}>
                             <h3 className={css.paramterTitle}>Смакі</h3>
                             <div className={css.checkList}>
-                                <Checkable
-                                    type='checkbox'
-                                    size='small'
-                                    labelText='Усе'
-                                    labelClassName={css.checkLabel}
-                                />
                                 <Controller
                                     control={control}
                                     name="tasteIds"
-                                    defaultValue={tastes?.map((taste: Taste) => taste.id)}
                                     render={
                                         ({ field: { onChange, name, value } }) => {
-                                            const options = tastes?.map(
+                                            const options = catalogFilters?.tastes?.map(
                                                 (taste: Taste) => ({ 'value': `${taste.id}`, 'title': taste.name })
                                             ) || []
                                             return (
@@ -118,6 +92,8 @@ export const FilterPanel = ({
                                                     onChange={newValue => onChange(newValue.map(v => parseInt(v)))}
                                                     className={css.checkList}
                                                     optionClassName={css.checkLabel}
+                                                    checkAllOption
+                                                    checkAllTitle='Усе'
                                                 />
                                             )
                                         }
@@ -131,12 +107,13 @@ export const FilterPanel = ({
                                 <Controller
                                     control={control}
                                     name="priceFrom"
-                                    render={({ field: { onChange } }) => (
+                                    render={({ field: { value, onChange } }) => (
                                         <InputField
                                             type='number'
                                             placeholder='ад'
                                             className={css.rangeFieldFrom}
                                             min={0}
+                                            value={`${value}`}
                                             onChange={(newValue) => onChange(parseInt(newValue))}
                                         />
                                     )}
@@ -144,12 +121,13 @@ export const FilterPanel = ({
                                 <Controller
                                     control={control}
                                     name="priceTo"
-                                    render={({ field: { onChange } }) => (
+                                    render={({ field: { value, onChange } }) => (
                                         <InputField
                                             type='number'
                                             placeholder='да'
-                                            className={css.rangeFieldFrom}
+                                            className={css.rangeFieldTo}
                                             min={0}
+                                            value={`${value}`}
                                             onChange={(newValue) => onChange(parseInt(newValue))}
                                         />
                                     )}
@@ -160,12 +138,13 @@ export const FilterPanel = ({
                                 <Controller
                                     control={control}
                                     name="volumeFrom"
-                                    render={({ field: { onChange } }) => (
+                                    render={({ field: { value, onChange } }) => (
                                         <InputField
                                             type='number'
                                             placeholder='ад'
                                             className={css.rangeFieldFrom}
                                             min={0}
+                                            value={`${value}`}
                                             onChange={(newValue) => onChange(parseInt(newValue))}
                                         />
                                     )}
@@ -173,12 +152,13 @@ export const FilterPanel = ({
                                 <Controller
                                     control={control}
                                     name="volumeTo"
-                                    render={({ field: { onChange } }) => (
+                                    render={({ field: { value, onChange } }) => (
                                         <InputField
                                             type='number'
                                             placeholder='да'
-                                            className={css.rangeFieldFrom}
+                                            className={css.rangeFieldTo}
                                             min={0}
+                                            value={`${value}`}
                                             onChange={(newValue) => onChange(parseInt(newValue))}
                                         />
                                     )}
@@ -228,7 +208,7 @@ export const FilterPanel = ({
                                     name="shipmentMethodIds"
                                     render={
                                         ({ field: { onChange, name, value } }) => {
-                                            const options = shipmentMethods?.map(
+                                            const options = catalogFilters?.shipmentMethods?.map(
                                                 (method: ShipmentMethod) => ({ 'value': `${method.id}`, 'title': method.name })
                                             ) || []
                                             return (
@@ -264,8 +244,8 @@ export const FilterPanel = ({
             }
 
             <div className={css.panelButtons}>
-                <Button type='button' theme='outlined' size='large' shape='round'>
-                    Ачысціць
+                <Button type='button' theme='outlined' size='large' shape='round' onClick={resetToDefault}>
+                    Cкінуць 
                 </Button>
                 <Button type='submit' size='large' shape='round'>
                     Прымяніць
