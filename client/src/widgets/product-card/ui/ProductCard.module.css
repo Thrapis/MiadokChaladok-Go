@@ -8,11 +8,18 @@
     overflow: hidden;
 }
 
+.linkOnImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .image {
     object-fit: cover;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     height: 408px;
+    width: 100%;
 }
 
 .control {

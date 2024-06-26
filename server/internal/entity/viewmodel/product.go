@@ -7,11 +7,17 @@ import (
 )
 
 type ProductDto struct {
-	ProductId   uint          `json:"productId"`
-	ProductName string        `json:"productName"`
-	ImagePath   string        `json:"imagePath"`
-	PriceSpread string        `json:"priceSpread"`
-	OptionList  []data.Option `json:"optionList"`
+	ProductId       uint                  `json:"productId"`
+	ProductName     string                `json:"productName"`
+	ImagePath       string                `json:"imagePath"`
+	Expiration      string                `json:"expiration"`
+	PriceSpread     string                `json:"priceSpread"`
+	Category        data.Category         `json:"category"`
+	Taste           data.Taste            `json:"taste"`
+	OptionList      []data.Option         `json:"optionList"`
+	MediaList       []data.Media          `json:"mediaList"`
+	ShipmentMethods []data.ShipmentMethod `json:"shipmentMethodList"`
+	ReviewList      []data.Review         `json:"reviewList"`
 }
 
 func ToProductDtos(products []*data.Product) []*ProductDto {
@@ -25,11 +31,17 @@ func ToProductDtos(products []*data.Product) []*ProductDto {
 
 func ToProductDto(product *data.Product) *ProductDto {
 	card := &ProductDto{
-		ProductId:   product.ID,
-		ImagePath:   product.ImagePath,
-		ProductName: product.Name,
-		PriceSpread: getSpread(product.Options),
-		OptionList:  product.Options,
+		ProductId:       product.ID,
+		ProductName:     product.Name,
+		ImagePath:       product.ImagePath,
+		Expiration:      product.Expiration,
+		PriceSpread:     getSpread(product.Options),
+		Category:        product.Category,
+		Taste:           product.Taste,
+		OptionList:      product.Options,
+		MediaList:       product.Media,
+		ShipmentMethods: product.ShipmentMethods,
+		ReviewList:      product.Reviews,
 	}
 	return card
 }

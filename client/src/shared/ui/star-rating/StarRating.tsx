@@ -1,26 +1,41 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import cn from 'classnames'
 
 import css from './StarRating.module.css'
 
 type Prop = {
+    className?: string
     stars?: number
     name?: string
-    defaultValue?: number
+    value?: number
+    readonly?: boolean
     onChange?: (selected: number) => void
 }
 
 export const StarRating = ({
+    className,
     stars = 5,
     name,
-    defaultValue = 0,
+    value = 0,
+    readonly = false,
     onChange
 }: Prop) => {
-    const [totalStars, setTotalStars] = useState(stars);
-    const [rating, setRating] = useState(defaultValue <= stars ? defaultValue : stars);
-    const [hover, setHover] = useState(0);
+    const [totalStars, setTotalStars] = useState(stars)
+    const [rating, setRating] = useState(value <= stars ? value : stars)
+    const [hover, setHover] = useState(0)
+
+    useEffect(() => {
+        setRating(value)
+    }, [value])
 
     return(
-        <div className={css.block}>
+        <div 
+            className={cn(
+                css.block,
+                className,
+                readonly && css.readOnly
+            )}
+        >
             {[...Array(totalStars)].map((star, index) => {
                 const currentRating = index + 1;
 

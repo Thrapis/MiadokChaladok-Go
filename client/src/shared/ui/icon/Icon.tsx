@@ -11,7 +11,10 @@ export type IconType =
   | 'x'
   | 'star-empty'
   | 'star-full'
+  | 'chevron-up'
+  | 'chevron-right'
   | 'chevron-down'
+  | 'chevron-left'
   | 'instagram'
   | 'pinterest'
   | 'telegram'
@@ -23,6 +26,7 @@ export type IconType =
 
 export type Props = {
     className?: string
+    iconClassName?: string
     type: IconType
     size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
     orientation?: 'inline' | 'block'
@@ -31,6 +35,7 @@ export type Props = {
 
 export const Icon = ({
     className,
+    iconClassName,
     type,
     size = 'medium',
     orientation = 'block',
@@ -42,8 +47,13 @@ export const Icon = ({
             onClick={onClick}
         >
             <div
-                className={cn(css.icon, css[`${size}Size`])}
-                style={{ backgroundImage: `url("/svg/${type}.svg")` }}
+                className={cn(css.icon, css[`${size}Size`], iconClassName)}
+                style={{ 
+                    maskImage: `url("/svg/${type}.svg")`,
+                    maskRepeat: 'no-repeat',
+                    maskPosition: 'center',
+                    maskSize: 'contain'
+                }}
             />
         </div>
     )

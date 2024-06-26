@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import { ReactFitty } from "react-fitty"
 
 import cn from 'classnames'
 
@@ -14,14 +15,7 @@ import { Option } from 'entities/database/Option'
 
 const { AddProductToCart } = apiProduct
 type AddToCartForm = typesForms.AddToCartForm
-
-export const isRequired = (value: number) => {
-    return value ? true : 'Патрэбна абраць опцыю для дадання ў кошык';
-}
-
-export const ruleSet = {
-    isRequired
-}
+const { AddToCartRuleSet } = typesForms
 
 type Props = {
     dto: ProductDto
@@ -36,9 +30,15 @@ export const CardAddToCart = ({
         control,
         handleSubmit,
         watch,
+        getValues,
         formState: { errors },
-        getValues
-    } = useForm<AddToCartForm>()
+    } = useForm<AddToCartForm>({
+        defaultValues: {
+            productId: dto.productId,
+            optionId: dto.optionList.length === 1 ? dto.optionList[0].id : undefined,
+            amount: 1,
+        }
+    })
 
     useEffect(() => {
         const subscription = watch((value, { name, type }) => {
@@ -46,12 +46,11 @@ export const CardAddToCart = ({
                 const price = value.optionId
                     ? `${dto.optionList.find(o => o.id === getValues("optionId"))?.price.toFixed(2)}`
                     : dto.priceSpread
-    
                 setOptionPrice(price)
             }
         })
-        return subscription.unsubscribe()
-    }, [watch, dto.optionList, dto.priceSpread])
+        return () => subscription.unsubscribe()
+    }, [watch])
 
     const onSubmit: SubmitHandler<AddToCartForm> = async (form) => {
         const response = await AddProductToCart(form)
@@ -66,24 +65,30 @@ export const CardAddToCart = ({
             <Controller
                 control={control}
                 name="productId"
-                rules={{
-                    required: true,
-                }}
-                defaultValue={dto.productId}
-                render={(fields) => <input type={'hidden'} defaultValue={fields.field.value} />}
+                rules={{ required: true }}
+                render={({ field: { value, name } }) => <input type={'hidden'} name={name} defaultValue={value} />}
+            />
+
+            <Controller
+                control={control}
+                name="amount"
+                rules={{ required: true }}
+                render={({ field: { value, name } }) => <input type={'hidden'} name={name} defaultValue={value} />}
             />
 
             <div className={css.controlWrapper}>
                 <div className={css.nameAndVolume}>
                     <div className={css.name}>
-                        {dto.productName}
+                        <ReactFitty minSize={12} maxSize={22}>
+                            {dto.productName}
+                        </ReactFitty>
                     </div>
+
                     <Controller
                         control={control}
                         name="optionId"
-                        defaultValue={dto.optionList.length === 1 ? dto.optionList[0].id : undefined}
                         rules={{
-                            validate: { isRequired: ruleSet.isRequired }
+                            validate: { isRequired: AddToCartRuleSet.OptionIdIsRequired }
                         }}
                         render={
                             ({ field: { onChange, name, value } }) => {
@@ -93,7 +98,6 @@ export const CardAddToCart = ({
                                 )
                                 return (
                                     <RadioGroup
-                                        type='radio'
                                         size='small'
                                         theme='button'
                                         selected={`${value}`}

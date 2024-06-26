@@ -1,0 +1,51 @@
+.hidden {
+    display: none;
+}
+
+.pageContent {
+    padding: 0px 16px;
+}
+
+.reviewsBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 0;
+}
+
+.reviewList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.noReviewsText {
+    font-size: 24px;
+}
+
+.reviewsTitleAndControl {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addReviewContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.addReviewContentHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 64px;
+    width: 100%;
+    padding-bottom: 32px;
+}
+
+.addReviewContentTitle {
+    font-size: 40px;
+}

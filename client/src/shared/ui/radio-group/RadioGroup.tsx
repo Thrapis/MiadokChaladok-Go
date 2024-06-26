@@ -8,7 +8,6 @@ type OptionType = {
 }
 
 type OptionProps = {
-    type: 'checkbox' | 'radio'
     size?: 'small' | 'medium' | 'large'
     theme?: 'default' | 'button'
     className?: string
@@ -21,7 +20,6 @@ type OptionProps = {
 }
 
 const Option = ({
-    type = 'radio',
     size = 'medium',
     theme = 'default',
     className,
@@ -46,7 +44,7 @@ const Option = ({
             <input
                 className={cn(css.input)}
                 onChange={handleChange}
-                type={type}
+                type='radio'
                 name={groupName}
                 value={value}
                 tabIndex={-1}
@@ -63,7 +61,6 @@ const Option = ({
 export type RadioGroupProps = {
     className?: string
     optionClassName?: string
-    type: 'checkbox' | 'radio'
     size?: 'small' | 'medium' | 'large'
     theme?: 'default' | 'button'
 
@@ -76,7 +73,6 @@ export type RadioGroupProps = {
 export const RadioGroup = ({
     className,
     optionClassName,
-    type,
     size = 'medium',
     theme = 'default',
     name,
@@ -90,7 +86,6 @@ export const RadioGroup = ({
         <div className={cn(css.group, className)}>
             {options.map(({ value, title }) => (
                 <Option
-                    type={type}
                     size={size}
                     theme={theme}
                     className={optionClassName}

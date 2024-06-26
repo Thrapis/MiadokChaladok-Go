@@ -28,12 +28,17 @@ export const CatalogFilter = ({
     const [isSortPanelVisible, setSortPanelVisible] = useState(false)
     const [catalogFilters, setCatalogFilters] = useState<CatalogFilterDto>()
 
+    const [defaultFilter, setDefaultFilter] = useState<FilterForm>()
+    const [lastFilter, setLastFilter] = useState<FilterForm>()
+
     useEffect(() => {
         const defaults = {
             categoryIds: catalogFilters?.categories?.map(c => c.id),
             tasteIds: catalogFilters?.tastes?.map(t => t.id),
             sortType: parseInt(SortList[0].value)
         }
+        setDefaultFilter(defaults as FilterForm)
+        setLastFilter(defaults as FilterForm)
         reset(defaults)
     }, [catalogFilters])
 
@@ -59,6 +64,7 @@ export const CatalogFilter = ({
         setFilterPanelVisible(false)
         setSortPanelVisible(false)
         onFilterChange(filter)
+        setLastFilter(filter)
     }
 
     function isSelectedCategoryButton(categoryId: number) {
@@ -75,7 +81,9 @@ export const CatalogFilter = ({
         }
     }
 
-    const resetToDefault = () => reset()
+    const resetToDefault = () => reset(defaultFilter)
+
+    const resetToLast = () => reset(lastFilter)
 
     return (
         <form
@@ -90,7 +98,7 @@ export const CatalogFilter = ({
                     className={css.controlButton}
                     onClick={() => {
                         setFilterPanelVisible(prev => !prev)
-                        resetToDefault()
+                        resetToLast()
                         setSortPanelVisible(false)
                     }}
                 >
@@ -108,7 +116,9 @@ export const CatalogFilter = ({
                                 theme={isSelectedCategoryButton(category.id) ? 'contained' : 'outlined'}
                                 className={css.controlButton}
                                 key={crypto.randomUUID()}
-                                onClick={() => onCategoryButtonClick(category.id)}
+                                onClick={() => {
+                                    onCategoryButtonClick(category.id)
+                                }}
                             >
                                 {category.name}
                             </Button>
@@ -123,7 +133,7 @@ export const CatalogFilter = ({
                     className={css.controlButton}
                     onClick={() => {
                         setSortPanelVisible(prev => !prev)
-                        resetToDefault()
+                        resetToLast()
                         setFilterPanelVisible(false)
                     }}
                 >

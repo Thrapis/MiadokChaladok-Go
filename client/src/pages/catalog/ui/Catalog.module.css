@@ -2,6 +2,10 @@
     padding: 0px 16px;
 }
 
+.noProductsText {
+    font-size: 24px;
+}
+
 .productsList {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

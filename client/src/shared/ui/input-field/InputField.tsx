@@ -5,7 +5,7 @@ import css from './InputField.module.css'
 export type Props = {
     className?: string
     onChange?: (entered: string) => void
-    type?: 'text' | 'password' | 'search' | 'tel' | 'email' | 'number'
+    type?: 'text' | 'password' | 'search' | 'tel' | 'email' | 'number' | 'date'
     name?: string
     value?: string
     placeholder?: string
@@ -13,7 +13,6 @@ export type Props = {
     min?: number
     max?: number
     step?: number
-    errorMessage?: string;
 }
 
 export const InputField = ({
@@ -27,33 +26,24 @@ export const InputField = ({
     min,
     max,
     step,
-    errorMessage
 }: Props) => {
 
-    const hasError = errorMessage != undefined;
-
-    return(
-        <div className={cn(
-                hasError && css.incorrect, 
+    return (
+        <input
+            className={cn(
+                css.inputField,
                 className
             )}
-        >
-            <input
-                className={cn(
-                    css.inputField, 
-                )}
-                onChange={(e) => onChange?.(e.target.value)}
-                type={type} 
-                name={name}
-                value={value}
-                placeholder={placeholder} 
-                maxLength={maxLength}
-                min={min}
-                max={max}
-                step={step}
-            />
-            { hasError && (<div className={css.annotation}>{errorMessage}</div>)}
-        </div>
+            onChange={(e) => onChange?.(e.target.value)}
+            type={type}
+            name={name}
+            value={value}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            min={min}
+            max={max}
+            step={step}
+        />
     )
 }
 

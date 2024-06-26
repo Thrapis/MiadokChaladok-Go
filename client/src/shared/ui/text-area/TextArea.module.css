@@ -1,14 +1,8 @@
 
-.wrapper {
-    display: flex;
-    flex-direction: column;
-
+.textArea {
     font-size: 18px;
     font-weight: 400;
-}
 
-.textArea {
-    width: 100%;
     padding: 0.25em;
 
     border: 1px solid var(--text-and-frames);
@@ -19,16 +13,6 @@
 
 .textArea:focus {
     outline: none;
-}
-
-.annotation {
-    width: 100%;
-    padding: 0.25em 0;
-    
-    color: var(--text-and-frames);
-
-    font-size: 16px;
-    font-weight: 400;
 }
 
 /* Resizing */

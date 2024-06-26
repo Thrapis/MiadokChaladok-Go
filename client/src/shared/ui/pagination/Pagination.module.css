@@ -1,8 +1,9 @@
 
-.list {
+.pagination {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: .5em;
 
     width: 100%;
@@ -10,11 +11,47 @@
     font-size: 18px;
 }
 
-.element {
+.hidden {
+    display: none;
+}
+
+.buttonWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5em;
+}
+
+.buttonWrapper:has(+.hidden)::after {
+    cursor: default;
+    pointer-events: none;
+    content: '...';
+
+    display: block;
+}
+
+.button {
+    all: unset;
+
+    cursor: pointer;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: .5em;
+
+    background-color: var(--accent-and-buttons);
+    border: 1px solid var(--text-and-frames);
+    color: var(--text-and-frames);
+    
+    padding: 0;
+    border-radius: 25px;
+
+    min-height: 40px;
+    min-width: 40px;
+
+    font-size: 18px;
+    text-decoration: none;
+    line-height: 1;
 
     user-select:none;
     -moz-user-select: none;
@@ -22,45 +59,40 @@
     -ms-user-select: none;
 }
 
-.element .button {
-    cursor: pointer;
-
-    background-color: var(--accent-and-buttons);
-    border: 1px solid var(--text-and-frames);
-    color: var(--text-and-frames);
-    text-decoration: none;
-
-    border-radius: 4px;
-    padding: 6px 16px;
-
-    line-height: 1;
-}
-
-.element.hidden {
-    display: none;
-}
-
-/* .hidden + .element::before {
-    display: block;
-    content: '...';
-} */
-
-.element:has(+.hidden)::after {
+.button:disabled {
     cursor: default;
-    pointer-events: none;
-    content: '...';
-
-    display: block;
+    background-color: transparent;
 }
 
-.current {
+.button.current {
     cursor: default;
     pointer-events: none;
     font-weight: 700;
     text-decoration: underline;
+
+    outline: solid 2px var(--text-and-frames);
+    background-color: transparent;
 }
 
-.element.disabled .button {
-    cursor: default;
-    pointer-events: none;
+.control {
+    min-width: 60px;
+}
+
+.iconWrapper {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: min-content;
+    width: min-content;
+}
+
+.icon {
+    min-height: 18px;
+    min-width: 18px;
+    height: 100%;
+    width: 100%;
+    background-color: var(--text-and-frames);
 }

@@ -13,7 +13,7 @@ import (
 )
 
 func GetProductById(c *gin.Context) {
-	productIdString := c.Params.ByName("id")
+	productIdString := c.Params.ByName("productId")
 	productId, _ := strconv.ParseUint(productIdString, 0, 64)
 
 	db := config.GetDb()
@@ -26,7 +26,7 @@ func GetProductById(c *gin.Context) {
 	api.RespondJSON(c, http.StatusOK, product, nil)
 }
 
-func GetProductSuggestions(c *gin.Context) {
+func GetSuggestions(c *gin.Context) {
 	maxCountString := c.Params.ByName("limit")
 	limit, _ := strconv.ParseInt(maxCountString, 0, 64)
 
@@ -60,7 +60,7 @@ func GetProductsByFilter(c *gin.Context) {
 	}
 
 	db := config.GetDb()
-	products, meta, err := dbp.GetProductDtosByFilter(db, requestBody, int(page), int(pageSize))
+	products, meta, err := dbp.GetProductDtosByFilterPaginated(db, requestBody, int(page), int(pageSize))
 
 	if err != nil {
 		api.RespondJSON(c, http.StatusNotFound, products, meta)
@@ -69,20 +69,20 @@ func GetProductsByFilter(c *gin.Context) {
 	api.RespondJSON(c, http.StatusOK, products, meta)
 }
 
-func ProductToCart(c *gin.Context) {
-	type CartRequest struct {
+func AddProductToCart(c *gin.Context) {
+	type ProductToCartRequest struct {
 		ProductId uint `json:"productId"`
 		OptionId  uint `json:"optionId"`
+		Amount    int  `json:"amount"`
 	}
 
-	var request CartRequest
-	err := c.BindJSON(&request)
+	var requestData ProductToCartRequest
+	err := c.BindJSON(&requestData)
 	if err != nil {
 		panic(err)
 	}
 
-	fmt.Print("Option: ")
-	fmt.Println(request)
+	fmt.Println(requestData)
 
 	api.RespondJSON(c, http.StatusOK, nil, nil)
 }

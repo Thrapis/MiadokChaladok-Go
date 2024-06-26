@@ -6,48 +6,40 @@ export type Props = {
     className?: string
     onChange?: (entered: string) => void
     name?: string
+    value?: string
     rows?: number
     cols?: number
     maxLength?: number
     resize?: 'both' | 'vertical' | 'horizontal' | 'fixed'
     placeholder?: string
-    annotation?: string
 }
 
 export const TextArea = ({
     className,
     onChange,
     name,
+    value,
     rows,
     cols,
     maxLength,
     resize = 'both',
-    placeholder,
-    annotation
+    placeholder
 }: Props) => {
-    return(
-        <div 
+    return (
+        <textarea
             className={cn(
-                css.wrapper,
+                css.textArea,
+                css[`${resize}Resize`],
                 className
             )}
+            onChange={(e) => onChange?.(e.target.value)}
+            name={name}
+            value={value}
+            rows={rows}
+            cols={cols}
+            maxLength={maxLength}
+            placeholder={placeholder}
         >
-            <textarea 
-                className={cn(
-                    css.textArea,
-                    css[`${resize}Resize`]
-                )}
-                onChange={(e) => onChange?.(e.target.value)}
-                name={name}
-                rows={rows}
-                cols={cols}
-                maxLength={maxLength}
-                placeholder={placeholder}
-            >
-            </textarea>
-            <div className={css.annotation}>
-                {annotation}
-            </div>
-        </div>
+        </textarea>
     )
 }

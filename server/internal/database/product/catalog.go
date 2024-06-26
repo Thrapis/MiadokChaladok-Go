@@ -34,7 +34,7 @@ type FilterParameters struct {
 	SortType          SortType `json:"sortType"`
 }
 
-func GetProductDtosByFilter(db *gorm.DB, filters FilterParameters, page, pageSize int) ([]*viewmodel.ProductDto, *meta.PaginationMeta, error) {
+func GetProductDtosByFilterPaginated(db *gorm.DB, filters FilterParameters, page, pageSize int) ([]*viewmodel.ProductDto, *meta.PaginationMeta, error) {
 	if page == 0 {
 		page = 1
 	}

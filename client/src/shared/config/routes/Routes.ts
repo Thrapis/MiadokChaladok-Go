@@ -3,10 +3,6 @@ export const ROUTE_CONSTANTS = {
         ROUTE: "/",
         NAME: "Галоўная"
     },
-    CATALOG: {
-        ROUTE: "/catalog", 
-        NAME: "Каталог"
-    },
     CONTACTS_AND_DELIVERY: {
         ROUTE: "/contacts-and-delivery", 
         NAME: "Кантакты і дастаўка"
@@ -15,7 +11,14 @@ export const ROUTE_CONSTANTS = {
         ROUTE: "/about", 
         NAME: "Пра нас"
     },
-    // PRODUCT: {ROUTE: "/product/:productId", NAME: "Прадукт"},
+    CATALOG: {
+        ROUTE: "/catalog", 
+        NAME: "Каталог"
+    },
+    PRODUCT: {
+        ROUTE: "/catalog/:productId", 
+        NAME: "Прадукт"
+    },
     NOT_FOUND: {
         ROUTE: "/404", 
         NAME: "Старонка не знойдзена"

@@ -1,0 +1,57 @@
+.body {
+    overflow-y: hidden;
+}
+
+.portal {
+    z-index: 999;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: var(--backdrop);
+
+    opacity: 0;
+    transition: opacity 250ms;
+}
+
+:global(.ReactModal__Overlay--after-open) {
+    opacity: 1;
+}
+
+:global(.ReactModal__Overlay--before-close) {
+    opacity: 0;
+}
+
+@keyframes modal-show {
+    from {
+        transform: translateY(-10%);
+    }
+    to {
+        transform: translateY(0);
+    }
+  }
+
+.content {
+    background-color: var(--card-background);
+    border: solid 1px var(--text-and-frames);
+    border-radius: 25px;
+    outline: none;
+    padding: 24px;
+    margin-block: clamp(32px, 8vw, 15%);
+    margin-inline: clamp(32px, 8vw, 15%);
+
+    overflow-y: auto;
+
+    animation: ease-out 250ms modal-show;
+}

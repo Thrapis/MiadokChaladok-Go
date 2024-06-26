@@ -15,14 +15,3 @@
 .inputField:focus {
     outline: none;
 }
-
-.annotation {
-    padding: .25em;
-    font-size: 10px;
-    font-weight: 400;
-}
-
-.incorrect * {
-    color: var(--incorrect);
-    border-color: var(--incorrect);
-}

@@ -11,3 +11,12 @@ export type FilterForm = {
     shipmentMethodIds: number[]
     sortType: number
 }
+
+
+// const AmountIsRequired = (value: number) => {
+//     return value ? true : 'Патрэбна абраць колькасць абранага прадукта'
+// }
+
+export const FilterRuleSet = {
+    
+}

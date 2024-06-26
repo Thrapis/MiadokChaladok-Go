@@ -41,7 +41,6 @@ export const ElementsTest = () => {
                         <InputField type='password' placeholder='Пароль' name='password'/>
                         <TextArea
                             placeholder='Камментар...'
-                            annotation='даўжыня максімум 500 сімвалаў'
                             resize='fixed'
                             rows={2}
                             maxLength={500}
@@ -64,7 +63,7 @@ export const ElementsTest = () => {
                         />
                     </div>
                     <div className={css.block}>
-                        <StarRating name='rating' defaultValue={3}/>
+                        <StarRating name='rating' value={3}/>
                     </div>
                     <div className={css.block}>
                         <Button type='submit' width='fluid'>Submit</Button>

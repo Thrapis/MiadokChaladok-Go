@@ -1,0 +1,43 @@
+.reviewWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+
+    padding: 24px 48px;
+    background-color: var(--card-background);
+    border: solid 1px var(--text-and-frames);
+    border-radius: 25px;
+}
+
+.baseDataContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.authorName, .buyDate {
+    padding: 0 4px;
+}
+
+.authorName {
+    font-family: 'Comorant';
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.buyDate {
+    font-family: 'Raleway';
+    font-size: 12px;
+    font-weight: 400;
+    padding-bottom: 4px;
+}
+
+.starRating {
+    font-size: 8px !important;
+    gap: 6px !important;
+}
+
+.commentContainer {
+    display: flex;
+}

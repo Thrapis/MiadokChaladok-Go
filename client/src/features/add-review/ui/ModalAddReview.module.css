@@ -1,0 +1,198 @@
+
+.modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Process */
+
+.process {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.resultBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.failureMessageBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.failureMessage {
+    color: var(--incorrect);
+}
+
+.iconCircleCorrect, .iconCircleIncorrect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: solid 2px var(--text-and-frames);
+    border-radius: 50%;
+    min-height: 80px;
+    min-width: 80px;
+
+    animation: ease-in 100ms circle-show;
+}
+
+.iconCircleCorrect {
+    border-color: var(--correct);
+}
+
+.iconCircleIncorrect {
+    border-color: var(--incorrect);
+}
+
+@keyframes circle-show {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.iconSuccess {
+    animation: linear 250ms icon-bounce;
+    background-color: var(--correct);
+}
+
+@keyframes icon-bounce {
+    0% {
+        transform: scale(.5);
+    }
+    50% {
+        transform: scale(1.4);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.iconFailure {
+    animation: linear 250ms icon-shake;
+    background-color: var(--incorrect);
+}
+
+@keyframes icon-shake {
+    0% {
+        transform: translate(10%, 10%);
+    }
+    20% {
+        transform: translate(-10%, -10%);
+    }
+    40% {
+        transform: translate(10%, -5%);
+    }
+    60% {
+        transform: translate(-5%, 10%);
+    }
+    80% {
+        transform: translate(5%, -5%);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* Form */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.errorsBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 1em;
+    margin: 0;
+    color: var(--incorrect);
+}
+
+.errorsBlock:empty {
+    display: none;
+}
+
+.inputsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.labeledInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+}
+
+.label {
+    white-space: nowrap;
+}
+
+.input {
+    width: 186px;
+    padding: 0 8px !important;
+    text-align: center;
+}
+
+.inputInvalid {
+    outline: solid 2px var(--incorrect);
+}
+
+.starRating {
+    width: 186px;
+    justify-content: center;
+    font-size: 12px !important;
+    gap: 8px !important;
+}
+
+.textAreaWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.textArea {
+    width: 100%;
+}
+
+.textAreaAnnotation {
+    font-family: 'Raleway';
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.commentAndSubmit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+}
+
+.submit {
+    padding: 0 !important;
+    margin-bottom: 24px;
+    min-width: 48px;
+    min-height: 48px;
+}
+

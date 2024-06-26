@@ -63,10 +63,13 @@ func startServer(cfg *config.Config) {
 	app.Use(static.Serve("/static", static.LocalFile("./static", true)))
 
 	//C
-	app.POST("/to-cart/product", routes.ProductToCart)
+	app.POST("/to-cart/product", routes.AddProductToCart)
+	app.POST("/to-product/review", routes.AddReviewToProduct)
 	//R
-	app.GET("/product/:id", routes.GetProductById)
-	app.GET("/product/suggestions/:limit", routes.GetProductSuggestions)
+	app.GET("/product/:productId", routes.GetProductById)
+	app.GET("/suggestions/:limit", routes.GetSuggestions)
+
+	app.GET("/reviews/:productId", routes.GetReviewsByProductId)
 
 	app.POST("/search/products", routes.GetProductsByFilter)
 

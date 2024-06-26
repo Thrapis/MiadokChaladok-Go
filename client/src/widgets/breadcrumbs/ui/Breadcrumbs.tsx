@@ -1,13 +1,17 @@
-import React from 'react';
+import css from './Breadcrumbs.module.css'
 
-import css from './Breadcrumbs.module.css';
+import { ROUTE_CONSTANTS } from 'shared/config'
 
-import { ROUTE_CONSTANTS } from 'shared/config';
+import { Link } from 'shared/ui'
+import { useLocation } from 'react-router'
 
-import { Button, Link } from 'shared/ui';
-import { useLocation } from 'react-router';
+type Props = {
+    current?: string
+}
 
-export const Breadcrumbs = () => {
+export const Breadcrumbs = ({
+    current
+}: Props) => {
     const location = useLocation()
 
     const pathnames = location.pathname.split('/')
@@ -18,7 +22,7 @@ export const Breadcrumbs = () => {
         const to = `/${pathnames.slice(0, index + 1).join('/')}`
 
         const route = Object.keys(ROUTE_CONSTANTS)
-            .find(c => Object(ROUTE_CONSTANTS)[c]["ROUTE"] == to)
+            .find(c => Object(ROUTE_CONSTANTS)[c]["ROUTE"] === to)
 
         const title = route ? Object(ROUTE_CONSTANTS)[route]["NAME"] : value
 
@@ -26,7 +30,7 @@ export const Breadcrumbs = () => {
             <li key={crypto.randomUUID()} className={css.crumb}>
                 {
                     isLast ? (
-                        <span className={css.crumbText}>{title}</span>
+                        <span className={css.crumbText}>{current || title}</span>
                     ) : (
                         <Link size='fit' href={to} className={css.crumbLink}>{title}</Link>
                     )

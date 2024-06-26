@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import cn from 'classnames'
 
 import css from './Pagination.module.css'
@@ -6,7 +7,8 @@ import { typesApi } from "shared/types"
 
 type PaginationMeta = typesApi.PaginationMeta
 
-type Props = {
+type PaginationProps = {
+    className?: string
     paginationMeta: PaginationMeta
     onChange?: (value: number) => void
     firstRadius?: number
@@ -19,12 +21,13 @@ const CURRENT_RADIUS = 2
 const LAST_RADIUS = 2
 
 export const Pagination = ({
+    className,
     paginationMeta,
     onChange,
     firstRadius = FIRST_RADIUS,
     currentRadius = CURRENT_RADIUS,
     lastRadius = LAST_RADIUS,
-}: Props) => {
+}: PaginationProps) => {
 
     const isHidden = (value: number) => {
         return (1 + firstRadius < value) &&
@@ -33,37 +36,93 @@ export const Pagination = ({
     }
 
     return (
-        <div className={css.list}>
-            <div className={cn(css.element, paginationMeta.Page - 1 < 1 && css.disabled)}>
-                <div 
-                    className={css.button} 
-                    onClick={() => onChange?.(paginationMeta.Page - 1)}
-                >
-                    {"<"}
+        <div className={cn(css.pagination, paginationMeta.TotalPages === 0 && css.hidden, className)}>
+            <PaginationButton
+                onClick={onChange}
+                value={paginationMeta.Page - 1}
+                disabled={paginationMeta.Page - 1 < 1}
+                control={true}
+            >
+                <div className={css.iconWrapper}>
+                    <div className={css.icon}
+                        style={{
+                            maskImage: `url("/svg/chevron-left.svg")`,
+                            maskRepeat: 'no-repeat',
+                            maskPosition: 'center',
+                            maskSize: 'contain'
+                        }}
+                    />
                 </div>
-            </div>
+            </PaginationButton>
             {
                 Array.from({ length: paginationMeta.TotalPages }, (_, i) => i + 1).map((value) =>
-                    <div
-                        className={cn(
-                            css.element,
-                            isHidden(value) && css.hidden,
-                            value === paginationMeta.Page && css.current
-                        )}
+                    <PaginationButton
+                        onClick={onChange}
+                        value={value}
+                        hidden={isHidden(value)}
+                        current={value === paginationMeta.Page}
                         key={crypto.randomUUID()}
                     >
-                        <div className={css.button} onClick={() => onChange?.(value)}>{value}</div>
-                    </div>
+                        {value}
+                    </PaginationButton>
                 )
             }
-            <div className={cn(css.element, paginationMeta.Page + 1 > paginationMeta.TotalPages && css.disabled)}>
-                <div 
-                    className={css.button} 
-                    onClick={() => onChange?.(paginationMeta.Page + 1)}
-                >
-                    {">"}
+            <PaginationButton
+                onClick={onChange}
+                value={paginationMeta.Page + 1}
+                disabled={paginationMeta.Page + 1 > paginationMeta.TotalPages}
+                control={true}
+            >
+                <div className={css.iconWrapper}>
+                    <div className={css.icon}
+                        style={{
+                            maskImage: `url("/svg/chevron-right.svg")`,
+                            maskRepeat: 'no-repeat',
+                            maskPosition: 'center',
+                            maskSize: 'contain'
+                        }}
+                    />
                 </div>
-            </div>
+            </PaginationButton>
+        </div>
+    )
+}
+
+type PaginationButtonProps = {
+    onClick?: (value: number) => void
+    children: ReactNode
+    value: number
+    current?: boolean
+    hidden?: boolean
+    disabled?: boolean
+    control?: boolean
+}
+
+const PaginationButton = ({
+    onClick,
+    children,
+    value,
+    current,
+    hidden,
+    disabled,
+    control,
+}: PaginationButtonProps) => {
+
+    return (
+        <div className={cn(css.buttonWrapper, hidden && css.hidden)}>
+            <button
+                className={cn(
+                    css.button,
+                    current && css.current,
+                    control && css.control
+                )}
+                disabled={disabled}
+                onClick={() => {
+                    onClick?.(value)
+                }}
+            >
+                {children}
+            </button>
         </div>
     )
 }

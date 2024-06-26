@@ -8,7 +8,7 @@ import (
 type Review struct {
 	entity.GormModel
 	ProductID  uint      `json:"productId"`
-	AuthorName string    `json:"customerName"`
+	AuthorName string    `json:"authorName"`
 	BuyDate    time.Time `json:"buyDate"`
 	Rating     int16     `json:"rating"`
 	Comment    string    `json:"comment"`

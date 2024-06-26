@@ -104,21 +104,20 @@
     border-radius: 5px;
 }
 
-.rangeFieldFrom > input,
-.rangeFieldTo > input {
+.rangeFieldFrom, .rangeFieldTo {
     border: 0;
     border-radius: 0;
     width: 60px !important;
     font-size: 16px !important;
 }
 
-.rangeFieldFrom > input::placeholder,
-.rangeFieldTo > input::placeholder {
+.rangeFieldFrom::placeholder,
+.rangeFieldTo::placeholder {
     font-size: 16px !important;
     text-align: center !important;
 }
 
-.rangeFieldFrom > input {
+.rangeFieldFrom {
     border-right: 1px solid var(--text-and-frames);
 }
 

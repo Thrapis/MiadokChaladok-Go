@@ -5,5 +5,5 @@ import { typesApi } from "shared/types";
 type ResponseData = typesApi.ResponseData
 
 export const GetSuggestedProducts = (limit: number): AxiosPromise<ResponseData> => {
-    return axios.get(`${API_SOURCE}/product/suggestions/${limit}`)
+    return axios.get(`${API_SOURCE}/suggestions/${limit}`)
 }
