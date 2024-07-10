@@ -1,16 +1,17 @@
-import React from 'react';
-
 import { Link } from "shared/ui";
 
 import { ROUTE_CONSTANTS } from 'shared/config'
 
 import css from './Header.module.css';
+import { CartButton } from 'widgets/cart-button/ui';
+import { SearchButton } from 'widgets/search-button/ui';
 
 export const Header = () => {
+
     return (
         <header>
             <Link href={ROUTE_CONSTANTS.HOME.ROUTE} className={css.headerLogoLink}>
-                <img src="/icons/large/honey-accent-square.png" alt=''/>
+                <img src="/icons/large/honey-accent-square.png" alt='' />
             </Link>
             <div className={css.headerGroup}>
                 <Link href={ROUTE_CONSTANTS.CATALOG.ROUTE} className={css.headerLogoLink}>
@@ -24,12 +25,8 @@ export const Header = () => {
                 </Link>
             </div>
             <div className={css.headerGroup}>
-                <Link href="#" className={css.headerLogoLink}>
-                    <img src="/icons/linear/magniglass.png" alt=''/>
-                </Link>
-                <Link href="#" className={css.headerLogoLink}>
-                    <img src="/icons/linear/cart.png" alt=''/>
-                </Link>
+                <SearchButton />
+                <CartButton />
             </div>
         </header>
     )

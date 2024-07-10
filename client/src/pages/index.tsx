@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom"
 
-import { ROUTE_CONSTANTS } from 'shared/config';
+import { ROUTE_CONSTANTS } from 'shared/config'
 
 import { layoutUi } from 'pages/layout'
 import { homeUi } from 'pages/home'
@@ -9,35 +9,35 @@ import { catalogUi } from 'pages/catalog'
 import { productUi } from 'pages/product'
 import { contactsAndDeliveryUi } from 'pages/contacts-and-delivery'
 import { aboutUi } from 'pages/about'
+import { cartUi } from 'pages/cart'
 import { elementsTestUi } from 'pages/elements-test'
 
-const { Layout } = layoutUi;
-const { Home } = homeUi;
-const { Catalog } = catalogUi;
-const { Product } = productUi;
-const { ContactsAndDelivery } = contactsAndDeliveryUi;
-const { About } = aboutUi;
-const { NotFound } = notFoundUi;
-const { ElementsTest } = elementsTestUi;
+const { Layout } = layoutUi
+const { HomePage } = homeUi
+const { CatalogPage } = catalogUi
+const { ProductPage } = productUi
+const { ContactsAndDeliveryPage } = contactsAndDeliveryUi
+const { AboutPage } = aboutUi
+const { CartPage } = cartUi
+const { NotFoundPage } = notFoundUi
+const { ElementsTestPage } = elementsTestUi
 
 export const Routing = () => {
     return (
         <Routes>
-        <Route path="/" element={<Layout/>}>
-            <Route index element={<Home/>} />
+            <Route path="/" element={<Layout />}>
+                <Route index element={<HomePage />} />
 
-            <Route path={ROUTE_CONSTANTS.CONTACTS_AND_DELIVERY.ROUTE} element={<ContactsAndDelivery/>} />
-            <Route path={ROUTE_CONSTANTS.ABOUT.ROUTE} element={<About/>} />
-            
-            <Route path={ROUTE_CONSTANTS.CATALOG.ROUTE} element={<Catalog/>} />
-            <Route path={ROUTE_CONSTANTS.PRODUCT.ROUTE} element={<Product/>} />
-            
+                <Route path={ROUTE_CONSTANTS.CONTACTS_AND_DELIVERY.ROUTE} element={<ContactsAndDeliveryPage />} />
+                <Route path={ROUTE_CONSTANTS.ABOUT.ROUTE} element={<AboutPage />} />
 
-            <Route path={ROUTE_CONSTANTS.NOT_FOUND.ROUTE} element={<NotFound/>} />
-            <Route path="*" element={<NotFound/>} />
-        </Route>
+                <Route path={ROUTE_CONSTANTS.CATALOG.ROUTE} element={<CatalogPage />} />
+                <Route path={ROUTE_CONSTANTS.PRODUCT.ROUTE} element={<ProductPage />} />
+                <Route path={ROUTE_CONSTANTS.CART.ROUTE} element={<CartPage />} />
+
+                <Route path={ROUTE_CONSTANTS.NOT_FOUND.ROUTE} element={<NotFoundPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+            </Route>
         </Routes>
-    );
-};
-
-// element={<Navigate to={ROUTE_CONSTANTS.NOT_FOUND} />}
+    )
+}

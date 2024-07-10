@@ -29,16 +29,16 @@ export const ContactsAndMap = () => {
                     </div>
                     <div className={cn(css.socialRow, css.socialLinkList)}>
                         <Link width='height' size='small' href={SOCIAL_LINKS.INSTAGRAM} className={css.socialLink}>
-                            <Icon type='instagram' size='xxlarge' />
+                            <Icon type='instagram' size='xxl' />
                         </Link>
                         <Link width='height' size='small' href={SOCIAL_LINKS.TELEGRAM} className={css.socialLink}>
-                            <Icon type='telegram' size='xxlarge' />
+                            <Icon type='telegram' size='xxl' />
                         </Link>
                         <Link width='height' size='small' href={SOCIAL_LINKS.PINTEREST} className={css.socialLink}>
-                            <Icon type='pinterest' size='xxlarge' />
+                            <Icon type='pinterest' size='xxl' />
                         </Link>
                         <Link width='height' size='small' href={SOCIAL_LINKS.TWITTER} className={css.socialLink}>
-                            <Icon type='twitter' size='xxlarge' />
+                            <Icon type='twitter' size='xxl' />
                         </Link>
                     </div>
                 </div>

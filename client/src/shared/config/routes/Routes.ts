@@ -19,6 +19,10 @@ export const ROUTE_CONSTANTS = {
         ROUTE: "/catalog/:productId", 
         NAME: "Прадукт"
     },
+    CART: {
+        ROUTE: "/cart", 
+        NAME: "Кошык"
+    },
     NOT_FOUND: {
         ROUTE: "/404", 
         NAME: "Старонка не знойдзена"

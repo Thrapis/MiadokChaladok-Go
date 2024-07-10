@@ -17,7 +17,7 @@ var gormConfig = &gorm.Config{
 	},
 }
 
-var db *gorm.DB
+var dbInstance *gorm.DB
 var dbOnce sync.Once
 
 func GetDb() *gorm.DB {
@@ -29,11 +29,11 @@ func GetDb() *gorm.DB {
 			cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Password, cfg.Database.DbName)
 
 		var err error
-		db, err = gorm.Open(postgres.Open(dsn), gormConfig)
+		dbInstance, err = gorm.Open(postgres.Open(dsn), gormConfig)
 		if err != nil {
 			panic(err)
 		}
 	})
 
-	return db
+	return dbInstance
 }

@@ -1,1 +1,1 @@
-export * from './ElementsTest';
+export * from './ElementsTestPage';

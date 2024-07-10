@@ -3,7 +3,7 @@ import React from 'react';
 import css from './Footer.module.css';
 
 import { Icon, Link } from 'shared/ui';
-import { CONTACT_DATA, SOCIAL_LINKS } from 'shared/config';
+import { CONTACT_DATA, ROUTE_CONSTANTS, SOCIAL_LINKS } from 'shared/config';
 
 export const Footer = () => {
     return (
@@ -39,22 +39,22 @@ export const Footer = () => {
                     <h2>Каталог</h2>
                     <div className={css.categoryList}>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href='/'>
                                 Класічны мёд
                             </Link>
                         </div>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href='/'>
                                 Мёд у сотах
                             </Link>
                         </div>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href='/'>
                                 Наборы
                             </Link>
                         </div>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href='/'>
                                 Іншыя прадукты
                             </Link>
                         </div>
@@ -64,12 +64,12 @@ export const Footer = () => {
                     <h2>Пра нас</h2>
                     <div className={css.categoryList}>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href={ROUTE_CONSTANTS.ABOUT.ROUTE}>
                                 Гісторыя пасекі
                             </Link>
                         </div>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href='/'>
                                 Дакументацыя
                             </Link>
                         </div>
@@ -79,12 +79,12 @@ export const Footer = () => {
                     <h2>Дастаўка і аплата</h2>
                     <div className={css.categoryList}>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href={ROUTE_CONSTANTS.CONTACTS_AND_DELIVERY.ROUTE}>
                                 Віды і ўмовы дастаўкі
                             </Link>
                         </div>
                         <div className={css.categoryElement}>
-                            <Link size='small' href='#'>
+                            <Link size='small' href={ROUTE_CONSTANTS.CONTACTS_AND_DELIVERY.ROUTE}>
                                 Віды аплаты
                             </Link>
                         </div>

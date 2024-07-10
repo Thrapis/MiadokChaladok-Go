@@ -1,1 +1,1 @@
-export * from './ContactsAndDelivery'
+export * from './ContactsAndDeliveryPage'

@@ -1,0 +1,56 @@
+.control {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+
+    padding: 24px;
+
+    border: solid 1px var(--text-and-frames);
+    border-radius: 25px;
+    background-color: var(--card-background);
+}
+
+.controlCell {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.centerCell {
+    justify-content: center;
+}
+
+.label {
+    white-space: nowrap;
+    margin-right: 8px;
+    font-size: 40px;
+    line-height: 1.2;
+}
+
+.promoInput {
+    border-radius: 10px;
+    font-size: 24px !important;
+}
+
+.promoButton {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+.totalPrice {
+    font-family: 'Raleway';
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.shipmentSelect {
+    border-radius: 10px;
+    font-size: 24px !important;
+    min-width: 260px;
+}
+
+.submitButton {
+    width: 100% !important;
+    margin: 0 8px;
+}

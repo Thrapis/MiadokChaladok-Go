@@ -1,4 +1,3 @@
-
 .root {
     position: relative;
 
@@ -13,6 +12,20 @@
 .icon {
     height: 100%;
     width: 100%;
+}
+
+/* Render Type */
+
+.imageRender {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.maskRender {
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
     background-color: var(--text-and-frames);
 }
 
@@ -28,32 +41,37 @@
 
 /* Size */
 
-.xsmallSize {
+.xsSize {
     min-height: 12px;
     min-width: 12px;
 }
 
-.smallSize {
+.sSize {
     min-height: 16px;
     min-width: 16px;
 }
 
-.mediumSize {
+.mSize {
     min-height: 20px;
     min-width: 20px;
 }
 
-.largeSize {
+.lSize {
     min-height: 24px;
     min-width: 24px;
 }
 
-.xlargeSize {
+.xlSize {
     min-height: 28px;
     min-width: 28px;
 }
 
-.xxlargeSize {
+.xxlSize {
     min-height: 32px;
     min-width: 32px;
+}
+
+.xxxlSize {
+    min-height: 36px;
+    min-width: 36px;
 }

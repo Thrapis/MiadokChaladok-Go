@@ -38,7 +38,7 @@ export const FilterPanel = ({
         <div className={cn(css.filterPanel, className)}>
             {
                 loading ? (
-                    <Icon type='loading-animated' size='xxlarge' />
+                    <Icon type='loading-animated' size='xxl' />
                 ) : (
                     <div className={css.panelFields}>
                         <div className={css.controlPanelColumn}>
@@ -236,7 +236,7 @@ export const FilterPanel = ({
                                 className={css.closeButton}
                                 onClick={() => setVisibility(false)}
                             >
-                                <Icon type='x' size='medium' />
+                                <Icon type='x' size='m' />
                             </Button>
                         </div>
                     </div>

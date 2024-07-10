@@ -55,7 +55,7 @@ export const SortPanel = ({
                         className={css.closeButton}
                         onClick={() => setVisibility(false)}
                     >
-                        <Icon type='x' size='medium' />
+                        <Icon type='x' size='m' />
                     </Button>
                 </div>
             </div>

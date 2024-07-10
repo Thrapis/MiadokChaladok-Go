@@ -15,7 +15,7 @@ type OptionProps = {
     value: OptionType["value"]
     title: OptionType["title"]
     selected: OptionType["value"]
-    groupName: string
+    groupName?: string
     onChange?: (value: string) => void
 }
 
@@ -64,10 +64,10 @@ export type RadioGroupProps = {
     size?: 'small' | 'medium' | 'large'
     theme?: 'default' | 'button'
 
-    name: string
-    options: OptionType[];
-    selected: OptionType["value"];
-    onChange?: (value: string) => void;
+    name?: string
+    options: OptionType[]
+    selected: OptionType["value"]
+    onChange?: (value: string) => void
 }
 
 export const RadioGroup = ({

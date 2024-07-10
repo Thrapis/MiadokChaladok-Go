@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"math"
 	"miadok-chaladok/internal/entity/data"
-	"miadok-chaladok/internal/entity/viewmodel"
 	"miadok-chaladok/pkg/api/meta"
 
 	"gorm.io/gorm"
 )
 
-type SortType int
+type SortType uint
 
 const (
 	SortByPopular   SortType = iota + 1
@@ -21,20 +20,20 @@ const (
 )
 
 type FilterParameters struct {
-	IgnoreFilters     bool     `json:"ignoreFilters"`
-	CategoryIds       []uint   `json:"categoryIds"`
-	TasteIds          []uint   `json:"tasteIds"`
-	PriceFrom         float32  `json:"priceFrom"`
-	PriceTo           float32  `json:"priceTo"`
-	VolumeFrom        float32  `json:"volumeFrom"`
-	VolumeTo          float32  `json:"volumeTo"`
-	InShop            bool     `json:"inShop"`
-	InStock           bool     `json:"inStock"`
-	ShipmentMethodIds []uint   `json:"shipmentMethodIds"`
-	SortType          SortType `json:"sortType"`
+	IgnoreFilters     bool
+	CategoryIds       []uint
+	TasteIds          []uint
+	PriceFrom         float32
+	PriceTo           float32
+	VolumeFrom        float32
+	VolumeTo          float32
+	InShop            bool
+	InStock           bool
+	ShipmentMethodIds []uint
+	SortType          SortType
 }
 
-func GetProductDtosByFilterPaginated(db *gorm.DB, filters FilterParameters, page, pageSize int) ([]*viewmodel.ProductDto, *meta.PaginationMeta, error) {
+func GetProductsByFilterPaginated(db *gorm.DB, filters FilterParameters, page, pageSize int) ([]*data.Product, *meta.PaginationMeta, error) {
 	if page == 0 {
 		page = 1
 	}
@@ -124,7 +123,6 @@ func GetProductDtosByFilterPaginated(db *gorm.DB, filters FilterParameters, page
 
 	totalPages := int(math.Ceil(float64(count) / float64(pageSize)))
 	meta := meta.NewPagintionMeta(page, pageSize, totalPages)
-	dtos := viewmodel.ToProductDtos(products)
 
-	return dtos, meta, nil
+	return products, meta, nil
 }

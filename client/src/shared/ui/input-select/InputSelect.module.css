@@ -13,7 +13,6 @@
 }
 
 .select {
-    /* display: none; */
     position: absolute;
     max-width: 0;
     max-height: 0;
@@ -82,11 +81,16 @@
 }
 
 .dropdownOption {
+    position: relative;
+
     cursor: pointer;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
+    white-space: nowrap;
+    overflow: hidden;
 
     box-sizing: border-box;
     padding: .5em;
@@ -97,16 +101,20 @@
     background-color: var(--card-background);
 }
 
+.optionText {
+    width: 100%;
+}
+
 /* Size */
 
-.small {
+.smallSize {
     height: 24px;
 }
 
-.medium {
+.mediumSize {
     height: 36px;
 }
 
-.large {
+.largeSize {
     height: 48px;
 }

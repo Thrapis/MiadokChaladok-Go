@@ -1,0 +1,43 @@
+
+.linkButton {
+    position: relative;
+}
+
+.iconWrapper {
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.linkButton:hover .iconWrapper {
+    outline: solid 3px var(--text-and-frames) !important;
+}
+
+/* .linkButton:hover .icon {
+    background-color: var(--card-background) !important;
+} */
+
+.counter {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 20px;
+    width: 20px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+
+    line-height: 1;
+    font-size: 12px;
+    font-family: 'Raleway';
+
+    background-color: var(--attention-background);
+    color: var(--attention-color);
+}
+
+.zero {
+    display: none;
+}

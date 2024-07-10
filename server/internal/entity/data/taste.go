@@ -1,6 +1,8 @@
 package data
 
-import "miadok-chaladok/internal/entity"
+import (
+	"miadok-chaladok/internal/entity"
+)
 
 type Taste struct {
 	entity.GormModel

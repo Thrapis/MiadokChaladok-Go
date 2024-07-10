@@ -1,11 +1,12 @@
 ---
 
-debug: true
+debug: false
+store-secret: "6731a2da-6481-40bd-865b-7762158de022"
 redis:
-  host:
-  port:
-  password:
-  db:
+  host: "redis"
+  port: 6379
+  password: 54321
+  db: 0
 database:
   driver: "postgres"
   host: "db"

@@ -1,1 +1,1 @@
-export * as catalogFilterUi from './ui';
+export * as catalogFilterUi from './ui'

@@ -1,24 +1,31 @@
 package api
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
-type ResponseData struct {
-	Status int
-	Data   interface{}
-	Meta   interface{}
+type HttpResponse struct {
+	Status  int         `json:"status"`
+	Payload interface{} `json:"payload"`
+	Meta    interface{} `json:"meta"`
 }
 
-func RespondJSON(c *gin.Context, status int, data interface{}, meta interface{}) {
-	fmt.Println("status ", status)
-	var res ResponseData
+func RespondJSON(c *gin.Context, status int, payload interface{}, meta interface{}) {
+	response := HttpResponse{
+		Status:  status,
+		Payload: payload,
+		Meta:    meta,
+	}
 
-	res.Status = status
-	res.Data = data
-	res.Meta = meta
+	c.JSON(status, response)
+}
 
-	c.JSON(200, res)
+func AbortRespondJSON(c *gin.Context, status int, payload interface{}, meta interface{}) {
+	response := HttpResponse{
+		Status:  status,
+		Payload: payload,
+		Meta:    meta,
+	}
+
+	c.AbortWithStatusJSON(status, response)
 }

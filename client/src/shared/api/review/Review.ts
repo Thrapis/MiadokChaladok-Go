@@ -1,19 +1,15 @@
-import axios, { AxiosPromise } from "axios";
-import { API_SOURCE } from "shared/config";
-import { typesApi, typesForms } from "shared/types";
+import { AxiosPromise } from "axios"
+import { typesApi, typesForms } from "shared/types"
 
-type ResponseData = typesApi.ResponseData
+import { apiInstance } from '../Base'
+
+type HttpResponse = typesApi.HttpResponse
 type AddReviewForm = typesForms.AddReviewForm
 
-
-export const GetReviewsByProductIdPaginated = (productId: number, page: number, pageSize: number): AxiosPromise<ResponseData> => {
-    return axios.get(`${API_SOURCE}/reviews/${productId}?page=${page}&pageSize=${pageSize}`)
+export const GetReviewsByProductIdPaginated = (productId: number, page: number, pageSize: number): AxiosPromise<HttpResponse> => {
+    return apiInstance.get('/api/get/reviews/paginated', { params: { productId, page, pageSize} })
 }
 
-export const AddReview = (form: AddReviewForm): AxiosPromise<ResponseData> => {
-    return axios.post(`${API_SOURCE}/to-product/review`, form)
+export const AddReview = (form: AddReviewForm): AxiosPromise<HttpResponse> => {
+    return apiInstance.post('/api/add/review/to-product', form, { withCredentials: true })
 }
-
-export const ADD_REVIEW_ERROR_MESSAGES: Map<number, string> = new Map([
-    [1, "Некаррэктны нумар аплаты ці дата куплі"]
-])

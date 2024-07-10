@@ -9,21 +9,35 @@ import "yet-another-react-lightbox/plugins/thumbnails.css"
 import css from './ProductBlock.module.css'
 
 import { IMAGES_SOURCE, ROUTE_CONSTANTS } from 'shared/config'
-import { Icon, Link } from 'shared/ui'
+import { Icon, Link, NumericUpDown, RadioGroup } from 'shared/ui'
 
-import { ProductDto } from 'entities'
-
-import { addToCartUi } from 'features'
-
-const { BlockAddToCart } = addToCartUi
+import { Product } from 'entities'
+import { GetDisplayPrice } from 'entities/price/PriceFormat'
+import { AddToCartButton } from 'features'
 
 export type Props = {
-    dto: ProductDto
+    product: Product
 }
 
 export const ProductBlock = ({
-    dto
+    product
 }: Props) => {
+    const onlyOption = product.options.length === 1
+
+    const [selectedOptionId, setSelectedOptionId] = useState<number | undefined>(
+        onlyOption ? product.options[0].id : undefined
+    )
+    const [quantity, setQuantity] = useState<number>(1)
+    const [optionPrice, setOptionPrice] = useState<string>(GetDisplayPrice(product.options, selectedOptionId))
+
+    const options = product.options.map(
+        option => ({ 'value': `${option.id}`, 'title': `${option.name} (${option.price} р.)` })
+    )
+
+    useEffect(() => {
+        const price = GetDisplayPrice(product.options, selectedOptionId)
+        setOptionPrice(price)
+    }, [selectedOptionId])
 
     return (
         <>
@@ -31,48 +45,97 @@ export const ProductBlock = ({
                 <div className={css.imageBlock}>
                     <img
                         className={css.image}
-                        src={`${IMAGES_SOURCE}${dto?.imagePath}`}
-                        alt={dto.productName}
+                        src={`${IMAGES_SOURCE}${product?.imagePath}`}
+                        alt={product.name}
                     />
                 </div>
                 <div className={css.infoBlock}>
                     <div className={css.title}>
                         <ReactFitty minSize={12} maxSize={48}>
-                            <h1>{dto.productName}</h1>
+                            <h1>{product.name}</h1>
                         </ReactFitty>
                     </div>
 
                     <div className={css.content}>
-                        <BlockAddToCart dto={dto} />
-                        <InfoTable dto={dto} />
+                        {/* <BlockAddToCart product={product} /> */}
+
+                        <div className={css.control}>
+                            <h4>Аб'ём:</h4>
+                            <RadioGroup
+                                size='small'
+                                selected={`${selectedOptionId}`}
+                                options={options}
+                                onChange={newValue => setSelectedOptionId(parseInt(newValue))}
+                                className={css.radioGroup}
+                            />
+
+                            {/* <div className={css.formError}>{errors.optionId?.message}</div> */}
+
+                            <div className={css.addToCartSpace}>
+                                <div className={css.priceAndAmoutSpace}>
+                                    <span className={css.price}>{`${optionPrice} р.`}</span>
+                                    <NumericUpDown
+                                        className={css.amountControl}
+                                        value={quantity}
+                                        min={1}
+                                        max={99}
+                                        step={1}
+                                        onChange={newValue => setQuantity(newValue)}
+                                    />
+                                </div>
+                                {/* <Button
+                                    type='submit'
+                                    size='large'
+                                    shape='round'
+                                    width='fluid'
+                                    className={css.submitButton}
+                                >
+                                    Дадаць у кошык
+                                </Button> */}
+                                <AddToCartButton
+                                    className={css.addToCartButton}
+                                    item={
+                                        selectedOptionId ? {
+                                            productId: product.id,
+                                            optionId: selectedOptionId,
+                                            quantity: quantity
+                                        } : undefined
+                                    }
+                                >
+                                    Дадаць у кошык
+                                </AddToCartButton>
+                            </div>
+                        </div>
+
+                        <InfoTable product={product} />
                     </div>
                 </div>
             </div>
-            <MediaSection dto={dto} />
+            <MediaSection product={product} />
         </>
     )
 }
 
 type InfoTableProps = {
-    dto: ProductDto
+    product: Product
 }
 
 const InfoTable = ({
-    dto
+    product
 }: InfoTableProps) => {
     const [isInStock, setIsInStock] = useState<boolean>(false)
     const [isInStorage, setIsInStorage] = useState<boolean>(false)
 
     useEffect(() => {
         setIsInStock(
-            dto.optionList.some(o => {
+            product.options.some(o => {
                 return o.availibility.some(a => {
                     return a.inStock > 0
                 })
             })
         )
         setIsInStorage(
-            dto.optionList.some(o => {
+            product.options.some(o => {
                 return o.availibility.some(a => {
                     return a.inStorage > 0
                 })
@@ -94,7 +157,7 @@ const InfoTable = ({
                 <tr>
                     <th><h4>Дастаўка:</h4></th>
                     <td>
-                        {dto.shipmentMethodList.map((sm, i, arr) => (
+                        {product.shipmentMethods.map((sm, i, arr) => (
                             `${sm.name}${i < arr.length - 2 ? `, ` : (
                                 i === arr.length - 2 ? ` або ` : `. `
                             )}`
@@ -110,11 +173,11 @@ const InfoTable = ({
                 </tr>
                 <tr>
                     <th><h4>Годны:</h4></th>
-                    <td>{dto.expiration}</td>
+                    <td>{product.expiration}</td>
                 </tr>
                 <tr>
                     <th><h4>Смак:</h4></th>
-                    <td>{dto.taste.description}</td>
+                    <td>{product.taste.description}</td>
                 </tr>
             </tbody>
         </table>
@@ -122,17 +185,17 @@ const InfoTable = ({
 }
 
 type MediaSectionProps = {
-    dto: ProductDto
+    product: Product
 }
 
 const MediaSection = ({
-    dto
+    product
 }: MediaSectionProps) => {
     const [selectedMediaId, setSelectedMediaId] = useState<number | null>(null)
 
     function getImageSet(mediaId: number) {
-        const mediaSet = dto.mediaList.map(m => ({ src: `${IMAGES_SOURCE}${m.imagePath}` }))
-        const selectedIndex = dto.mediaList.findIndex(m => m.id === mediaId)
+        const mediaSet = product.media.map(m => ({ src: `${IMAGES_SOURCE}${m.imagePath}` }))
+        const selectedIndex = product.media.findIndex(m => m.id === mediaId)
         return mediaSet.slice(selectedIndex, mediaSet.length).concat(mediaSet.slice(0, selectedIndex))
     }
 
@@ -140,7 +203,7 @@ const MediaSection = ({
         <>
             <div className={css.mediaCollection}>
                 {
-                    dto.mediaList?.map((m, index) => (
+                    product.media?.map((m, index) => (
                         <button
                             className={css.mediaWrapper}
                             type="button"
@@ -161,9 +224,9 @@ const MediaSection = ({
             <Lightbox
                 plugins={[Thumbnails]}
                 render={{
-                    iconClose: () => <Icon type='x' size='large' iconClassName={css.lightboxIcon} />,
-                    iconPrev: () => <Icon type='chevron-left' size='xlarge' iconClassName={css.lightboxIcon} />,
-                    iconNext: () => <Icon type='chevron-right' size='xlarge' iconClassName={css.lightboxIcon} />,
+                    iconClose: () => <Icon type='x' size='l' renderType='mask' iconClassName={css.lightboxIcon} />,
+                    iconPrev: () => <Icon type='chevron-left' size='xl' renderType='mask' iconClassName={css.lightboxIcon} />,
+                    iconNext: () => <Icon type='chevron-right' size='xl' renderType='mask' iconClassName={css.lightboxIcon} />,
                 }}
                 className={css.miadokLightbox}
                 open={selectedMediaId != null}

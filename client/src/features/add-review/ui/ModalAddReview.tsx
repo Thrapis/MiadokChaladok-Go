@@ -11,7 +11,7 @@ import { typesForms, typesApi } from 'shared/types'
 const { AddReview, ADD_REVIEW_ERROR_MESSAGES } = apiReview
 const { AddReviewRuleSet } = typesForms
 type AddReviewForm = typesForms.AddReviewForm
-type FormMeta = typesApi.FormMeta
+type ErrorMeta = typesApi.ErrorMeta
 
 type Props = {
     onSubmit?: () => void
@@ -53,7 +53,7 @@ export const ModalAddReview = ({
         const data = response.data
         console.log(data)
 
-        if (data.Status === 200) {
+        if (data.status === 200) {
             setIsProcessSuccess(true)
             reset()
 
@@ -66,10 +66,16 @@ export const ModalAddReview = ({
         } else {
             setIsProcessSuccess(false)
 
-            const meta = data.Meta as FormMeta
-            setFailureMessage(ADD_REVIEW_ERROR_MESSAGES.get(meta.ErrorCode))
+            const meta = data.meta as ErrorMeta
+            setFailureMessage(ADD_REVIEW_ERROR_MESSAGES.get(meta.errorCode))
             onSubmitFailure?.()
         }
+    }
+
+    const resetProcess = () => {
+        setInFormProcess(false)
+        setIsProcessSuccess(undefined)
+        setFailureMessage(undefined)
     }
 
     return (
@@ -80,11 +86,11 @@ export const ModalAddReview = ({
                         isProcessSuccess !== undefined && css.hidden
                     )}
                     type='loading-animated'
-                    size='xxlarge'
+                    size='xxl'
                 />
 
                 <div className={cn(isProcessSuccess === undefined ? css.hidden : css.resultBlock)}>
-                    <div 
+                    <div
                         className={cn(
                             isProcessSuccess === undefined && css.hidden,
                             isProcessSuccess ? css.iconCircleCorrect : css.iconCircleIncorrect
@@ -92,7 +98,8 @@ export const ModalAddReview = ({
                     >
                         <Icon
                             type={isProcessSuccess ? 'check' : 'x'}
-                            size='xlarge'
+                            renderType='mask'
+                            size='xl'
                             iconClassName={cn(isProcessSuccess ? css.iconSuccess : css.iconFailure)}
                         />
                     </div>
@@ -104,7 +111,7 @@ export const ModalAddReview = ({
                             theme='contained'
                             size='large'
                             shape='round'
-                            onClick={() => setInFormProcess(false)}
+                            onClick={resetProcess}
                         >
                             Паспрабаваць зноў
                         </Button>
@@ -272,7 +279,7 @@ export const ModalAddReview = ({
                         className={css.submit}
                         type='submit'
                     >
-                        <Icon type='check' size='large' />
+                        <Icon type='check' size='l' />
                     </Button>
                 </div>
             </form>

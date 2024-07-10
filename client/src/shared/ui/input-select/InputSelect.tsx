@@ -1,11 +1,13 @@
 import cn from 'classnames'
 
-import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { MouseEventHandler, useEffect, useRef, useState } from "react"
 
 import css from './InputSelect.module.css'
 
-type Option = { title: string; value: string };
+type Option = { 
+    title: string
+    value: string 
+}
 
 export type SelectProps = {
     className?: string
@@ -17,8 +19,6 @@ export type SelectProps = {
     options: Option[]
     selected: Option | null
     placeholder?: string
-    mode?: 'rows' | 'cells'
-    status?: 'default' | 'invalid'
 }
 
 export const InputSelect = ({
@@ -30,8 +30,6 @@ export const InputSelect = ({
     options,
     selected,
     placeholder = "Абярыце опцыю",
-    mode = 'rows',
-    status = 'default',
 }: SelectProps) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedValue, setSelectedValue] = useState(selected?.value)
@@ -79,7 +77,7 @@ export const InputSelect = ({
             <div
                 className={cn(
                     css.dropdownButton,
-                    css[`${size}`]
+                    css[`${size}Size`],
                 )}
                 onClick={handlePlaceHolderClick}
                 role="button"
@@ -110,9 +108,9 @@ export const InputSelect = ({
 }
 
 type OptionProps = {
-    option: Option;
+    option: Option
     size?: 'small' | 'medium' | 'large'
-    onClick: (value: Option['value']) => void;
+    onClick: (value: Option['value']) => void
 }
 
 const OptionElement = ({
@@ -130,13 +128,13 @@ const OptionElement = ({
         <li
             className={cn(
                 css.dropdownOption,
-                css[`${size}`]
+                css[`${size}Size`],
             )}
             value={value}
             onClick={handleClick(value)}
             tabIndex={0}
         >
-            {title}
+            <span className={css.optionText}>{title}</span>
         </li>
     )
 }

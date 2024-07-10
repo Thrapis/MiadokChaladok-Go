@@ -1,6 +1,6 @@
 
 export type PaginationMeta = {
-    Page: number
-    PageSize: number
-    TotalPages: number
+    page: number
+    pageSize: number
+    totalPages: number
 }

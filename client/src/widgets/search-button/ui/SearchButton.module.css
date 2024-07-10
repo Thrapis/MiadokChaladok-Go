@@ -1,0 +1,17 @@
+
+.linkButton {
+    position: relative;
+}
+
+.iconWrapper {
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.linkButton:hover .iconWrapper {
+    outline: solid 3px var(--text-and-frames) !important;
+}
+
+/* .linkButton:hover .icon {
+    background-color: var(--card-background) !important;
+} */

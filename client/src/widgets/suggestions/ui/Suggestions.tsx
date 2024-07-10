@@ -5,7 +5,7 @@ import css from './Suggestions.module.css'
 import { Icon } from 'shared/ui'
 import { apiProduct } from 'shared/api'
 
-import { ProductDto } from 'entities'
+import { Product } from 'entities'
 
 import { productCardUi } from 'widgets/product-card'
 
@@ -14,11 +14,11 @@ const { ProductCard } = productCardUi
 
 export const SuggestionsBlock = () => {
     const [loading, setLoading] = useState(true);
-    const [suggestions, setSuggestions] = useState<ProductDto[] | null>(null);
+    const [suggestions, setSuggestions] = useState<Product[] | null>(null);
 
     async function fetchSuggestions() {
         const response = await GetSuggestedProducts(3)
-        setSuggestions(response.data.Data as ProductDto[])
+        setSuggestions(response.data.payload as Product[])
         setLoading(false)
     }
 
@@ -33,11 +33,11 @@ export const SuggestionsBlock = () => {
             <div className={css.productsList}>
                 {
                     loading ? (
-                        <Icon type='loading-animated' size='xxlarge' />
+                        <Icon type='loading-animated' size='xxl' />
                     ) : (
-                        suggestions?.map((suggest: ProductDto) => (
+                        suggestions?.map((suggest: Product) => (
                             <ProductCard
-                                dto={suggest}
+                                product={suggest}
                                 key={crypto.randomUUID()}
                                 className={css.productCard}
                             />

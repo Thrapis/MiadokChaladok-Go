@@ -52,7 +52,7 @@ export const CatalogFilter = ({
 
     async function fetchFilterLists() {
         const response = await GetFilterLists()
-        const filterLists = response.data.Data as CatalogFilterDto
+        const filterLists = response.data.payload as CatalogFilterDto
         setCatalogFilters(filterLists)
     }
 

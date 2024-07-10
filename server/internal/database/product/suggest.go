@@ -2,12 +2,11 @@ package product
 
 import (
 	"miadok-chaladok/internal/entity/data"
-	"miadok-chaladok/internal/entity/viewmodel"
 
 	"gorm.io/gorm"
 )
 
-func GetSuggestedProductDtos(db *gorm.DB, limit int) ([]*viewmodel.ProductDto, error) {
+func GetSuggestedProducts(db *gorm.DB, limit int) ([]*data.Product, error) {
 	if limit == 0 {
 		limit = 3
 	}
@@ -21,5 +20,5 @@ func GetSuggestedProductDtos(db *gorm.DB, limit int) ([]*viewmodel.ProductDto, e
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return viewmodel.ToProductDtos(products), nil
+	return products, nil
 }

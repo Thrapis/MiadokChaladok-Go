@@ -6,6 +6,7 @@ export type Props = {
     className?: string
     onChange?: (entered: string) => void
     type?: 'text' | 'password' | 'search' | 'tel' | 'email' | 'number' | 'date'
+    size?: 'small' | 'medium' | 'large'
     name?: string
     value?: string
     placeholder?: string
@@ -19,6 +20,7 @@ export const InputField = ({
     className,
     onChange,
     type = 'text',
+    size = 'small',
     name,
     value,
     placeholder,
@@ -32,6 +34,7 @@ export const InputField = ({
         <input
             className={cn(
                 css.inputField,
+                css[`${size}Size`],
                 className
             )}
             onChange={(e) => onChange?.(e.target.value)}

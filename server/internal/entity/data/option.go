@@ -9,4 +9,5 @@ type Option struct {
 	Volume       float32        `json:"volume"`
 	Price        float32        `json:"price"`
 	ShopsOptions []ShopsOptions `json:"availibility"`
+	Product      Product        `json:"product"`
 }

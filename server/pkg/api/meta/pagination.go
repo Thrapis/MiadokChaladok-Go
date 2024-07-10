@@ -1,9 +1,9 @@
 package meta
 
 type PaginationMeta struct {
-	Page       int
-	PageSize   int
-	TotalPages int
+	Page       int `json:"page"`
+	PageSize   int `json:"pageSize"`
+	TotalPages int `json:"totalPages"`
 }
 
 func NewPagintionMeta(page, pageSize, totalPages int) *PaginationMeta {

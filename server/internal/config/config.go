@@ -10,7 +10,9 @@ import (
 // Config - defines all configuration of the server application.
 type Config struct {
 	// Provide addition info in responses with user conversation
-	DebugMode bool `yaml:"debug" env:"BOT_DEBUG" env-description:"Server app debug mode" env-required:"true"`
+	DebugMode bool `yaml:"debug" env:"API_DEBUG" env-description:"Server app debug mode"`
+	// Secret code for server app sessions store
+	StoreSecret string `yaml:"store-secret" env:"STORE_SECRET" env-description:"Server app store secret"`
 	// Represent redis configuration
 	Redis RedisConfig `yaml:"redis"`
 	// Represent database configuration
@@ -19,13 +21,11 @@ type Config struct {
 
 // RedisConfig - defines redis storage configuration.
 type RedisConfig struct {
-	Host     string `yaml:"host" env:"REDIS_HOST" env-description:"redis host"`
-	Port     int32  `yaml:"port" env:"REDIS_PORT" env-description:"redis port"`
+	Host     string `yaml:"host" env:"REDIS_HOST" env-description:"redis host" env-required:"true"`
+	Port     int32  `yaml:"port" env:"REDIS_PORT" env-description:"redis port" env-required:"true"`
 	Password string `yaml:"password" env:"REDIS_PASSWORD" env-description:"redis password"`
 	Db       int    `yaml:"db" env:"REDIS_DB" env-description:"redis database"`
 }
-
-///env-required:"true"
 
 // DatabaseConfig - defines database storage configuration.
 type DatabaseConfig struct {
@@ -39,26 +39,26 @@ type DatabaseConfig struct {
 
 const configPath = "configs/config.yaml"
 
-var instance *Config
-var confOnce sync.Once
+var configInstance *Config
+var configOnce sync.Once
 
 // GetConfig returns app configuration.
 func GetConfig() *Config {
-	confOnce.Do(func() {
+	configOnce.Do(func() {
 
-		instance = &Config{}
+		configInstance = &Config{}
 
-		if err := cleanenv.ReadConfig(configPath, instance); err != nil {
-			help, _ := cleanenv.GetDescription(instance, nil)
+		if err := cleanenv.ReadConfig(configPath, configInstance); err != nil {
+			help, _ := cleanenv.GetDescription(configInstance, nil)
 			log.Println(help)
 			log.Fatal(err)
 		}
 
-		err := cleanenv.ReadEnv(instance)
+		err := cleanenv.ReadEnv(configInstance)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 	})
-	return instance
+	return configInstance
 }

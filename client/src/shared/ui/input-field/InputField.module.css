@@ -15,3 +15,17 @@
 .inputField:focus {
     outline: none;
 }
+
+/* Size */
+
+.smallSize {
+    height: 24px;
+}
+
+.mediumSize {
+    height: 36px;
+}
+
+.largeSize {
+    height: 48px;
+}

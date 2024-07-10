@@ -2,12 +2,11 @@ package product
 
 import (
 	"miadok-chaladok/internal/entity/data"
-	"miadok-chaladok/internal/entity/viewmodel"
 
 	"gorm.io/gorm"
 )
 
-func GetProductDtoById(db *gorm.DB, id uint) (*viewmodel.ProductDto, error) {
+func GetProductById(db *gorm.DB, id uint) (*data.Product, error) {
 	var product *data.Product
 	result := db.Table("products").Where("id = ?", id).
 		Preload("Category").Preload("Taste").
@@ -19,5 +18,5 @@ func GetProductDtoById(db *gorm.DB, id uint) (*viewmodel.ProductDto, error) {
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return viewmodel.ToProductDto(product), nil
+	return product, nil
 }

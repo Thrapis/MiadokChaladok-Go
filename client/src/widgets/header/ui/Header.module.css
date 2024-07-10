@@ -27,11 +27,10 @@ header {
     height: inherit;
 }
 
-.headerGroup {
-    display: flex;
-    justify-content: center;
-    gap: clamp(1em, 4vw, 4em);
-}
+/* .controlButton {
+    height: 100% !important;
+} */
+
 
 header a:not(:hover) {
     text-decoration: none;
@@ -39,4 +38,10 @@ header a:not(:hover) {
 
 .headerGroup img {
     height: 40px;
+}
+
+.headerGroup {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1em, 4vw, 4em);
 }

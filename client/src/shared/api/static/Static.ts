@@ -1,9 +1,10 @@
-import axios, { AxiosPromise } from "axios";
-import { API_SOURCE } from "shared/config";
-import { typesApi } from "shared/types";
+import { AxiosPromise } from "axios"
+import { typesApi } from "shared/types"
 
-type ResponseData = typesApi.ResponseData
+import { apiInstance } from '../Base'
 
-export const GetFilterLists = (): AxiosPromise<ResponseData> => {
-    return axios.get(`${API_SOURCE}/filter/lists`)
+type HttpResponse = typesApi.HttpResponse
+
+export const GetFilterLists = (): AxiosPromise<HttpResponse> => {
+    return apiInstance.get('/api/get/filter/lists')
 }

@@ -3,13 +3,15 @@ import cn from 'classnames'
 
 import css from './Pagination.module.css'
 
-import { typesApi } from "shared/types"
-
-type PaginationMeta = typesApi.PaginationMeta
+interface IPaginationMeta {
+    page: number
+    pageSize: number
+    totalPages: number
+}
 
 type PaginationProps = {
     className?: string
-    paginationMeta: PaginationMeta
+    paginationMeta: IPaginationMeta
     onChange?: (value: number) => void
     firstRadius?: number
     currentRadius?: number
@@ -31,16 +33,16 @@ export const Pagination = ({
 
     const isHidden = (value: number) => {
         return (1 + firstRadius < value) &&
-            (paginationMeta.Page - currentRadius > value || paginationMeta.Page + currentRadius < value) &&
-            (paginationMeta.TotalPages - lastRadius > value)
+            (paginationMeta.page - currentRadius > value || paginationMeta.page + currentRadius < value) &&
+            (paginationMeta.totalPages - lastRadius > value)
     }
 
     return (
-        <div className={cn(css.pagination, paginationMeta.TotalPages === 0 && css.hidden, className)}>
+        <div className={cn(css.pagination, paginationMeta.totalPages === 0 && css.hidden, className)}>
             <PaginationButton
                 onClick={onChange}
-                value={paginationMeta.Page - 1}
-                disabled={paginationMeta.Page - 1 < 1}
+                value={paginationMeta.page - 1}
+                disabled={paginationMeta.page - 1 < 1}
                 control={true}
             >
                 <div className={css.iconWrapper}>
@@ -55,12 +57,12 @@ export const Pagination = ({
                 </div>
             </PaginationButton>
             {
-                Array.from({ length: paginationMeta.TotalPages }, (_, i) => i + 1).map((value) =>
+                Array.from({ length: paginationMeta.totalPages }, (_, i) => i + 1).map((value) =>
                     <PaginationButton
                         onClick={onChange}
                         value={value}
                         hidden={isHidden(value)}
-                        current={value === paginationMeta.Page}
+                        current={value === paginationMeta.page}
                         key={crypto.randomUUID()}
                     >
                         {value}
@@ -69,8 +71,8 @@ export const Pagination = ({
             }
             <PaginationButton
                 onClick={onChange}
-                value={paginationMeta.Page + 1}
-                disabled={paginationMeta.Page + 1 > paginationMeta.TotalPages}
+                value={paginationMeta.page + 1}
+                disabled={paginationMeta.page + 1 > paginationMeta.totalPages}
                 control={true}
             >
                 <div className={css.iconWrapper}>

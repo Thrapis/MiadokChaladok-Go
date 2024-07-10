@@ -2,7 +2,6 @@ version: '3.9'
 services:
   db:
     container_name: "miadok_db"
-    # platform: linux/x86_64
     build:
       context: .
       dockerfile: db.Dockerfile
@@ -19,9 +18,17 @@ services:
         target: /dev/shm
         tmpfs:
           size: 134217728 # 128*2^20 bytes = 128Mb
-  # redis:
-  #   image: "redis:7-alpine"
-  #   container_name: redis-server
+  redis:
+    container_name: "miadok_redis"
+    image: "redis:7-alpine"
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
+    ports:
+      - "6379"
+    environment:
+      REDIS_PASSWORD: 54321
   api:
     container_name: "miadok_api"
     build:
@@ -33,9 +40,10 @@ services:
       - "8080:8080"
     depends_on:
       - db
+      - redis
     environment:
-      WAIT_HOSTS: db:5432
-      # STORAGE_HOST: redis
+      WAIT_HOSTS: db:5432, redis:6379
+      # STORAGE_HOST: redis:6379
     volumes:
       - .:/app/
   web:
