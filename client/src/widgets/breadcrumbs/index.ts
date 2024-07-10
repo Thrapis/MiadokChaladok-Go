@@ -1,1 +1,1 @@
-export * as breadcrumbsUi from './ui';
+export { Breadcrumbs } from './ui/Breadcrumbs'

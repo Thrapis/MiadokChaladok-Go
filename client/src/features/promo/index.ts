@@ -1,0 +1,1 @@
+export { PromoCheckButton } from './ui/PromoCheckButton'

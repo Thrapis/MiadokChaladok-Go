@@ -3,25 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import css from './CartPage.module.css'
 
-import { apiProduct } from 'shared/api'
+import { Icon } from 'shared/ui'
+import { GetCartItems, ICartItemDescription } from 'shared/api/cart'
 
 import { changeItemQuantityInCart, removeItemFromCart, selectCart } from 'entities/cart'
 
-import { cartItemUi } from 'widgets/cart-item'
-import { cartControlUi } from 'widgets/cart-control'
-import { Icon } from 'shared/ui'
-import { Breadcrumbs } from 'widgets/breadcrumbs/ui'
-
-const { CartItem } = cartItemUi
-const { CartControl } = cartControlUi
-
-type Item = apiProduct.ICartOption
-type Items = Item[]
-const { GetCartItems } = apiProduct
+import { CartControl, CartItem } from 'widgets/cart'
+import { Breadcrumbs } from 'widgets/breadcrumbs'
 
 export const CartPage = () => {
     const dispatch = useDispatch()
-    const [items, setItems] = useState<Items>([])
+    const [items, setItems] = useState<ICartItemDescription[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
     const cart = useSelector(selectCart)
@@ -32,24 +24,28 @@ export const CartPage = () => {
         return p + c.quantity * (items.find(i => i.id === c.optionId)?.price || 0)
     }, 0)
 
-    const changeQuantity = (item: Item, quantity: number) => {
+    const changeQuantity = (item: ICartItemDescription, quantity: number) => {
         dispatch(changeItemQuantityInCart({ optionId: item.id, quantity: quantity }))
     }
 
-    const removeItem = (item: Item) => {
+    const removeItem = (item: ICartItemDescription) => {
         dispatch(removeItemFromCart({ optionId: item.id }))
         setItems(items.filter(i => i.id !== item.id))
     }
 
+    const fetchCartItems = async () => {
+        await GetCartItems(cart.map(i => i.optionId))
+            .then(response => response.data)
+            .then(data => {
+                setItems(data.payload || [])
+                setIsLoading(false)
+            })
+            .catch(error => console.error('Error fetching data:', error))
+    }
+
     useEffect(() => {
         if (cart.length !== 0) {
-            GetCartItems(cart.map(i => i.optionId))
-                .then(response => response.data)
-                .then(data => {
-                    setItems(data.payload || [])
-                    setIsLoading(false)
-                })
-                .catch(error => console.error('Error fetching data:', error))
+            fetchCartItems()
         } else {
             setIsLoading(false)
         }
@@ -70,7 +66,7 @@ export const CartPage = () => {
                 ) : (
                     cart.length === 0 ? (
                         <div className={css.emptyCartBlock}>
-                            Ваш кошык пусты. Дадайце ў кошык тое, што выс цікавіць 
+                            Ваш кошык пусты. Дадайце ў кошык тое, што выс цікавіць
                         </div>
                     ) : (
                         <>

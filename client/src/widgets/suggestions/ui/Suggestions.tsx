@@ -3,23 +3,24 @@ import { useEffect, useState } from 'react'
 import css from './Suggestions.module.css'
 
 import { Icon } from 'shared/ui'
-import { apiProduct } from 'shared/api'
+import { GetSuggestedProducts, IProductPreview } from 'shared/api/product'
 
-import { Product } from 'entities'
+import { ProductCard } from 'widgets/product'
 
-import { productCardUi } from 'widgets/product-card'
-
-const { GetSuggestedProducts } = apiProduct
-const { ProductCard } = productCardUi
+const suggestionsLimit = 3
 
 export const SuggestionsBlock = () => {
     const [loading, setLoading] = useState(true);
-    const [suggestions, setSuggestions] = useState<Product[] | null>(null);
+    const [suggestions, setSuggestions] = useState<IProductPreview[] | null>(null);
 
-    async function fetchSuggestions() {
-        const response = await GetSuggestedProducts(3)
-        setSuggestions(response.data.payload as Product[])
-        setLoading(false)
+    const fetchSuggestions = async () => {
+        await GetSuggestedProducts(suggestionsLimit)
+            .then(response => response.data)
+            .then(data => {
+                setSuggestions(data.payload)
+                setLoading(false)
+            })
+            .catch(error => console.error('Error fetching data:', error))
     }
 
     useEffect(() => {
@@ -35,7 +36,7 @@ export const SuggestionsBlock = () => {
                     loading ? (
                         <Icon type='loading-animated' size='xxl' />
                     ) : (
-                        suggestions?.map((suggest: Product) => (
+                        suggestions?.map(suggest => (
                             <ProductCard
                                 product={suggest}
                                 key={crypto.randomUUID()}

@@ -1,7 +1,8 @@
-import cn from 'classnames';
-import { ArraysSoftEqual } from 'shared/lib';
+import cn from 'classnames'
 
-import css from './CheckboxGroup.module.css';
+import css from './CheckboxGroup.module.css'
+
+import { ArraysSoftEqual } from 'shared/lib/array'
 
 type OptionType = {
     value: string

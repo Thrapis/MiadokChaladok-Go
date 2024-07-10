@@ -1,1 +1,1 @@
-export * as catalogUi from './ui'
+export { CatalogPage } from './ui/CatalogPage'

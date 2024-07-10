@@ -32,6 +32,11 @@ body {
     max-width: 1328px;
 }
 
+main {
+    flex: 1;
+    z-index: 1;
+}
+
 h1 {
     font-family: "Cormorant";
     font-weight: 700;

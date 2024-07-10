@@ -3,9 +3,7 @@ import css from './AboutPage.module.css'
 import { ROUTE_CONSTANTS } from 'shared/config'
 import { Link } from 'shared/ui'
 
-import { breadcrumbsUi } from 'widgets/breadcrumbs'
-
-const { Breadcrumbs } = breadcrumbsUi
+import { Breadcrumbs } from 'widgets/breadcrumbs'
 
 export const AboutPage = () => {
     return (

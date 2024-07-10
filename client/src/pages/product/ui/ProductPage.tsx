@@ -4,27 +4,18 @@ import cn from 'classnames'
 
 import css from './ProductPage.module.css'
 
-import { ROUTE_CONSTANTS } from 'shared/config';
-import { apiProduct, apiReview } from 'shared/api'
-import { typesApi } from 'shared/types'
+import { ROUTE_CONSTANTS } from 'shared/config'
 import { Button, Icon, Modal, Pagination } from 'shared/ui'
+import { IPaginationMeta } from 'shared/types'
+import { IReviewDescription } from 'shared/api/review'
+import { GetProductById, IProductDescription } from 'shared/api/product'
+import { GetReviewsByProductIdPaginated } from 'shared/api/review'
 
-import { Product, Review } from 'entities'
+import { ModalAddReview } from 'features/review'
 
-import { ModalAddReview } from 'features/add-review'
-
-import { breadcrumbsUi } from "widgets/breadcrumbs"
-import { productBlockUi } from 'widgets/product-block'
-import { reviewCloudUi } from 'widgets/review-cloud'
-
-const { GetProductById } = apiProduct
-const { GetReviewsByProductIdPaginated } = apiReview
-
-const { Breadcrumbs } = breadcrumbsUi
-const { ProductBlock } = productBlockUi
-const { ReviewCloud } = reviewCloudUi
-
-type PaginationMeta = typesApi.PaginationMeta
+import { ProductBlock } from 'widgets/product'
+import { Breadcrumbs } from "widgets/breadcrumbs"
+import { ReviewCloud } from 'widgets/review'
 
 const PAGE_SIZE = 10
 const INIT_PAGE = 1
@@ -33,9 +24,9 @@ export const ProductPage = () => {
     const [loading, setLoading] = useState(true)
     const [reviewLoading, setReviewLoading] = useState(true)
     const [isAddReviewModalOpened, setIsAddReviewModalOpened] = useState(false)
-    const [product, setProduct] = useState<Product>()
-    const [reviews, setReviews] = useState<Review[]>([])
-    const [paginationMeta, setPaginationMeta] = useState<PaginationMeta>({
+    const [product, setProduct] = useState<IProductDescription>()
+    const [reviews, setReviews] = useState<IReviewDescription[]>([])
+    const [paginationMeta, setPaginationMeta] = useState<IPaginationMeta>({
         page: INIT_PAGE, pageSize: PAGE_SIZE, totalPages: 0
     })
 
@@ -49,16 +40,18 @@ export const ProductPage = () => {
             return
         }
         const productIdParsed = parseInt(productId)
-        const response = await GetProductById(productIdParsed)
 
-        const dto = response.data.payload as Product
-        if (dto === null) {
-            naviagte(ROUTE_CONSTANTS.NOT_FOUND.ROUTE)
-            return
-        }
-
-        setProduct(response.data.payload as Product)
-        setLoading(false)
+        await GetProductById(productIdParsed)
+            .then(response => response.data)
+            .then(data => {
+                if (data.payload === null) {
+                    naviagte(ROUTE_CONSTANTS.NOT_FOUND.ROUTE)
+                    return
+                }
+                setProduct(data.payload)
+                setLoading(false)
+            })
+            .catch(error => console.error('Error fetching data:', error))
     }
 
     const fetchReviews = async (page: number) => {
@@ -66,10 +59,15 @@ export const ProductPage = () => {
             return
         }
         const productIdParsed = parseInt(productId)
-        const response = await GetReviewsByProductIdPaginated(productIdParsed, page, PAGE_SIZE)
-        setReviews(response.data.payload as Review[])
-        setPaginationMeta(response.data.meta as PaginationMeta)
-        setReviewLoading(false)
+
+        await GetReviewsByProductIdPaginated(productIdParsed, page, PAGE_SIZE)
+            .then(response => response.data)
+            .then(data => {
+                setReviews(data.payload)
+                setPaginationMeta(data.meta)
+                setReviewLoading(false)
+            })
+            .catch(error => console.error('Error fetching data:', error))
     }
 
     const onPaginationPageChange = async (page: number) => {
@@ -86,7 +84,7 @@ export const ProductPage = () => {
         fetchProduct()
         fetchReviews(INIT_PAGE)
     }, [productId])
-    
+
     useEffect(() => {
         const bd = anchorRef.current?.getBoundingClientRect()
         if (bd && bd.top < window.screenTop) {

@@ -1,15 +1,28 @@
 import { AxiosPromise } from "axios"
-import { typesApi, typesForms } from "shared/types"
+import { IErrorMeta, IHttpResponse, IPaginationMeta } from "shared/types"
 
 import { apiInstance } from '../Base'
+import { IAddReviewForm, IReviewDescription } from "./Types"
 
-type HttpResponse = typesApi.HttpResponse
-type AddReviewForm = typesForms.AddReviewForm
+type IGetReviewsByProductIdPaginatedResponse = IHttpResponse<IReviewDescription[], IPaginationMeta>
 
-export const GetReviewsByProductIdPaginated = (productId: number, page: number, pageSize: number): AxiosPromise<HttpResponse> => {
-    return apiInstance.get('/api/get/reviews/paginated', { params: { productId, page, pageSize} })
+export const GetReviewsByProductIdPaginated = (
+    productId: number,
+    page: number,
+    pageSize: number
+): AxiosPromise<IGetReviewsByProductIdPaginatedResponse> => {
+    return apiInstance.get('/api/get/reviews/paginated', { params: { productId, page, pageSize } })
 }
 
-export const AddReview = (form: AddReviewForm): AxiosPromise<HttpResponse> => {
-    return apiInstance.post('/api/add/review/to-product', form, { withCredentials: true })
+type IAddReviewResponse = IHttpResponse<unknown, IErrorMeta>
+
+export const AddReview = (
+    form: IAddReviewForm
+): AxiosPromise<IAddReviewResponse> => {
+    return apiInstance.post('/api/add/review/to-product', form, {
+        withCredentials: true,
+        validateStatus: (status) => {
+            return status >= 200 && status < 500
+        },
+    })
 }

@@ -1,1 +1,0 @@
-export * as productBlockUi from './ui'

@@ -27,32 +27,54 @@ a.link {
 
 .pagination {
     position: absolute;
-    bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 16px;
+
+    margin: 0 auto;
+    padding: 8px 16px;
+
+    border-radius: 25px;
+    
+    height: fit-content;
+    width: fit-content;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 
-    height: 60px;
-    width: 100%;
+    backdrop-filter: blur(4px);
 
     list-style-type: none;
 
     z-index: 1;
 }
 
+.pagination li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .pagination li button {
+    cursor: pointer;
+
     background-color: var(--card-background);
-    border: solid 2px transparent;
+    border: 0;
     border-radius: 100%;
 
     width: 20px;
     height: 20px;
 
     margin-inline: 8px;
+
+    transition-property: background-color;
+    transition-timing-function: ease-in;
+    transition-duration: 200ms;
 }
 
 .pagination li:global(.slick-active) button {
-    border: solid 2px var(--text-and-frames);
+    background-color: var(--accent-and-buttons);
+    /* outline: solid 2px var(--text-and-frames); */
 }

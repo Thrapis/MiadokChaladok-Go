@@ -1,0 +1,120 @@
+.card {
+    background-color: var(--card-background);
+    border: solid 1px var(--text-and-frames);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+.linkOnImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image {
+    object-fit: cover;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 408px;
+    width: 100%;
+}
+
+.control {
+    border-top: solid 1px var(--text-and-frames);
+    min-height: 60px;
+    padding: 8px;
+    padding-top: 16px;
+}
+
+
+/*      */
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.controlWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.nameAndVolume {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    width: 50%;
+}
+
+.name {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.volumeList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.volumeOption {
+    white-space: nowrap !important;
+}
+
+.volumeOnlyOption  {
+    cursor: default !important;
+    border: 0 !important;
+    background-color: transparent !important;
+    margin: 0;
+}
+
+.priceAndCartButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    width: 50%;
+}
+
+.price {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 500;
+    width: 100%;
+}
+
+.addToCartButton {
+    margin: 0;
+    white-space: nowrap;
+    width: 60% !important;
+    border-radius: 25px;
+    height: 24px;
+    font-size: 16px !important;
+    font-weight: 600;
+    font-family: 'Raleway';
+}
+
+.formError {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0 4px;
+    color: var(--incorrect);
+}
+
+.formError:empty {
+    display: none;
+}

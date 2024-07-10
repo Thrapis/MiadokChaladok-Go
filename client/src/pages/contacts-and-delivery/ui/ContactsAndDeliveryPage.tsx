@@ -4,11 +4,8 @@ import css from './ContactsAndDeliveryPage.module.css'
 import { ROUTE_CONSTANTS } from 'shared/config'
 import { Link, Icon } from 'shared/ui'
 
-import { breadcrumbsUi } from 'widgets/breadcrumbs'
-import { contactsAndMapUi } from "widgets/contacts-and-map"
-
-const { Breadcrumbs } = breadcrumbsUi
-const { ContactsAndMap } = contactsAndMapUi
+import { Breadcrumbs } from 'widgets/breadcrumbs'
+import { ContactsAndMap } from "widgets/contacts-and-map"
 
 export const ContactsAndDeliveryPage = () => {
     return (

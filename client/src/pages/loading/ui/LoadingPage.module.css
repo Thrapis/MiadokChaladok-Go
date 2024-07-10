@@ -1,0 +1,15 @@
+.pageContent {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadingIcon {
+    min-height: 64px !important;
+    min-width: 64px !important;
+}

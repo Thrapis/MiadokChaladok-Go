@@ -24,7 +24,6 @@ export const MainCarousel = () => {
         slidesToScroll: 1,
       };
     return (
-        //owl-theme
         <Slider 
             {...settings}
             className={css.carouselContainer}

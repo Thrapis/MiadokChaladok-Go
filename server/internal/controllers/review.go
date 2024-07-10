@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"miadok-chaladok/internal/config"
 	dbr "miadok-chaladok/internal/database/review"
 	"miadok-chaladok/internal/entity/api/request"
@@ -24,8 +23,6 @@ func AddReviewToProduct(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-
-	fmt.Println(requestData)
 
 	good := true
 

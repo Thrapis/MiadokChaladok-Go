@@ -1,1 +1,1 @@
-export * as elementsTestUi from './ui';
+export { ElementsTestPage } from './ui/ElementsTestPage';

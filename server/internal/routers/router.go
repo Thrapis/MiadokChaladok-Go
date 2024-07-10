@@ -3,7 +3,6 @@ package routers
 import (
 	"miadok-chaladok/internal/config"
 	"miadok-chaladok/internal/controllers"
-	"miadok-chaladok/internal/middleware"
 	"miadok-chaladok/pkg/storage/redis"
 
 	"github.com/gin-contrib/cors"
@@ -51,23 +50,22 @@ func SetupRouter(cfg *config.Config) *gin.Engine {
 			get.POST("/products/by-filter/paginated", controllers.GetProductsByFilterPaginated)
 			get.GET("/reviews/paginated", controllers.GetReviewsByProductIdPaginated)
 			get.GET("/filter/lists", controllers.GetFilterLists)
-		}
-	}
 
-	// Set protected routes
-	protected := router.Group("/api")
-	protected.Use(middleware.AuthMiddlewareCookie())
-	{
-		get := protected.Group("/get")
-		{
 			get.POST("/cart/items", controllers.GetCartItems)
 		}
 
-		add := protected.Group("/add")
+		add := public.Group("/add")
 		{
 			add.POST("/review/to-product", controllers.AddReviewToProduct)
 		}
 	}
+
+	// Set protected routes
+	// protected := router.Group("/api")
+	// protected.Use(middleware.AuthMiddlewareCookie())
+	// {
+
+	// }
 
 	return router
 }

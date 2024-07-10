@@ -1,0 +1,25 @@
+.pageContent {
+    flex: 1;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.errorIcon {
+    min-height: 64px !important;
+    min-width: 64px !important;
+}
+
+.label {
+    font-weight: 600;
+}
+
+.error {
+    font-size: 18px;
+    font-family: 'Raleway';
+}

@@ -1,1 +1,1 @@
-export * as contactsAndMapUi from './ui'
+export { ContactsAndMap } from './ui/ContactsAndMap'

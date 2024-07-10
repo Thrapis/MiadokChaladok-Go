@@ -9,6 +9,7 @@ export type IconType =
     | 'sort'
     | 'magniglass'
     | 'x'
+    | 'sad'
     | 'star-empty'
     | 'star-full'
     | 'chevron-up'

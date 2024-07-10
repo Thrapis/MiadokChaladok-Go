@@ -4,52 +4,46 @@ import cn from 'classnames'
 import css from './CatalogPage.module.css'
 
 import { Icon, Pagination } from 'shared/ui'
-import { apiProduct } from 'shared/api'
-import { typesApi, typesForms } from 'shared/types'
+import { IPaginationMeta } from 'shared/types'
+import { IProductPreview } from 'shared/api/product'
+import { GetProductsByFilterPaginated, IFilterForm } from 'shared/api/catalog'
 
-import { Product } from 'entities'
+import { CatalogFilter } from 'features/catalog'
 
-import { productCardUi } from 'widgets/product-card'
-
-import { breadcrumbsUi } from 'widgets/breadcrumbs'
-import { catalogFilterUi } from 'features/catalog-filter'
-
-const { Breadcrumbs } = breadcrumbsUi
-const { CatalogFilter } = catalogFilterUi
-const { ProductCard } = productCardUi
-
-const { GetProductsByFilterPaginated } = apiProduct
-type PaginationMeta = typesApi.PaginationMeta
-type FilterForm = typesForms.FilterForm
+import { ProductCard } from 'widgets/product'
+import { Breadcrumbs } from 'widgets/breadcrumbs'
 
 const PAGE_SIZE = 12
 const INIT_PAGE = 1
-const DEFAULT_FILTER = { ignoreFilters: true } as FilterForm
+const DEFAULT_FILTER = { ignoreFilters: true } as IFilterForm
 
 export const CatalogPage = () => {
     const [loading, setLoading] = useState(true)
-    const [products, setProducts] = useState<Product[] | null>(null)
-    const [lastFilterForm, setLastFilterForm] = useState<FilterForm>(DEFAULT_FILTER)
-    const [paginationMeta, setPaginationMeta] = useState<PaginationMeta>({
+    const [products, setProducts] = useState<IProductPreview[] | null>(null)
+    const [lastFilterForm, setLastFilterForm] = useState<IFilterForm>(DEFAULT_FILTER)
+    const [paginationMeta, setPaginationMeta] = useState<IPaginationMeta>({
         page: INIT_PAGE, pageSize: PAGE_SIZE, totalPages: 0
     })
 
     const anchorRef = useRef<HTMLDivElement>(null)
 
-    async function fetchProducts(filter: FilterForm, page: number) {
-        const response = await GetProductsByFilterPaginated(filter, page, PAGE_SIZE)
-
-        console.log(response.data)
-
-        setPaginationMeta(response.data.meta as PaginationMeta)
-        setProducts(response.data.payload as Product[])
-        if (filter === DEFAULT_FILTER) {
-            setLoading(false)
-            return
-        }
+    const fetchProducts = async (filter: IFilterForm, page: number) => {
+        await GetProductsByFilterPaginated(filter, page, PAGE_SIZE)
+            .then(response => response.data)
+            .then(data => {
+                setPaginationMeta(data.meta)
+                setProducts(data.payload)
+            })
+            .catch(error => console.error('Error fetching data:', error))
+            .finally(() => {
+                if (filter === DEFAULT_FILTER) {
+                    setLoading(false)
+                    return
+                }
+            })
     }
 
-    async function onFilterChange(filter: FilterForm) {
+    async function onFilterChange(filter: IFilterForm) {
         setLastFilterForm(filter)
     }
 
@@ -90,7 +84,7 @@ export const CatalogPage = () => {
                         <Icon type='loading-animated' size='xxl' />
                     ) : (
                         paginationMeta.totalPages > 0 ? (
-                            products?.map((product: Product) => (
+                            products?.map(product => (
                                 <ProductCard
                                     product={product}
                                     key={crypto.randomUUID()}

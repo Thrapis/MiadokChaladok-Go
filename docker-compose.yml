@@ -33,7 +33,7 @@ services:
     container_name: "miadok_api"
     build:
       context: .
-      dockerfile: app.Dockerfile
+      dockerfile: api.Dockerfile
     networks:
       - default
     ports:

@@ -1,10 +1,11 @@
-import { Link } from "shared/ui";
 
+import css from './Header.module.css'
+
+import { Link } from "shared/ui";
 import { ROUTE_CONSTANTS } from 'shared/config'
 
-import css from './Header.module.css';
-import { CartButton } from 'widgets/cart-button/ui';
-import { SearchButton } from 'widgets/search-button/ui';
+import { SearchButton } from 'widgets/search'
+import { CartButton } from 'widgets/cart'
 
 export const Header = () => {
 

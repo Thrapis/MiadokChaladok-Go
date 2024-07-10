@@ -1,4 +1,3 @@
-
 import cn from 'classnames'
 
 import css from './HomePage.module.css'
@@ -6,16 +5,11 @@ import css from './HomePage.module.css'
 import { Icon, Link } from 'shared/ui'
 import { ROUTE_CONSTANTS } from 'shared/config'
 
-import { carouselUi } from "widgets/carousel"
-import { suggestionsUi } from "widgets/suggestions"
-import { contactsAndMapUi } from "widgets/contacts-and-map"
-
-const { MainCarousel } = carouselUi
-const { SuggestionsBlock } = suggestionsUi
-const { ContactsAndMap } = contactsAndMapUi
+import { MainCarousel } from "widgets/carousel"
+import { SuggestionsBlock } from "widgets/suggestions"
+import { ContactsAndMap } from "widgets/contacts-and-map"
 
 export const HomePage = () => {
-
     return (
         <div className={cn(css.pageContent)}>
             <div className={css.carouselSpace}>

@@ -1,1 +1,1 @@
-export * as footerUi from './ui'
+export { Footer } from './ui/Footer'

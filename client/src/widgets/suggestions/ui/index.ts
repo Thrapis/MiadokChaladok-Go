@@ -1,1 +1,0 @@
-export { SuggestionsBlock } from './Suggestions'

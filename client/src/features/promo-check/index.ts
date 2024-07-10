@@ -1,1 +1,0 @@
-export * as promoCheckUi from './ui'

@@ -1,1 +1,1 @@
-export * as cartUi from './ui'
+export { CartPage } from './ui/CartPage'

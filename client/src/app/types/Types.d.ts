@@ -1,2 +1,2 @@
-declare type RootState = ReturnType<typeof import('app/store').store.getState>
-declare type AppDispatch = typeof import('app/store').store.dispatch
+declare type RootState = ReturnType<typeof import('app/store/Store').store.getState>
+declare type AppDispatch = typeof import('app/store/Store').store.dispatch
