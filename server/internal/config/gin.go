@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"miadok-chaladok/internal/delivery/http/middleware"
 
 	"github.com/gin-contrib/cors"
@@ -10,12 +9,13 @@ import (
 
 func NewGin(config *Config) *gin.Engine {
 	app := gin.New()
-	app.Use(gin.Recovery())
 
 	if !config.DebugMode {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	app.RedirectTrailingSlash = true
+
+	app.Use(gin.Recovery())
 	app.Use(gin.Logger())
 	app.Use(cors.New(GetCorsConfig(config)))
 	app.Use(middleware.ErrorHandleMiddleware())
@@ -25,9 +25,10 @@ func NewGin(config *Config) *gin.Engine {
 
 func GetCorsConfig(config *Config) cors.Config {
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{
-		fmt.Sprintf("http://%s:%d", config.Web.Host, config.Web.Port),
-		fmt.Sprintf("https://%s:%d", config.Web.Host, config.Web.Port),
+	if len(config.Cors.AllowOrigins) == 0 {
+		corsConfig.AllowAllOrigins = true
+	} else {
+		corsConfig.AllowOrigins = config.Cors.AllowOrigins
 	}
 	corsConfig.AllowCredentials = true
 

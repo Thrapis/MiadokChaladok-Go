@@ -15,8 +15,8 @@ type Config struct {
 	Log LogConfig `yaml:"log"`
 	// Represent app configuration
 	App AppConfig `yaml:"app"`
-	// Represent web configuration
-	Web WebConfig `yaml:"web"`
+	// Represent cors configuration
+	Cors CorsConfig `yaml:"cors"`
 	// Represent (key/value) storage configuration
 	Storage StorageConfig `yaml:"storage"`
 	// Represent database configuration
@@ -33,10 +33,9 @@ type AppConfig struct {
 	Port int `yaml:"port" env:"APP_PORT" env-description:"app port" env-required:"true"`
 }
 
-// WebConfig - defines web configuration.
-type WebConfig struct {
-	Host string `yaml:"host" env:"WEB_HOST" env-description:"web host" env-required:"true"`
-	Port int    `yaml:"port" env:"WEB_PORT" env-description:"web port" env-required:"true"`
+// CorsConfig - defines cors configuration.
+type CorsConfig struct {
+	AllowOrigins []string `yaml:"allow-origins" env:"CORS_ALLOWORIGINS" env-description:"cors allow origins"`
 }
 
 // StorageConfig - defines storage configuration.

@@ -3,14 +3,15 @@
 debug: false
 log:
   level: 6
+cors:
+  allow-origins:
+    - "http://localhost"
+    - "https://localhost"
 app:
   port: 8080
-web:
-  host: "localhost"
-  port: 3000
 store-secret: "6731a2da-6481-40bd-865b-7762158de022"
 storage:
-  host: "redis"
+  host: "storage"
   port: 6379
   password: 54321
   db: 0
@@ -21,7 +22,7 @@ database:
   user: "miadok_manager"
   password: "54321"
   dbname: "miadok_db"
-    pool:
+  pool:
     idle: 10
     max: 100
     lifetime: 300

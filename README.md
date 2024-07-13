@@ -4,7 +4,7 @@
 
 # Miadok Chaladok
 
-This repository hosts a Full-Stack Web Application built with React.js, Golang, and PostgreSQL. The goal of the project is to gain knowledge in React (using Typescript, architecture based on Feature-Sliced Design), Golang libraries (Gin, Gorm), Redis [in future], Postres database and Docker.
+This repository hosts a Full-Stack Web Application built with React.js, Golang, and PostgreSQL. The goal of the project is to gain knowledge in React (using Typescript, architecture based on Feature-Sliced Design), Golang libraries (Gin, Gorm), Redis storage, Postgres database and Docker.
 
 ## Contents
 
@@ -14,21 +14,26 @@ This repository hosts a Full-Stack Web Application built with React.js, Golang, 
 
 ## Docker Compose Configuration
 
-The `docker-compose.yml` file defines three Docker services:
+The `docker-compose.yml` file defines four Docker services:
 
 ### 1. `db` (configuration defined in `db.Dockerfile`)
 
 - Utilizes PostgreSQL Docker image.
 - Exposes port 5432 for access between containers (especially for `api`) and 3306 from outside.
 
-### 2. `api` (configuration defined in `api.Dockerfile`)
+### 2. `storage`
+
+- Utilizes Redis Docker image.
+- Exposes port 6379 for access between containers (especially for `api`).
+
+### 3. `api` (configuration defined in `api.Dockerfile`)
 
 - Dockerizes the Golang backend application.
 - Exposes port 8080 for accessing between containers (especially for `web`).
-- Links to the `db` service for database connectivity.
+- Links to the `db` service for database connectivity and `storage` for caching.
 - Builds application and hosts it inside Alpine Linux container for container size minimizing.
 
-### 3. `web` (configuration defined in `web.Dockerfile`)
+### 4. `web` (configuration defined in `web.Dockerfile`)
 
 - Dockerizes the React.js frontend application.
 - Mounts the application code and node_modules for development.
