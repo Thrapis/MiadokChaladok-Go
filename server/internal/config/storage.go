@@ -1,33 +1,23 @@
 package config
 
 import (
+	"log"
 	"miadok-chaladok/pkg/storage"
 	"miadok-chaladok/pkg/storage/redis"
-	"sync"
 )
 
-var storageInstance storage.StorageOperator
-var storageOnce sync.Once
+func NewStorage(config *Config) storage.StorageOperator {
+	storageConfig := redis.StorageConfig{
+		Host:     config.Storage.Host,
+		Port:     config.Storage.Port,
+		Password: config.Storage.Password,
+		Db:       config.Storage.Db,
+	}
 
-func GetStorage() storage.StorageOperator {
-	storageOnce.Do(func() {
+	storage, err := redis.NewStorage(storageConfig)
+	if err != nil {
+		log.Fatalf("failed to connect storage: %v", err)
+	}
 
-		cfg := GetConfig()
-
-		redisCfg := redis.StorageConfig{
-			Host:     cfg.Redis.Host,
-			Port:     cfg.Redis.Port,
-			Password: cfg.Redis.Password,
-			Db:       cfg.Redis.Db,
-		}
-
-		storage, err := redis.NewStorage(redisCfg)
-		if err != nil {
-			panic(err)
-		}
-
-		storageInstance = storage
-	})
-
-	return storageInstance
+	return storage
 }

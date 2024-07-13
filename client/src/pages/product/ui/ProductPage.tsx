@@ -64,7 +64,7 @@ export const ProductPage = () => {
             .then(response => response.data)
             .then(data => {
                 setReviews(data.payload)
-                setPaginationMeta(data.meta)
+                setPaginationMeta(data.pagination)
                 setReviewLoading(false)
             })
             .catch(error => console.error('Error fetching data:', error))

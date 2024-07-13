@@ -1,10 +1,10 @@
 import { AxiosPromise } from "axios"
-import { IErrorMeta, IHttpResponse, IPaginationMeta } from "shared/types"
+import { IHttpResponse } from "shared/types"
 
 import { apiInstance } from '../Base'
 import { IAddReviewForm, IReviewDescription } from "./Types"
 
-type IGetReviewsByProductIdPaginatedResponse = IHttpResponse<IReviewDescription[], IPaginationMeta>
+type IGetReviewsByProductIdPaginatedResponse = IHttpResponse<IReviewDescription[]>
 
 export const GetReviewsByProductIdPaginated = (
     productId: number,
@@ -14,7 +14,7 @@ export const GetReviewsByProductIdPaginated = (
     return apiInstance.get('/api/get/reviews/paginated', { params: { productId, page, pageSize } })
 }
 
-type IAddReviewResponse = IHttpResponse<unknown, IErrorMeta>
+type IAddReviewResponse = IHttpResponse
 
 export const AddReview = (
     form: IAddReviewForm

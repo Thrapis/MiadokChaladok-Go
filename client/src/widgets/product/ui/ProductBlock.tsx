@@ -124,25 +124,6 @@ type InfoTableProps = {
 const InfoTable = ({
     product
 }: InfoTableProps) => {
-    const [isInStock, setIsInStock] = useState<boolean>(false)
-    const [isInStorage, setIsInStorage] = useState<boolean>(false)
-
-    useEffect(() => {
-        setIsInStock(
-            product.options.some(o => {
-                return o.availibility.some(a => {
-                    return a.inStock > 0
-                })
-            })
-        )
-        setIsInStorage(
-            product.options.some(o => {
-                return o.availibility.some(a => {
-                    return a.inStorage > 0
-                })
-            })
-        )
-    }, [])
 
     return (
         <table className={css.infoTable}>
@@ -150,16 +131,16 @@ const InfoTable = ({
                 <tr>
                     <th><h4>Наяўнасць:</h4></th>
                     <td>
-                        {isInStock ? `Зараз ёсць у нашай краме` : (
-                            isInStorage ? `Зараз ёсць на складзе` : `Няма ў наяўнасці`
+                        {product.isInStock ? `Зараз ёсць у нашай краме` : (
+                            product.isInStorage ? `Зараз ёсць на складзе` : `Няма ў наяўнасці`
                         )}
                     </td>
                 </tr>
                 <tr>
                     <th><h4>Дастаўка:</h4></th>
                     <td>
-                        {product.shipmentMethods.map((sm, i, arr) => (
-                            `${sm.name}${i < arr.length - 2 ? `, ` : (
+                        {product.shipmentMethodNames.map((smName, i, arr) => (
+                            `${smName}${i < arr.length - 2 ? `, ` : (
                                 i === arr.length - 2 ? ` або ` : `. `
                             )}`
                         ))}
@@ -178,7 +159,7 @@ const InfoTable = ({
                 </tr>
                 <tr>
                     <th><h4>Смак:</h4></th>
-                    <td>{product.taste.description}</td>
+                    <td>{product.tasteDescription}</td>
                 </tr>
             </tbody>
         </table>
@@ -192,11 +173,11 @@ type MediaSectionProps = {
 const MediaSection = ({
     product
 }: MediaSectionProps) => {
-    const [selectedMediaId, setSelectedMediaId] = useState<number | null>(null)
+    const [selectedMediaPath, setSelectedMediaPath] = useState<string | null>(null)
 
-    function getImageSet(mediaId: number) {
-        const mediaSet = product.media.map(m => ({ src: `${IMAGES_SOURCE}${m.imagePath}` }))
-        const selectedIndex = product.media.findIndex(m => m.id === mediaId)
+    function getImageSet(mediaPath: string) {
+        const mediaSet = product.mediaPaths.map(mPath => ({ src: `${IMAGES_SOURCE}${mPath}` }))
+        const selectedIndex = product.mediaPaths.findIndex(mPath => mPath === mediaPath)
         return mediaSet.slice(selectedIndex, mediaSet.length).concat(mediaSet.slice(0, selectedIndex))
     }
 
@@ -204,18 +185,18 @@ const MediaSection = ({
         <>
             <div className={css.mediaCollection}>
                 {
-                    product.media?.map((m, index) => (
+                    product.mediaPaths?.map((mPath, index) => (
                         <button
                             className={css.mediaWrapper}
                             type="button"
                             onClick={() => {
-                                setSelectedMediaId(m.id)
+                                setSelectedMediaPath(mPath)
                             }}
                             key={crypto.randomUUID()}
                         >
                             <img
                                 className={css.media}
-                                src={`${IMAGES_SOURCE}${m.imagePath}`}
+                                src={`${IMAGES_SOURCE}${mPath}`}
                                 alt={`Выява ${index}`}
                             />
                         </button>
@@ -230,9 +211,9 @@ const MediaSection = ({
                     iconNext: () => <Icon type='chevron-right' size='xl' renderType='mask' iconClassName={css.lightboxIcon} />,
                 }}
                 className={css.miadokLightbox}
-                open={selectedMediaId != null}
-                close={() => setSelectedMediaId(null)}
-                slides={selectedMediaId != null ? getImageSet(selectedMediaId) : []}
+                open={selectedMediaPath != null}
+                close={() => setSelectedMediaPath(null)}
+                slides={selectedMediaPath != null ? getImageSet(selectedMediaPath) : []}
             />
         </>
     )

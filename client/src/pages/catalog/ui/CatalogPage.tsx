@@ -31,7 +31,7 @@ export const CatalogPage = () => {
         await GetProductsByFilterPaginated(filter, page, PAGE_SIZE)
             .then(response => response.data)
             .then(data => {
-                setPaginationMeta(data.meta)
+                setPaginationMeta(data.pagination)
                 setProducts(data.payload)
             })
             .catch(error => console.error('Error fetching data:', error))

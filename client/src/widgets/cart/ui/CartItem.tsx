@@ -2,12 +2,12 @@ import css from './CartItem.module.css'
 
 import { IMAGES_SOURCE, ROUTE_CONSTANTS } from 'shared/config'
 import { Button, Icon, Link, NumericUpDown } from 'shared/ui'
-import { ICartItemDescription } from 'shared/api/cart'
+import { IOptionItem } from 'shared/api/cart'
 
 type CartItemProps = {
-    onRemove?: (item: ICartItemDescription) => void
-    onQuantityChange?: (item: ICartItemDescription, quantity: number) => void
-    item: ICartItemDescription
+    onRemove?: (item: IOptionItem) => void
+    onQuantityChange?: (item: IOptionItem, quantity: number) => void
+    item: IOptionItem
     quantity: number
 }
 
@@ -20,19 +20,19 @@ export const CartItem = ({
 
     return (
         <div className={css.wrapper}>
-            <Link className={css.imageWrapper} href={ROUTE_CONSTANTS.PRODUCT.ROUTE.replace(":productId", `${item.product.id}`)}>
-                <img className={css.image} src={`${IMAGES_SOURCE}${item.product.imagePath}`} />
+            <Link className={css.imageWrapper} href={ROUTE_CONSTANTS.PRODUCT.ROUTE.replace(":productId", `${item.productId}`)}>
+                <img className={css.image} src={`${IMAGES_SOURCE}${item.productImagePath}`} />
             </Link>
             <div className={css.content}>
                 <div className={css.description}>
                     <div className={css.naming}>
-                        <h3>{item.product.name}</h3>
+                        <h3>{item.productName}</h3>
                         <span>{item.name}</span>
                     </div>
                     <div className={css.availibility}>
                         <span className={css.availibilityLabel}>У наяўнасці:</span>
                         <span className={css.availibilityCount}>
-                            {item.availibility[0].inStock + item.availibility[0].inStorage} адз.
+                            {item.quantityAvailable} адз.
                         </span>
                     </div>
                 </div>

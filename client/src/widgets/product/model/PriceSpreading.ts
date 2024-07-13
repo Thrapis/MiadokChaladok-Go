@@ -1,5 +1,9 @@
-import { IOption } from "shared/api/Types"
 import { FormatPrice } from "shared/lib/price"
+
+interface IOption {
+    readonly id: number
+    readonly price: number
+}
 
 const OptionPrice = (list: IOption[], id: number) => {
     const option = list.find(o => o.id === id)

@@ -1,19 +1,14 @@
 
-export interface IHttpResponse<P = unknown, M = unknown> {
-	status: number
+export interface IHttpResponse<P = unknown> {
 	payload: P
-	meta: M
+	pagination: IPaginationMeta
+    errors: string
 }
 
 export interface IPaginationMeta {
     page: number
     pageSize: number
     totalPages: number
-}
-
-export interface IErrorMeta {
-    errorCode: number
-    errorMessage: string
 }
 
 export { }

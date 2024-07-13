@@ -1,9 +1,14 @@
-import { ICategory, IShipmentMethod, ITaste } from "../Types"
+// Filter Lists
 
 export interface IFilterLists {
-    readonly categories: ICategory[]
-    readonly tastes: ITaste[]
-    readonly shipmentMethods: IShipmentMethod[]
+    readonly categories: IFilterRecord[]
+    readonly tastes: IFilterRecord[]
+    readonly shipmentMethods: IFilterRecord[]
+}
+
+export interface IFilterRecord {
+    readonly id: number
+    readonly name: string
 }
 
 export interface IFilterForm {

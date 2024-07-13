@@ -6,6 +6,7 @@ import css from './ModalAddReview.module.css'
 
 import { Button, Icon, InputField, StarRating, TextArea } from 'shared/ui'
 import { AddReview, AddReviewRuleSet, ADD_REVIEW_ERROR_MESSAGES, IAddReviewForm } from 'shared/api/review'
+import { request } from 'http'
 
 type Props = {
     onSubmit?: () => void
@@ -43,9 +44,11 @@ export const ModalAddReview = ({
         onSubmit?.()
         setInFormProcess(true)
         await AddReview(form)
-            .then(response => response.data)
-            .then(data => {
-                if (data.status === 200) {
+            .then(request => {
+                const status = request.status
+                const data = request.data
+                
+                if (status === 200) {
                     setIsProcessSuccess(true)
                     reset()
                     setTimeout(() => {
@@ -56,7 +59,7 @@ export const ModalAddReview = ({
                     }, 1000)
                 } else {
                     setIsProcessSuccess(false)
-                    setFailureMessage(ADD_REVIEW_ERROR_MESSAGES.get(data.meta.errorCode))
+                    setFailureMessage(ADD_REVIEW_ERROR_MESSAGES.get(data.errors))
                     onSubmitFailure?.()
                 }
             })

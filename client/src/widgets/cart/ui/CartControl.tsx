@@ -3,17 +3,19 @@ import cn from 'classnames'
 
 import css from './CartControl.module.css'
 
-import { IShipmentMethod } from 'shared/api/Types'
 import { Button, InputField, InputSelect } from 'shared/ui'
 import { FormatPrice } from 'shared/lib/price'
 
 import { PromoCheckButton } from 'features/promo'
 
-type ShipmentMethod = IShipmentMethod
+interface IShipmentMethod {
+    readonly id: number
+    readonly name: string
+}
 
 type CartControlProps = {
     totalPrice: number
-    methods: ShipmentMethod[]
+    methods: IShipmentMethod[]
 }
 
 export const CartControl = ({

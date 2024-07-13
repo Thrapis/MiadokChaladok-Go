@@ -1,30 +1,25 @@
-import { ICategory, IShipmentMethod, ITaste } from "../Types"
+// Cart Item
 
-
-export interface ICartItemDescription {
+export interface IOptionItem {
     readonly id: number
     readonly name: string
     readonly price: number
     readonly volume: number
-
-    readonly availibility: ICartItemAvilibility[]
-    readonly product: ICartItemProductPreview
+    
+    readonly productId: number
+    readonly productName: string
+    readonly productImagePath: string
+    readonly quantityAvailable: number
+    readonly shipmentMethods: IOptionItemShipmentMethod[]
 }
 
-export interface ICartItemAvilibility {
-    readonly shopId:    number
-	readonly inStock:   number
-	readonly inStorage: number
-}
-
-export interface ICartItemProductPreview {
+export interface IOptionItemShipmentMethod {
     readonly id: number
     readonly name: string
-    readonly imagePath: string
-    
-    readonly category: ICategory
-    readonly taste: ITaste
-    readonly shipmentMethods: IShipmentMethod[]
+}
+
+export interface IGetCartItemsForm {
+    readonly optionIds: number[]
 }
 
 export {}

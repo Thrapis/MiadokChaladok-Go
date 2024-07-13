@@ -11,7 +11,7 @@ export const GetFilterLists = (): AxiosPromise<IGetFilterListsResponse> => {
     return apiInstance.get('/api/get/filter/lists')
 }
 
-type IGetProductsByFilterPaginatedResponse = IHttpResponse<IProductPreview[], IPaginationMeta>
+type IGetProductsByFilterPaginatedResponse = IHttpResponse<IProductPreview[]>
 
 export const GetProductsByFilterPaginated = (
     form: IFilterForm, 

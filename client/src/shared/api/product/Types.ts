@@ -1,32 +1,25 @@
-import { ICategory, ITaste, IOption, IMedia, IShipmentMethod} from '../Types'
-
 // Description
-
-export interface IProductOptionAvilibility {
-    readonly shopId:    number
-	readonly inStock:   number
-	readonly inStorage: number
-}
-
-export interface IProductOption {
-    readonly id: number
-    readonly name: string
-    readonly price: number
-    readonly volume: number
-    readonly availibility: IProductOptionAvilibility[]
-}
 
 export interface IProductDescription {
     readonly id: number
     readonly name: string
     readonly imagePath: string
     readonly expiration: string
-    
-    readonly category: ICategory
-    readonly taste: ITaste
-    readonly options: IProductOption[]
-    readonly media: IMedia[]
-    readonly shipmentMethods: IShipmentMethod[]
+
+    readonly isInStock: boolean
+    readonly isInStorage: boolean
+    readonly categoryName: string
+    readonly tasteName: string
+    readonly tasteDescription: string
+    readonly shipmentMethodNames: string[]
+    readonly mediaPaths: string[]
+    readonly options: IProductDescriptionOption[]
+}
+
+export interface IProductDescriptionOption {
+    readonly id: number
+    readonly name: string
+    readonly price: number
 }
 
 // Preview
@@ -35,8 +28,13 @@ export interface IProductPreview {
     readonly id: number
     readonly name: string
     readonly imagePath: string
-    readonly expiration: string
-    readonly options: IOption[]
+    readonly options: IProductPreviewOption[]
+}
+
+export interface IProductPreviewOption {
+    readonly id: number
+    readonly name: string
+    readonly price: number
 }
 
 export {}

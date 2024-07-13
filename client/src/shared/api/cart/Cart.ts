@@ -1,12 +1,14 @@
 import { AxiosPromise } from "axios"
 import { IHttpResponse } from "shared/types"
 import { apiInstance } from "../Base"
-import { ICartItemDescription } from "./Types"
+import { IOptionItem, IGetCartItemsForm } from "./Types"
 
-type IGetCartItemsResponse = IHttpResponse<ICartItemDescription[]>
+
+
+type IGetCartItemsResponse = IHttpResponse<IOptionItem[]>
 
 export const GetCartItems = (
-    optionIds: number[]
+    form: IGetCartItemsForm
 ): AxiosPromise<IGetCartItemsResponse> => {
-    return apiInstance.post('/api/get/cart/items', optionIds, { withCredentials: true })
+    return apiInstance.post('/api/get/cart/items', form, { withCredentials: true })
 }

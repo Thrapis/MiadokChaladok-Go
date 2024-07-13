@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import css from './CartPage.module.css'
 
 import { Icon } from 'shared/ui'
-import { GetCartItems, ICartItemDescription } from 'shared/api/cart'
+import { GetCartItems, IOptionItem } from 'shared/api/cart'
 
 import { changeItemQuantityInCart, removeItemFromCart, selectCart } from 'entities/cart'
 
@@ -13,7 +13,7 @@ import { Breadcrumbs } from 'widgets/breadcrumbs'
 
 export const CartPage = () => {
     const dispatch = useDispatch()
-    const [items, setItems] = useState<ICartItemDescription[]>([])
+    const [items, setItems] = useState<IOptionItem[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
     const cart = useSelector(selectCart)
@@ -24,17 +24,19 @@ export const CartPage = () => {
         return p + c.quantity * (items.find(i => i.id === c.optionId)?.price || 0)
     }, 0)
 
-    const changeQuantity = (item: ICartItemDescription, quantity: number) => {
+    const changeQuantity = (item: IOptionItem, quantity: number) => {
         dispatch(changeItemQuantityInCart({ optionId: item.id, quantity: quantity }))
     }
 
-    const removeItem = (item: ICartItemDescription) => {
+    const removeItem = (item: IOptionItem) => {
         dispatch(removeItemFromCart({ optionId: item.id }))
         setItems(items.filter(i => i.id !== item.id))
     }
 
     const fetchCartItems = async () => {
-        await GetCartItems(cart.map(i => i.optionId))
+        const form = {optionIds: cart.map(i => i.optionId)}
+        
+        await GetCartItems(form)
             .then(response => response.data)
             .then(data => {
                 setItems(data.payload || [])
@@ -85,7 +87,7 @@ export const CartPage = () => {
                             </div>
                             <CartControl
                                 totalPrice={totalPrice()}
-                                methods={items?.[0]?.product?.shipmentMethods || []}
+                                methods={items?.[0]?.shipmentMethods || []}
                             />
                         </>
                     )

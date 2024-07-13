@@ -1,6 +1,5 @@
 export {
-    type ICartItemDescription,
-    type ICartItemAvilibility,
-    type ICartItemProductPreview,
+    type IOptionItem,
+    type IOptionItemShipmentMethod,
 } from './Types'
 export { GetCartItems } from './Cart'
