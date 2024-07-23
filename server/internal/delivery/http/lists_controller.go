@@ -1,31 +1,35 @@
 package http
 
 import (
+	"context"
+	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
-	"miadok-chaladok/internal/usecase"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
-type ListsController struct {
-	UseCase *usecase.ListsUseCase
-	Log     *logrus.Logger
+type IListsUseCase interface {
+	Get(ctx context.Context) (*model.FilterListsResponse, error)
 }
 
-func NewListsController(useCase *usecase.ListsUseCase, log *logrus.Logger) *ListsController {
-	return &ListsController{
-		UseCase: useCase,
-		Log:     log,
+type listsController struct {
+	useCase IListsUseCase
+	log     app.ILogger
+}
+
+func NewListsController(useCase IListsUseCase, log app.ILogger) *listsController {
+	return &listsController{
+		useCase: useCase,
+		log:     log,
 	}
 }
 
-func (c *ListsController) GetFilterLists(ctx *gin.Context) {
+func (c *listsController) GetFilterLists(ctx *gin.Context) {
 
-	response, err := c.UseCase.Get(ctx)
+	response, err := c.useCase.Get(ctx)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting filter lists")
+		c.log.Error(err, "error getting filter lists")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 	}
 

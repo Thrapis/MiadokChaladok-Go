@@ -1,35 +1,33 @@
-package redis
+package config
 
 import (
 	"context"
 	"fmt"
+	"log"
 	"time"
-
-	"miadok-chaladok/pkg/storage"
 
 	redis "github.com/redis/go-redis/v9"
 )
 
 // redisStorage - implement storage interface using Redis.
 type redisStorage struct {
-	storage.StorageOperator
 	client *redis.Client
 }
 
-// NewStorage - instantiate redis storage.
-func NewStorage(cfg StorageConfig) (*redisStorage, error) {
+// NewRedisStorage - instantiate redis storage.
+func NewRedisStorage(config *Config) *redisStorage {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     fmt.Sprintf("%s:%d", cfg.Host, cfg.Port),
-		Password: cfg.Password,
-		DB:       cfg.Db,
+		Addr:     fmt.Sprintf("%s:%d", config.Storage.Host, config.Storage.Port),
+		Password: config.Storage.Password,
+		DB:       config.Storage.Db,
 	})
 
 	err := rdb.Ping(context.Background()).Err()
 	if err != nil {
-		return nil, err
+		log.Fatalf("failed to connect storage: %v", err)
 	}
 
-	return &redisStorage{client: rdb}, nil
+	return &redisStorage{client: rdb}
 }
 
 // Del - delete value from storage.
@@ -58,10 +56,4 @@ func (s *redisStorage) SetStruct(ctx context.Context, key string, value interfac
 // GetStruct - retrieve struct value from storage.
 func (s *redisStorage) GetStruct(ctx context.Context, key string, value interface{}) error {
 	return s.client.Get(ctx, key).Scan(value)
-}
-
-// StartTransaction - start operations transaction.
-func (s *redisStorage) StartTransaction() storage.TransactionOperator {
-	pipleliner := s.client.TxPipeline()
-	return &redisTransaction{pipeliner: &pipleliner}
 }

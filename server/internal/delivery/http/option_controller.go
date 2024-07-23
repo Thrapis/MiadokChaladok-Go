@@ -1,37 +1,41 @@
 package http
 
 import (
+	"context"
+	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
-	"miadok-chaladok/internal/usecase"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
-type OptionController struct {
-	UseCase *usecase.OptionUseCase
-	Log     *logrus.Logger
+type IOptionUseCase interface {
+	GetCartItems(ctx context.Context, request *model.GetCartItemsRequest) ([]model.OptionItemResponse, error)
 }
 
-func NewOptionController(useCase *usecase.OptionUseCase, log *logrus.Logger) *OptionController {
-	return &OptionController{
-		UseCase: useCase,
-		Log:     log,
+type optionController struct {
+	useCase IOptionUseCase
+	log     app.ILogger
+}
+
+func NewOptionController(useCase IOptionUseCase, log app.ILogger) *optionController {
+	return &optionController{
+		useCase: useCase,
+		log:     log,
 	}
 }
 
-func (c *OptionController) GetCartItems(ctx *gin.Context) {
+func (c *optionController) GetCartItems(ctx *gin.Context) {
 
 	request := new(model.GetCartItemsRequest)
 	if err := ctx.BindJSON(&request); err != nil {
-		c.Log.WithError(err).Error("error parsing request body")
+		c.log.Error(err, "error parsing request body")
 		ctx.AbortWithStatus(http.StatusBadRequest)
 	}
 
-	response, err := c.UseCase.GetCartItems(ctx, request)
+	response, err := c.useCase.GetCartItems(ctx, request)
 	if err != nil {
-		c.Log.WithError(err).Error("error getting cart items")
+		c.log.Error(err, "error getting cart items")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 	}
 

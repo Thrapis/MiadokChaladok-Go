@@ -1,28 +1,28 @@
 package http
 
 import (
+	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/xid"
-	"github.com/sirupsen/logrus"
 )
 
-type SessionController struct {
-	Log *logrus.Logger
+type sessionController struct {
+	log app.ILogger
 }
 
-func NewSessionController(log *logrus.Logger) *SessionController {
-	return &SessionController{
-		Log: log,
+func NewSessionController(log app.ILogger) *sessionController {
+	return &sessionController{
+		log: log,
 	}
 }
 
 const tokenKey = "token"
 
-func (c *SessionController) SetSession(ctx *gin.Context) {
+func (c *sessionController) SetSession(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 
 	sessionToken := session.Get(tokenKey)

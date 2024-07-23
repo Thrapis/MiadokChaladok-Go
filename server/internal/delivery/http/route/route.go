@@ -1,19 +1,17 @@
 package route
 
 import (
-	"miadok-chaladok/internal/delivery/http"
-
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
 type RouteConfig struct {
 	App               *gin.Engine
-	ListsController   *http.ListsController
-	ProductController *http.ProductController
-	OptionController  *http.OptionController
-	ReviewController  *http.ReviewController
-	SessionController *http.SessionController
+	ListsController   IListsController
+	ProductController IProductController
+	OptionController  IOptionController
+	ReviewController  IReviewController
+	SessionController ISessionController
 	AuthMiddleware    gin.HandlerFunc
 }
 

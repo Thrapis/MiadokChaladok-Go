@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"miadok-chaladok/internal/model"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
@@ -18,8 +17,8 @@ func AuthMiddlewareCookie() gin.HandlerFunc {
 		sessionToken := session.Get(tokenKey)
 
 		if sessionToken == nil {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, model.HttpResponse[any]{
-				Errors: "no token",
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error": "no token",
 			})
 		}
 

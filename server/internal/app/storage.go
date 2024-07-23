@@ -1,12 +1,12 @@
-package storage
+package app
 
 import (
 	"context"
 	"time"
 )
 
-// Operator - represent entity that can make operations over cache data.
-type Operator interface {
+// IStorage - represent entity that can make operations over cache data.
+type IStorage interface {
 	// Del - delete value by key
 	Del(ctx context.Context, key string) error
 
@@ -21,16 +21,4 @@ type Operator interface {
 
 	// GetString - retrieve struct value by key
 	GetStruct(ctx context.Context, key string, value interface{}) error
-}
-
-// Storager - represent entity for cache data.
-type StorageOperator interface {
-	Operator
-	StartTransaction() TransactionOperator
-}
-
-// Transactioner - represent entity for cache transaction.
-type TransactionOperator interface {
-	Operator
-	ExecTransaction(ctx context.Context) error
 }

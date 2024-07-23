@@ -5,28 +5,25 @@ import (
 	"miadok-chaladok/internal/entity"
 	"miadok-chaladok/internal/model"
 
-	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
-type ProductRepository struct {
-	Repository[entity.Product]
-	Log *logrus.Logger
+type productRepository struct {
+	repository[entity.Product]
 }
 
-func NewProductRepository(db *gorm.DB, log *logrus.Logger) *ProductRepository {
-	return &ProductRepository{
-		Repository: Repository[entity.Product]{
-			DB: db,
+func NewProductRepository(db *gorm.DB) *productRepository {
+	return &productRepository{
+		repository: repository[entity.Product]{
+			db: db,
 		},
-		Log: log,
 	}
 }
 
-func (r *ProductRepository) GetProductDescriptionById(request *model.GetProductDescriptionRequest) (*entity.Product, error) {
+func (r *productRepository) GetProductDescriptionById(request *model.GetProductDescriptionRequest) (*entity.Product, error) {
 	var product *entity.Product
 
-	result := r.DB.Table("products").Where("id = ?", request.ProductID).
+	result := r.db.Table("products").Where("id = ?", request.ProductID).
 		Preload("Category").Preload("Taste").
 		Preload("Options").Preload("ShipmentMethods").
 		Preload("Media").
@@ -39,10 +36,10 @@ func (r *ProductRepository) GetProductDescriptionById(request *model.GetProductD
 	return product, nil
 }
 
-func (r *ProductRepository) GetSuggestedProducts(request *model.GetSuggestionsRequest) ([]entity.Product, error) {
+func (r *productRepository) GetSuggestedProducts(request *model.GetSuggestionsRequest) ([]entity.Product, error) {
 	var products []entity.Product
 
-	result := r.DB.Select("p.*").Table("products as p").
+	result := r.db.Select("p.*").Table("products as p").
 		Joins("INNER JOIN suggestions s ON s.product_id = p.id").
 		Limit(request.Limit).
 		Preload("Options").Find(&products)
@@ -53,46 +50,46 @@ func (r *ProductRepository) GetSuggestedProducts(request *model.GetSuggestionsRe
 	return products, nil
 }
 
-func (r *ProductRepository) GetProductsByFilterPaginated(request *model.GetProductsByFilterPaginatedRequest) ([]entity.Product, int64, error) {
+func (r *productRepository) GetProductsByFilterPaginated(request *model.GetProductsByFilterPaginatedRequest) ([]entity.Product, int64, error) {
 	criteriaSQ := &gorm.DB{}
 	orderDirection := ""
 
 	switch request.SortType {
 	case model.SortByPopular:
-		criteriaSQ = r.DB.Select("SUM(s_i_oo.quantity)").Table("orders as s_i_ord").
+		criteriaSQ = r.db.Select("SUM(s_i_oo.quantity)").Table("orders as s_i_ord").
 			Joins("INNER JOIN orders_options as s_i_oo ON s_i_ord.id = s_i_oo.order_id").
 			Joins("INNER JOIN options as s_i_opt ON s_i_opt.id = s_i_oo.option_id").
 			Where("s_i_opt.product_id = p_inner.id")
 		orderDirection = "DESC NULLS LAST"
 	case model.SortByCheapest:
-		criteriaSQ = r.DB.Select("MIN(price)").Table("options").
+		criteriaSQ = r.db.Select("MIN(price)").Table("options").
 			Where("product_id = p_inner.id")
 		orderDirection = "ASC NULLS LAST"
 	case model.SortByExpensive:
-		criteriaSQ = r.DB.Select("MAX(price)").Table("options").
+		criteriaSQ = r.db.Select("MAX(price)").Table("options").
 			Where("product_id = p_inner.id")
 		orderDirection = "DESC NULLS LAST"
 	case model.SortByNew:
-		criteriaSQ = r.DB.Select("created_at").Table("products").
+		criteriaSQ = r.db.Select("created_at").Table("products").
 			Where("id = p_inner.id")
 		orderDirection = "DESC NULLS LAST"
 	case model.SortByReview:
-		criteriaSQ = r.DB.Select("COUNT(*)").Table("products as s_i_p").
+		criteriaSQ = r.db.Select("COUNT(*)").Table("products as s_i_p").
 			Joins("INNER JOIN reviews as s_i_r ON s_i_r.product_id = s_i_p.id").
 			Where("s_i_p.id = p_inner.id")
 		orderDirection = "DESC NULLS LAST"
 	}
 	orderBy := fmt.Sprintf("ordering_select.ordering_criteria %s", orderDirection)
 
-	orderingSelectSQ := r.DB.Select("p_inner.id, (?)", criteriaSQ).Table("products as p_inner")
+	orderingSelectSQ := r.db.Select("p_inner.id, (?)", criteriaSQ).Table("products as p_inner")
 
-	query := r.DB.Table("products as p").
+	query := r.db.Table("products as p").
 		Joins("INNER JOIN (?) as ordering_select(product_id, ordering_criteria) ON p.id = ordering_select.product_id", orderingSelectSQ).
 		Joins("INNER JOIN options o ON o.product_id = p.id", orderingSelectSQ).
 		Joins("INNER JOIN shops_options so ON so.option_id = o.id AND so.shop_id = 1", orderingSelectSQ)
 
 	if !request.IgnoreFilters {
-		hasRequiredShipmentMethodsSQ := r.DB.
+		hasRequiredShipmentMethodsSQ := r.db.
 			Select("COUNT(*) = ? as b", len(request.ShipmentMethodIds)).
 			Table("products_shipment_methods psm").
 			Where("psm.product_id = p.id").

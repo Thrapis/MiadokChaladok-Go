@@ -4,29 +4,26 @@ import (
 	"miadok-chaladok/internal/entity"
 	"miadok-chaladok/internal/model"
 
-	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
-type ReviewRepository struct {
-	Repository[entity.Review]
-	Log *logrus.Logger
+type reviewRepository struct {
+	repository[entity.Review]
 }
 
-func NewReviewRepository(db *gorm.DB, log *logrus.Logger) *ReviewRepository {
-	return &ReviewRepository{
-		Repository: Repository[entity.Review]{
-			DB: db,
+func NewReviewRepository(db *gorm.DB) *reviewRepository {
+	return &reviewRepository{
+		repository: repository[entity.Review]{
+			db: db,
 		},
-		Log: log,
 	}
 }
 
-func (r *ReviewRepository) GetReviewsByProductIdPaginated(request *model.GetReviewsByProductIdRequest) ([]entity.Review, int64, error) {
+func (r *reviewRepository) GetReviewsByProductIdPaginated(request *model.GetReviewsByProductIdRequest) ([]entity.Review, int64, error) {
 	var total int64
 	var reviews []entity.Review
 
-	query := r.DB.Table("reviews r").
+	query := r.db.Table("reviews r").
 		Joins("INNER JOIN products p ON p.id = r.product_id").
 		Where("p.id = ?", request.ProductID).
 		Order("r.updated_at DESC NULLS LAST")

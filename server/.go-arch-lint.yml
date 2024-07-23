@@ -1,0 +1,121 @@
+version: 3
+allow:
+  depOnAnyVendor: false
+
+excludeFiles:
+  - "^.*_test\\.go$"
+  - "^.*\/test\/.*$"
+
+# ----------------------------------
+# Components
+# ----------------------------------
+components:
+  main:       { in: cmd/ }
+  app:        { in: internal/app }
+  config:     { in: internal/config }
+  middleware: { in: internal/delivery/http/middleware }
+  route:      { in: internal/delivery/http/route }
+  controller: { in: internal/delivery/http }
+  usescase:
+    in:
+      - internal/usecase/lists
+      - internal/usecase/product
+      - internal/usecase/option
+      - internal/usecase/review
+  repository: { in: internal/repository }
+  model:
+    in:
+      - internal/model
+      - internal/model/converter
+  entity:     { in: internal/entity }
+  utils:      { in: pkg/utils }
+
+# ----------------------------------
+# Vendors
+# ----------------------------------
+vendors:
+  uuid:       { in: github.com/google/uuid }
+  xid:        { in: github.com/rs/xid }
+  cleanenv:   { in: github.com/ilyakaznacheev/cleanenv }
+  logrus:     { in: github.com/sirupsen/logrus }
+  redis:      { in: github.com/redis/go-redis/v9 }
+  jwt:        { in: github.com/golang-jwt/jwt }
+  gin:
+    in:
+      - github.com/gin-gonic/gin
+      - github.com/gin-contrib/cors
+      - github.com/gin-contrib/static
+      - github.com/gin-contrib/sessions
+  gorm:
+    in:
+      - gorm.io/gorm
+      - gorm.io/driver/postgres
+      - gorm.io/gorm/logger
+
+
+# ----------------------------------
+# Common components
+# ----------------------------------
+commonComponents:
+  - app
+
+# ----------------------------------
+# Dependency rules
+# ----------------------------------
+deps:
+  main:
+    mayDependOn:
+      - config
+
+  config:
+    mayDependOn:
+      - middleware
+      - route
+      - controller
+      - usescase
+      - repository
+    canUse:
+      - cleanenv
+      - logrus
+      - redis
+      - gin
+      - gorm
+
+  middleware:
+    canUse:
+      - gin
+      - jwt
+
+  route:
+    canUse:
+      - gin
+
+  controller:
+    mayDependOn:
+      - model
+    canUse:
+      - xid
+      - gin
+
+  usescase:
+    mayDependOn:
+      - entity
+      - model
+
+  repository:
+    mayDependOn:
+      - entity
+      - model
+    canUse:
+      - gorm
+
+  model:
+    mayDependOn:
+      - entity
+      - model
+      - utils
+
+  entity:
+    canUse:
+      - uuid
+      - gorm

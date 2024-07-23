@@ -3,20 +3,17 @@ package repository
 import (
 	"miadok-chaladok/internal/entity"
 
-	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
-type CategoryRepository struct {
-	Repository[entity.Category]
-	Log *logrus.Logger
+type categoryRepository struct {
+	repository[entity.Category]
 }
 
-func NewCategoryRepository(db *gorm.DB, log *logrus.Logger) *CategoryRepository {
-	return &CategoryRepository{
-		Repository: Repository[entity.Category]{
-			DB: db,
+func NewCategoryRepository(db *gorm.DB) *categoryRepository {
+	return &categoryRepository{
+		repository: repository[entity.Category]{
+			db: db,
 		},
-		Log: log,
 	}
 }

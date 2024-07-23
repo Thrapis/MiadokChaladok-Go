@@ -2,28 +2,28 @@ package repository
 
 import "gorm.io/gorm"
 
-type Repository[T any] struct {
-	DB *gorm.DB
+type repository[T any] struct {
+	db *gorm.DB
 }
 
-func (r *Repository[T]) Create(entity *T) error {
-	return r.DB.Create(entity).Error
+func (r *repository[T]) Create(entity *T) error {
+	return r.db.Create(entity).Error
 }
 
-func (r *Repository[T]) Update(entity *T) error {
-	return r.DB.Save(entity).Error
+func (r *repository[T]) Update(entity *T) error {
+	return r.db.Save(entity).Error
 }
 
-func (r *Repository[T]) Delete(entity *T) error {
-	return r.DB.Delete(entity).Error
+func (r *repository[T]) Delete(entity *T) error {
+	return r.db.Delete(entity).Error
 }
 
-func (r *Repository[T]) FindById(id uint) (entity *T, err error) {
-	err = r.DB.Where("id = ?", id).Take(entity).Error
+func (r *repository[T]) FindById(id uint) (entity *T, err error) {
+	err = r.db.Where("id = ?", id).Take(entity).Error
 	return
 }
 
-func (r *Repository[T]) GetAll() (entities []T, err error) {
-	err = r.DB.Find(&entities).Error
+func (r *repository[T]) GetAll() (entities []T, err error) {
+	err = r.db.Find(&entities).Error
 	return
 }

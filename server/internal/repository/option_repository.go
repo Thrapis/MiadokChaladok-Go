@@ -4,28 +4,25 @@ import (
 	"miadok-chaladok/internal/entity"
 	"miadok-chaladok/internal/model"
 
-	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
-type OptionRepository struct {
-	Repository[entity.Option]
-	Log *logrus.Logger
+type optionRepository struct {
+	repository[entity.Option]
 }
 
-func NewOptionRepository(db *gorm.DB, log *logrus.Logger) *OptionRepository {
-	return &OptionRepository{
-		Repository: Repository[entity.Option]{
-			DB: db,
+func NewOptionRepository(db *gorm.DB) *optionRepository {
+	return &optionRepository{
+		repository: repository[entity.Option]{
+			db: db,
 		},
-		Log: log,
 	}
 }
 
-func (r *OptionRepository) GetCartItemOptions(request *model.GetCartItemsRequest) ([]entity.Option, error) {
+func (r *optionRepository) GetCartItemOptions(request *model.GetCartItemsRequest) ([]entity.Option, error) {
 	var cartItems []entity.Option
 
-	result := r.DB.Table("options as o").
+	result := r.db.Table("options as o").
 		Joins("INNER JOIN products as p ON p.id = o.product_id").
 		Where("o.id IN ?", request.OptionIds).
 		Preload("ShopsOptions").Preload("Product").
