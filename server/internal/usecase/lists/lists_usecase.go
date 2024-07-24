@@ -3,15 +3,14 @@ package lists
 import (
 	"context"
 	"errors"
+	"time"
+
 	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
 	"miadok-chaladok/internal/model/converter"
-	"time"
 )
 
-var (
-	ErrGettingFromRepository = errors.New("getting from repository failed")
-)
+var ErrGettingFromRepository = errors.New("getting from repository failed")
 
 type listsUseCase struct {
 	storage                  app.IStorage
@@ -23,7 +22,8 @@ type listsUseCase struct {
 
 func NewListsUseCase(storage app.IStorage, logger app.ILogger,
 	categoryRepository ICategoryRepository, tasteRepository ITasteRepository,
-	shipmentMethodRepository IShipmentMethodRepository) *listsUseCase {
+	shipmentMethodRepository IShipmentMethodRepository,
+) *listsUseCase {
 	return &listsUseCase{
 		storage:                  storage,
 		log:                      logger,
@@ -33,8 +33,10 @@ func NewListsUseCase(storage app.IStorage, logger app.ILogger,
 	}
 }
 
-const filterListsStorageKey = "FilterListsCached"
-const filterListsStorageDuration = time.Hour * 6
+const (
+	filterListsStorageKey      = "FilterListsCached"
+	filterListsStorageDuration = time.Hour * 6
+)
 
 func (c *listsUseCase) Get(ctx context.Context) (*model.FilterListsResponse, error) {
 	var lists *model.FilterListsResponse

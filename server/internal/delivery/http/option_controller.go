@@ -2,9 +2,10 @@ package http
 
 import (
 	"context"
+	"net/http"
+
 	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +27,6 @@ func NewOptionController(useCase IOptionUseCase, log app.ILogger) *optionControl
 }
 
 func (c *optionController) GetCartItems(ctx *gin.Context) {
-
 	request := new(model.GetCartItemsRequest)
 	if err := ctx.BindJSON(&request); err != nil {
 		c.log.Error(err, "error parsing request body")

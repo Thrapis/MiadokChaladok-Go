@@ -3,14 +3,13 @@ package review
 import (
 	"context"
 	"errors"
+
 	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
 	"miadok-chaladok/internal/model/converter"
 )
 
-var (
-	ErrGettingFromRepository = errors.New("getting from repository failed")
-)
+var ErrGettingFromRepository = errors.New("getting from repository failed")
 
 type reviewUseCase struct {
 	storage          app.IStorage
@@ -19,7 +18,8 @@ type reviewUseCase struct {
 }
 
 func NewReviewUseCase(storage app.IStorage, logger app.ILogger,
-	reviewRepository IReviewRepository) *reviewUseCase {
+	reviewRepository IReviewRepository,
+) *reviewUseCase {
 	return &reviewUseCase{
 		storage:          storage,
 		log:              logger,
@@ -28,7 +28,6 @@ func NewReviewUseCase(storage app.IStorage, logger app.ILogger,
 }
 
 func (c *reviewUseCase) Create(ctx context.Context, request *model.CreateReviewRequest) error {
-
 	// items, err := cart.GetCartProductOptions(c.DB, request)
 	// if err != nil {
 	// 	c.Log.WithError(err).Error("failed to find options")
@@ -41,7 +40,6 @@ func (c *reviewUseCase) Create(ctx context.Context, request *model.CreateReviewR
 }
 
 func (c *reviewUseCase) GetByProductId(ctx context.Context, request *model.GetReviewsByProductIdRequest) ([]model.ReviewDescriptionResponse, int64, error) {
-
 	reviews, total, err := c.reviewRepository.GetReviewsByProductIdPaginated(request)
 	if err != nil {
 		c.log.Error(err, "failed to find reviews")

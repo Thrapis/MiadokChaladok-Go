@@ -1,8 +1,9 @@
 package model
 
 import (
-	"miadok-chaladok/pkg/utils"
 	"time"
+
+	"miadok-chaladok/pkg/utils"
 )
 
 type ReviewDescriptionResponse struct {

@@ -67,13 +67,14 @@ type DatabasePoolConfig struct {
 
 const configPath = "configs/config.yaml"
 
-var configInstance *Config
-var configOnce sync.Once
+var (
+	configInstance *Config
+	configOnce     sync.Once
+)
 
 // GetConfig returns app configuration.
 func GetConfig() *Config {
 	configOnce.Do(func() {
-
 		configInstance = &Config{}
 
 		if err := cleanenv.ReadConfig(configPath, configInstance); err != nil {
@@ -86,7 +87,6 @@ func GetConfig() *Config {
 		if err != nil {
 			log.Fatal(err)
 		}
-
 	})
 	return configInstance
 }

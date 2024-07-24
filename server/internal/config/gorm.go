@@ -2,8 +2,9 @@ package config
 
 import (
 	"fmt"
-	"miadok-chaladok/internal/app"
 	"time"
+
+	"miadok-chaladok/internal/app"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -11,7 +12,6 @@ import (
 )
 
 func NewPostgresDatabase(config *Config, log app.ILogger) *gorm.DB {
-
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		config.Database.Host, config.Database.Port, config.Database.User, config.Database.Password, config.Database.DbName)
 
