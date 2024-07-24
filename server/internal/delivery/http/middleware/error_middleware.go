@@ -11,7 +11,7 @@ func ErrorHandleMiddleware() gin.HandlerFunc {
 		ctx.Next()
 
 		if ctx.Errors != nil {
-			ctx.AbortWithError(http.StatusInternalServerError, ctx.Errors.Last())
+			ctx.AbortWithStatusJSON(http.StatusInternalServerError, ctx.Errors.Last())
 		}
 	}
 }
