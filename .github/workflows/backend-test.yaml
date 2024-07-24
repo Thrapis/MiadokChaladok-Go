@@ -28,7 +28,8 @@ jobs:
       # Run golangci-lint
       - name: golangci-lint
         uses: reviewdog/action-golangci-lint@v2
-        workdir: ./server
+        with:
+          workdir: ./server
       # Get dependencies
       - name: Get dependencies
         run: |
