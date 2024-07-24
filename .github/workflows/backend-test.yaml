@@ -12,7 +12,6 @@ on:
       - main
 jobs:
   lint-build-test:
-    needs: show-files
     runs-on: ubuntu-latest
     defaults:
       run:
