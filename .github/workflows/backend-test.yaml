@@ -39,6 +39,7 @@ jobs:
       - name: Run revive linter
         uses: morphy2k/revive-action@v2
         with:
+          config: .github/lint-configs/revive-config.toml
           path: ./server/...
       # Get dependencies
       - name: Get dependencies
