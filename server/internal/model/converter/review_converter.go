@@ -5,6 +5,7 @@ import (
 	"miadok-chaladok/internal/model"
 )
 
+// ReviewToDescriptionResponse - converts entity.Review into model.ReviewDescriptionResponse.
 func ReviewToDescriptionResponse(review *entity.Review) *model.ReviewDescriptionResponse {
 	return &model.ReviewDescriptionResponse{
 		ID:         review.ID,

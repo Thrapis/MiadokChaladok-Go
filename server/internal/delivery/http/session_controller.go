@@ -11,19 +11,22 @@ import (
 	"github.com/rs/xid"
 )
 
-type sessionController struct {
+// SessionController - entity of session controller.
+type SessionController struct {
 	log app.ILogger
 }
 
-func NewSessionController(log app.ILogger) *sessionController {
-	return &sessionController{
+// NewSessionController - returns SessionController instance.
+func NewSessionController(log app.ILogger) *SessionController {
+	return &SessionController{
 		log: log,
 	}
 }
 
 const tokenKey = "token"
 
-func (c *sessionController) SetSession(ctx *gin.Context) {
+// SetSession - adds cookie authentication token to client cookies.
+func (c *SessionController) SetSession(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 
 	sessionToken := session.Get(tokenKey)
@@ -40,7 +43,7 @@ func (c *sessionController) SetSession(ctx *gin.Context) {
 		})
 
 		if err := session.Save(); err != nil {
-			ctx.JSON(http.StatusInternalServerError, model.HttpResponse[any]{
+			ctx.JSON(http.StatusInternalServerError, model.HTTPResponse[any]{
 				Errors: err.Error(),
 			})
 		}

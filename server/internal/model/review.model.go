@@ -6,6 +6,7 @@ import (
 	"miadok-chaladok/pkg/utils"
 )
 
+// ReviewDescriptionResponse - response dto of review description.
 type ReviewDescriptionResponse struct {
 	ID         uint      `json:"id"`
 	AuthorName string    `json:"authorName"`
@@ -14,6 +15,7 @@ type ReviewDescriptionResponse struct {
 	Comment    string    `json:"comment"`
 }
 
+// CreateReviewRequest - request dto with review creation parameters.
 type CreateReviewRequest struct {
 	ProductID     uint               `json:"productId"`
 	AuthorName    string             `json:"authorName"`
@@ -23,7 +25,8 @@ type CreateReviewRequest struct {
 	Comment       string             `json:"comment"`
 }
 
-type GetReviewsByProductIdRequest struct {
+// GetReviewsByProductIDRequest - request dto with review getting parameters.
+type GetReviewsByProductIDRequest struct {
 	ProductID uint `json:"-"`
 	Page      uint `json:"-"`
 	PageSize  uint `json:"-"`

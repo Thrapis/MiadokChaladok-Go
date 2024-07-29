@@ -1,5 +1,6 @@
 package model
 
+// OptionItemResponse - response dto of option item.
 type OptionItemResponse struct {
 	ID                uint                               `json:"id"`
 	Name              string                             `json:"name"`
@@ -12,11 +13,13 @@ type OptionItemResponse struct {
 	ShipmentMethods   []OptionItemShipmentMethodResponse `json:"shipmentMethods"`
 }
 
+// OptionItemShipmentMethodResponse - response dto of option item shipment method.
 type OptionItemShipmentMethodResponse struct {
 	ID   uint   `json:"id"`
 	Name string `json:"name"`
 }
 
+// GetCartItemsRequest - request dto with option IDs parameter.
 type GetCartItemsRequest struct {
-	OptionIds []uint `json:"optionIds"`
+	OptionIDs []uint `json:"optionIds"`
 }

@@ -1,3 +1,4 @@
+// Package main provides entrypoint for server application.
 package main
 
 import (
@@ -7,7 +8,6 @@ import (
 )
 
 func main() {
-	// Executing of application workflow
 	appConfig := config.GetConfig()
 	log := config.NewLogrusLogger(appConfig)
 	db := config.NewPostgresDatabase(appConfig, log)

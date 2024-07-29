@@ -1,3 +1,4 @@
+// Package config provides global application configuration.
 package config
 
 import (
@@ -11,15 +12,15 @@ import (
 type Config struct {
 	DebugMode   bool   `yaml:"debug" env:"API_DEBUG" env-description:"server app debug mode"`
 	StoreSecret string `yaml:"store-secret" env:"STORE_SECRET" env-description:"server app store secret"`
-	// Represent log configuration
+	// Represent log configuration.
 	Log LogConfig `yaml:"log"`
-	// Represent app configuration
+	// Represent app configuration.
 	App AppConfig `yaml:"app"`
-	// Represent cors configuration
+	// Represent cors configuration.
 	Cors CorsConfig `yaml:"cors"`
-	// Represent (key/value) storage configuration
+	// Represent (key/value) storage configuration.
 	Storage StorageConfig `yaml:"storage"`
-	// Represent database configuration
+	// Represent database configuration.
 	Database DatabaseConfig `yaml:"database"`
 }
 
@@ -54,7 +55,7 @@ type DatabaseConfig struct {
 	User     string `yaml:"user" env:"DATABASE_USER" env-description:"database user" env-required:"true"`
 	Password string `yaml:"password" env:"DATABASE_PASSWORD" env-description:"database password" env-required:"true"`
 	DbName   string `yaml:"dbname" env:"DATABASE_DB" env-description:"database dbname" env-required:"true"`
-	// Represent database pool configuration
+	// Represent database pool configuration.
 	Pool DatabasePoolConfig `yaml:"pool"`
 }
 

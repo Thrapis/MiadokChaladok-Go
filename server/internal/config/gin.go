@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// NewGin - returns configurated gin.Engine instance.
 func NewGin(config *Config) *gin.Engine {
 	app := gin.New()
 
@@ -17,13 +18,13 @@ func NewGin(config *Config) *gin.Engine {
 
 	app.Use(gin.Recovery())
 	app.Use(gin.Logger())
-	app.Use(cors.New(GetCorsConfig(config)))
+	app.Use(cors.New(getCorsConfig(config)))
 	app.Use(middleware.ErrorHandleMiddleware())
 
 	return app
 }
 
-func GetCorsConfig(config *Config) cors.Config {
+func getCorsConfig(config *Config) cors.Config {
 	corsConfig := cors.DefaultConfig()
 	if len(config.Cors.AllowOrigins) == 0 {
 		corsConfig.AllowAllOrigins = true

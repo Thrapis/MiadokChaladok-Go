@@ -14,6 +14,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// StartupConfig - web application startup configuration.
 type StartupConfig struct {
 	Config  *Config
 	Log     app.ILogger
@@ -22,6 +23,7 @@ type StartupConfig struct {
 	App     *gin.Engine
 }
 
+// Startup - starting of web application.
 func Startup(config *StartupConfig) {
 	// setup repositories
 	categoryRepository := repository.NewCategoryRepository(config.DB)
@@ -44,7 +46,7 @@ func Startup(config *StartupConfig) {
 	reviewController := http.NewReviewController(reviewUseCase, config.Log)
 	sessionController := http.NewSessionController(config.Log)
 
-	routeConfig := route.RouteConfig{
+	routeConfig := route.Config{
 		App:               config.App,
 		ListsController:   listsController,
 		ProductController: productController,

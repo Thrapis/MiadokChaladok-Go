@@ -6,12 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
-type categoryRepository struct {
+// CategoryRepository - entity of category repository.
+type CategoryRepository struct {
 	repository[entity.Category]
 }
 
-func NewCategoryRepository(db *gorm.DB) *categoryRepository {
-	return &categoryRepository{
+// NewCategoryRepository - returns CategoryRepository instance.
+func NewCategoryRepository(db *gorm.DB) *CategoryRepository {
+	return &CategoryRepository{
 		repository: repository[entity.Category]{
 			db: db,
 		},

@@ -2,6 +2,7 @@ package entity
 
 import "gorm.io/gorm"
 
+// Option - entity that represents product option.
 type Option struct {
 	gorm.Model
 	ProductID    uint

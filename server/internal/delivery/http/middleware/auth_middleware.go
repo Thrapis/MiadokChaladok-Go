@@ -10,6 +10,9 @@ import (
 
 const tokenKey = "token"
 
+// AuthMiddlewareCookie - middleware for cookie authentication.
+//
+// WARNING: Not in use. Just example.
 func AuthMiddlewareCookie() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		session := sessions.Default(ctx)
@@ -26,6 +29,9 @@ func AuthMiddlewareCookie() gin.HandlerFunc {
 	}
 }
 
+// AuthMiddleware - middleware for JWT-token authentication.
+//
+// WARNING: Not in use. Just example.
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
@@ -34,7 +40,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.Parse(tokenString, func(_ *jwt.Token) (interface{}, error) {
 			return []byte("secretKey"), nil
 		})
 		if err != nil {
@@ -50,21 +56,3 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 	}
 }
-
-// func AuthMiddleware() gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		// Check if the user is authenticated
-// 		if isAuthenticated(c) {
-// 			c.Next()
-// 			return
-// 		}
-// 		// User is not authenticated, return an error response
-// 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-// 	}
-// }
-
-// func isAuthenticated(c *gin.Context) bool {
-// 	// Check if the user is authenticated based on a JWT token, session, or any other mechanism
-// 	// Return true if the user is authenticated, false otherwise
-// 	return false
-// }

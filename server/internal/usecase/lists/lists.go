@@ -1,3 +1,4 @@
+// Package lists provides description of lists usecase.
 package lists
 
 import (
@@ -10,9 +11,10 @@ import (
 	"miadok-chaladok/internal/model/converter"
 )
 
-var ErrGettingFromRepository = errors.New("getting from repository failed")
+var errGettingFromRepository = errors.New("getting from repository failed")
 
-type listsUseCase struct {
+// UseCase - entity of lists usecase.
+type UseCase struct {
 	storage                  app.IStorage
 	log                      app.ILogger
 	categoryRepository       ICategoryRepository
@@ -20,11 +22,12 @@ type listsUseCase struct {
 	shipmentMethodRepository IShipmentMethodRepository
 }
 
+// NewListsUseCase - returns lists UseCase instance.
 func NewListsUseCase(storage app.IStorage, logger app.ILogger,
 	categoryRepository ICategoryRepository, tasteRepository ITasteRepository,
 	shipmentMethodRepository IShipmentMethodRepository,
-) *listsUseCase {
-	return &listsUseCase{
+) *UseCase {
+	return &UseCase{
 		storage:                  storage,
 		log:                      logger,
 		categoryRepository:       categoryRepository,
@@ -38,7 +41,8 @@ const (
 	filterListsStorageDuration = time.Hour * 6
 )
 
-func (c *listsUseCase) Get(ctx context.Context) (*model.FilterListsResponse, error) {
+// GetFilterLists - returns filter lists.
+func (c *UseCase) GetFilterLists(ctx context.Context) (*model.FilterListsResponse, error) {
 	var lists *model.FilterListsResponse
 
 	err := c.storage.GetStruct(ctx, filterListsStorageKey, lists)
@@ -49,19 +53,19 @@ func (c *listsUseCase) Get(ctx context.Context) (*model.FilterListsResponse, err
 	categories, err := c.categoryRepository.GetAll()
 	if err != nil {
 		c.log.Error(err, "failed to get categories")
-		return nil, ErrGettingFromRepository
+		return nil, errGettingFromRepository
 	}
 
 	tastes, err := c.tasteRepository.GetAll()
 	if err != nil {
 		c.log.Error(err, "failed to get tastes")
-		return nil, ErrGettingFromRepository
+		return nil, errGettingFromRepository
 	}
 
 	shipmentMethods, err := c.shipmentMethodRepository.GetAll()
 	if err != nil {
 		c.log.Error(err, "failed to get shipment methods")
-		return nil, ErrGettingFromRepository
+		return nil, errGettingFromRepository
 	}
 
 	responseCategories := make([]model.FilterRecordResponse, len(categories))

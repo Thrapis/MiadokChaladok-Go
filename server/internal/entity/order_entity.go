@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Order - entity that represents unit of order.
 type Order struct {
 	gorm.Model
 	CustomerName     string

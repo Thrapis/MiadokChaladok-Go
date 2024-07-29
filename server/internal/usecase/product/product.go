@@ -1,3 +1,4 @@
+// Package product provides description of product usecase.
 package product
 
 import (
@@ -9,29 +10,32 @@ import (
 	"miadok-chaladok/internal/model/converter"
 )
 
-var ErrGettingFromRepository = errors.New("getting from repository failed")
+var errGettingFromRepository = errors.New("getting from repository failed")
 
-type productUseCase struct {
+// UseCase - entity of product usecase.
+type UseCase struct {
 	storage           app.IStorage
 	log               app.ILogger
 	productRepository IProductRepository
 }
 
+// NewProductUseCase - returns product UseCase instance.
 func NewProductUseCase(storage app.IStorage, logger app.ILogger,
 	productRepository IProductRepository,
-) *productUseCase {
-	return &productUseCase{
+) *UseCase {
+	return &UseCase{
 		storage:           storage,
 		log:               logger,
 		productRepository: productRepository,
 	}
 }
 
-func (c *productUseCase) GetProductDescription(ctx context.Context, request *model.GetProductDescriptionRequest) (*model.ProductDescriptionResponse, error) {
-	product, err := c.productRepository.GetProductDescriptionById(request)
+// GetProductDescription - returns product detailed description.
+func (c *UseCase) GetProductDescription(_ context.Context, request *model.GetProductDescriptionRequest) (*model.ProductDescriptionResponse, error) {
+	product, err := c.productRepository.GetProductDescriptionByID(request)
 	if err != nil {
 		c.log.Error(err, "failed to find product")
-		return nil, ErrGettingFromRepository
+		return nil, errGettingFromRepository
 	}
 
 	responseProduct := converter.ProductToDescriptionResponse(product)
@@ -39,11 +43,12 @@ func (c *productUseCase) GetProductDescription(ctx context.Context, request *mod
 	return responseProduct, nil
 }
 
-func (c *productUseCase) GetSuggestions(ctx context.Context, request *model.GetSuggestionsRequest) ([]model.ProductPreviewResponse, error) {
+// GetSuggestions - returns product previews that are amoung suggested.
+func (c *UseCase) GetSuggestions(_ context.Context, request *model.GetSuggestionsRequest) ([]model.ProductPreviewResponse, error) {
 	products, err := c.productRepository.GetSuggestedProducts(request)
 	if err != nil {
 		c.log.Error(err, "failed to find suggested products")
-		return nil, ErrGettingFromRepository
+		return nil, errGettingFromRepository
 	}
 
 	responseProducts := make([]model.ProductPreviewResponse, len(products))
@@ -54,11 +59,13 @@ func (c *productUseCase) GetSuggestions(ctx context.Context, request *model.GetS
 	return responseProducts, nil
 }
 
-func (c *productUseCase) GetProductsByFilterPaginated(ctx context.Context, request *model.GetProductsByFilterPaginatedRequest) ([]model.ProductPreviewResponse, int64, error) {
+// GetProductsByFilterPaginated - returns page of products and count
+// of all products that match filters.
+func (c *UseCase) GetProductsByFilterPaginated(_ context.Context, request *model.GetProductsByFilterPaginatedRequest) ([]model.ProductPreviewResponse, int64, error) {
 	products, total, err := c.productRepository.GetProductsByFilterPaginated(request)
 	if err != nil {
 		c.log.Error(err, "failed to find products by filter")
-		return nil, 0, ErrGettingFromRepository
+		return nil, 0, errGettingFromRepository
 	}
 
 	responseProducts := make([]model.ProductPreviewResponse, len(products))
