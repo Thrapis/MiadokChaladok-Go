@@ -18,7 +18,7 @@ type IReviewUseCase interface {
 	Create(ctx context.Context, request *model.CreateReviewRequest) error
 	// GetByProductIDPaginated - returns page and overall count of
 	// reviews that belong to product with ID.
-	GetByProductIDPaginated(ctx context.Context, request *model.GetReviewsByProductIdRequest) ([]model.ReviewDescriptionResponse, int64, error)
+	GetByProductIDPaginated(ctx context.Context, request *model.GetReviewsByProductIDRequest) ([]model.ReviewDescriptionResponse, int64, error)
 }
 
 // ReviewController - entity of review controller.
@@ -81,7 +81,7 @@ func (c *ReviewController) GetReviewsByProductIDPaginated(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusBadRequest)
 	}
 
-	request := &model.GetReviewsByProductIdRequest{
+	request := &model.GetReviewsByProductIDRequest{
 		ProductID: uint(productID),
 		Page:      uint(page),
 		PageSize:  uint(pageSize),
