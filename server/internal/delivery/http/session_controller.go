@@ -1,9 +1,10 @@
 package http
 
 import (
+	"net/http"
+
 	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
-	"net/http"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"

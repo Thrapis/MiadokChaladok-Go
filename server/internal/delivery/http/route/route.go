@@ -55,6 +55,5 @@ func (c *RouteConfig) SetupProtectedRoute() {
 	protected := c.App.Group("/api")
 	protected.Use(c.AuthMiddleware)
 	{
-
 	}
 }

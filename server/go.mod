@@ -1,6 +1,6 @@
 module miadok-chaladok
 
-go 1.20
+go 1.22
 
 require (
 	github.com/gin-contrib/sessions v1.0.1

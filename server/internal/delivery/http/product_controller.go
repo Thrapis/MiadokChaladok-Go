@@ -3,10 +3,11 @@ package http
 import (
 	"context"
 	"math"
-	"miadok-chaladok/internal/app"
-	"miadok-chaladok/internal/model"
 	"net/http"
 	"strconv"
+
+	"miadok-chaladok/internal/app"
+	"miadok-chaladok/internal/model"
 
 	"github.com/gin-gonic/gin"
 )
@@ -30,7 +31,6 @@ func NewProductController(useCase IProductUseCase, log app.ILogger) *productCont
 }
 
 func (c *productController) GetProductDescriptionById(ctx *gin.Context) {
-
 	productIdString := ctx.Query("productId")
 	productId, err := strconv.ParseUint(productIdString, 0, 64)
 	if err != nil {
@@ -50,7 +50,6 @@ func (c *productController) GetProductDescriptionById(ctx *gin.Context) {
 }
 
 func (c *productController) GetSuggestions(ctx *gin.Context) {
-
 	maxCountString := ctx.Query("limit")
 	limit, err := strconv.ParseInt(maxCountString, 0, 64)
 	if err != nil {
@@ -70,7 +69,6 @@ func (c *productController) GetSuggestions(ctx *gin.Context) {
 }
 
 func (c *productController) GetProductsByFilterPaginated(ctx *gin.Context) {
-
 	pageString := ctx.Query("page")
 	page, err := strconv.ParseUint(pageString, 10, 64)
 	if err != nil {

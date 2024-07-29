@@ -1,0 +1,53 @@
+name: Backend test
+on:
+  push:
+    branches:
+      - main
+      - feature/**
+      - ci/**
+      - bug/**
+      - test/**
+  pull_request:
+    branches:
+      - main
+jobs:
+  lint-build-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
+    steps:
+      # Check-out repository under $GITHUB_WORKSPACE
+      - uses: actions/checkout@v4
+      # Set up Go
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+          cache: false
+      # Run go vet
+      - name: Run go vet
+        run: go vet ./...
+      # Run staticcheck linter
+      - name: Run staticcheck linter
+        uses: dominikh/staticcheck-action@v1
+        with:
+          version: "latest"
+          install-go: false
+          working-directory: ./server
+      # Run revive linter
+      - name: Run revive linter
+        uses: morphy2k/revive-action@v2
+        with:
+          config: .github/lint-configs/revive-config.toml
+          path: ./server/...
+      # Get dependencies
+      - name: Get dependencies
+        run: |
+          go get -v -t -d ./...
+      # Build project
+      - name: Build
+        run: go build ./...
+      # Run tests
+      - name: Run tests
+        run: go test -v -vet=off ./...

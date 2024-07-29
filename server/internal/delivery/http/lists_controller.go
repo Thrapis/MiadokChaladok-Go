@@ -2,9 +2,10 @@ package http
 
 import (
 	"context"
+	"net/http"
+
 	"miadok-chaladok/internal/app"
 	"miadok-chaladok/internal/model"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,7 +27,6 @@ func NewListsController(useCase IListsUseCase, log app.ILogger) *listsController
 }
 
 func (c *listsController) GetFilterLists(ctx *gin.Context) {
-
 	response, err := c.useCase.Get(ctx)
 	if err != nil {
 		c.log.Error(err, "error getting filter lists")

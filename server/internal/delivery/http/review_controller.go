@@ -3,10 +3,11 @@ package http
 import (
 	"context"
 	"math"
-	"miadok-chaladok/internal/app"
-	"miadok-chaladok/internal/model"
 	"net/http"
 	"strconv"
+
+	"miadok-chaladok/internal/app"
+	"miadok-chaladok/internal/model"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,7 +35,6 @@ const (
 )
 
 func (c *reviewController) AddReviewToProduct(ctx *gin.Context) {
-
 	request := &model.CreateReviewRequest{}
 	if err := ctx.BindJSON(request); err != nil {
 		c.log.Error(err, "failed to parse request body")
@@ -51,7 +51,6 @@ func (c *reviewController) AddReviewToProduct(ctx *gin.Context) {
 }
 
 func (c *reviewController) GetReviewsByProductIdPaginated(ctx *gin.Context) {
-
 	productIdString := ctx.Query("productId")
 	productId, err := strconv.ParseUint(productIdString, 10, 64)
 	if err != nil {
