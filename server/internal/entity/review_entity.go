@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Review - entity that represents review of product.
 type Review struct {
 	gorm.Model
 	ProductID  uint

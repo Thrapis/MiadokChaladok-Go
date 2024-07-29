@@ -4,34 +4,40 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type logrusLogger struct {
+// LogrusLogger - logrus logger wrapper.
+type LogrusLogger struct {
 	logger *logrus.Logger
 }
 
-func NewLogrusLogger(config *Config) *logrusLogger {
+// NewLogrusLogger - returns configurated LogrusLogger instance.
+func NewLogrusLogger(config *Config) *LogrusLogger {
 	logger := logrus.New()
 
 	logger.SetLevel(logrus.Level(config.Log.Level))
 	logger.SetFormatter(&logrus.JSONFormatter{})
 
-	return &logrusLogger{
+	return &LogrusLogger{
 		logger: logger,
 	}
 }
 
-func (l *logrusLogger) Info(message string) {
+// Info - writes info message.
+func (l *LogrusLogger) Info(message string) {
 	l.logger.Info(message)
 }
 
-func (l *logrusLogger) Error(err error, message string) {
+// Error - writes error with error message.
+func (l *LogrusLogger) Error(err error, message string) {
 	l.logger.WithError(err).Error(message)
 }
 
-func (l *logrusLogger) Fatalf(format string, args ...interface{}) {
+// Fatalf - writes formatted message and exits program.
+func (l *LogrusLogger) Fatalf(format string, args ...interface{}) {
 	l.logger.Fatalf(format, args...)
 }
 
-func (l *logrusLogger) Printf(message string, args ...interface{}) {
+// Printf - writes formatted message.
+func (l *LogrusLogger) Printf(message string, args ...interface{}) {
 	// l.logger.Tracef(message, args...)
 	l.logger.Printf(message, args...)
 }

@@ -5,6 +5,7 @@ import (
 	"miadok-chaladok/internal/model"
 )
 
+// ProductToDescriptionResponse - converts entity.Product into model.ProductDescriptionResponse.
 func ProductToDescriptionResponse(product *entity.Product) *model.ProductDescriptionResponse {
 	converted := &model.ProductDescriptionResponse{
 		ID:               product.ID,
@@ -45,6 +46,7 @@ func ProductToDescriptionResponse(product *entity.Product) *model.ProductDescrip
 	return converted
 }
 
+// ProductToPreviewResponse - converts entity.Product into model.ProductPreviewResponse.
 func ProductToPreviewResponse(product *entity.Product) *model.ProductPreviewResponse {
 	converted := &model.ProductPreviewResponse{
 		ID:        product.ID,

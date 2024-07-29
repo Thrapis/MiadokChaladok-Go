@@ -12,33 +12,41 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// IProductUseCase - interface of product usecase required for ProductController.
 type IProductUseCase interface {
+	// GetProductDescription - returns detailed description of the product.
 	GetProductDescription(ctx context.Context, request *model.GetProductDescriptionRequest) (*model.ProductDescriptionResponse, error)
+	// GetSuggestions - returns suggested product previews.
 	GetSuggestions(ctx context.Context, request *model.GetSuggestionsRequest) ([]model.ProductPreviewResponse, error)
+	// GetProductsByFilterPaginated - returns page of product previews and overall count of
+	// products that match the filters.
 	GetProductsByFilterPaginated(ctx context.Context, request *model.GetProductsByFilterPaginatedRequest) ([]model.ProductPreviewResponse, int64, error)
 }
 
-type productController struct {
+// ProductController - entity of product controller.
+type ProductController struct {
 	useCase IProductUseCase
 	log     app.ILogger
 }
 
-func NewProductController(useCase IProductUseCase, log app.ILogger) *productController {
-	return &productController{
+// NewProductController - returns ProductController instance.
+func NewProductController(useCase IProductUseCase, log app.ILogger) *ProductController {
+	return &ProductController{
 		useCase: useCase,
 		log:     log,
 	}
 }
 
-func (c *productController) GetProductDescriptionById(ctx *gin.Context) {
-	productIdString := ctx.Query("productId")
-	productId, err := strconv.ParseUint(productIdString, 0, 64)
+// GetProductDescriptionByID - returns detailed description of the product by ID.
+func (c *ProductController) GetProductDescriptionByID(ctx *gin.Context) {
+	productIDString := ctx.Query("productId")
+	productID, err := strconv.ParseUint(productIDString, 0, 64)
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
 	}
 
-	request := &model.GetProductDescriptionRequest{ProductID: uint(productId)}
+	request := &model.GetProductDescriptionRequest{ProductID: uint(productID)}
 
 	response, err := c.useCase.GetProductDescription(ctx, request)
 	if err != nil {
@@ -46,10 +54,11 @@ func (c *productController) GetProductDescriptionById(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	ctx.JSON(http.StatusOK, model.HttpResponse[*model.ProductDescriptionResponse]{Payload: response})
+	ctx.JSON(http.StatusOK, model.HTTPResponse[*model.ProductDescriptionResponse]{Payload: response})
 }
 
-func (c *productController) GetSuggestions(ctx *gin.Context) {
+// GetSuggestions - returns suggested product previews.
+func (c *ProductController) GetSuggestions(ctx *gin.Context) {
 	maxCountString := ctx.Query("limit")
 	limit, err := strconv.ParseInt(maxCountString, 0, 64)
 	if err != nil {
@@ -65,10 +74,12 @@ func (c *productController) GetSuggestions(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	ctx.JSON(http.StatusOK, model.HttpResponse[[]model.ProductPreviewResponse]{Payload: response})
+	ctx.JSON(http.StatusOK, model.HTTPResponse[[]model.ProductPreviewResponse]{Payload: response})
 }
 
-func (c *productController) GetProductsByFilterPaginated(ctx *gin.Context) {
+// GetProductsByFilterPaginated - returns page of product previews and pagination meta of
+// products that match the filters.
+func (c *ProductController) GetProductsByFilterPaginated(ctx *gin.Context) {
 	pageString := ctx.Query("page")
 	page, err := strconv.ParseUint(pageString, 10, 64)
 	if err != nil {
@@ -109,7 +120,7 @@ func (c *productController) GetProductsByFilterPaginated(ctx *gin.Context) {
 		TotalPages: uint(math.Ceil(float64(total) / float64(request.PageSize))),
 	}
 
-	ctx.JSON(http.StatusOK, model.HttpResponse[[]model.ProductPreviewResponse]{
+	ctx.JSON(http.StatusOK, model.HTTPResponse[[]model.ProductPreviewResponse]{
 		Payload:    response,
 		Pagination: pagination,
 	})

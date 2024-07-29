@@ -12,29 +12,36 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// IReviewUseCase - interface of review usecase required for ReviewController.
 type IReviewUseCase interface {
+	// Create - creates review.
 	Create(ctx context.Context, request *model.CreateReviewRequest) error
-	GetByProductId(ctx context.Context, request *model.GetReviewsByProductIdRequest) ([]model.ReviewDescriptionResponse, int64, error)
+	// GetByProductIDPaginated - returns page and overall count of
+	// reviews that belong to product with ID.
+	GetByProductIDPaginated(ctx context.Context, request *model.GetReviewsByProductIDRequest) ([]model.ReviewDescriptionResponse, int64, error)
 }
 
-type reviewController struct {
+// ReviewController - entity of review controller.
+type ReviewController struct {
 	useCase IReviewUseCase
 	log     app.ILogger
 }
 
-func NewReviewController(useCase IReviewUseCase, log app.ILogger) *reviewController {
-	return &reviewController{
+// NewReviewController - returns ReviewController instance.
+func NewReviewController(useCase IReviewUseCase, log app.ILogger) *ReviewController {
+	return &ReviewController{
 		useCase: useCase,
 		log:     log,
 	}
 }
 
-const (
-	NO_ERROR                       = iota
-	INVALID_PAY_NUMBER_OR_BUY_DATE = iota
-)
+// const (
+// 	noError                   = iota
+// 	invalidPayNumberOrBuyDate = iota
+// )
 
-func (c *reviewController) AddReviewToProduct(ctx *gin.Context) {
+// AddReviewToProduct - adds review to product.
+func (c *ReviewController) AddReviewToProduct(ctx *gin.Context) {
 	request := &model.CreateReviewRequest{}
 	if err := ctx.BindJSON(request); err != nil {
 		c.log.Error(err, "failed to parse request body")
@@ -50,9 +57,11 @@ func (c *reviewController) AddReviewToProduct(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }
 
-func (c *reviewController) GetReviewsByProductIdPaginated(ctx *gin.Context) {
-	productIdString := ctx.Query("productId")
-	productId, err := strconv.ParseUint(productIdString, 10, 64)
+// GetReviewsByProductIDPaginated - returns page and pagination meta of
+// reviews that belong to product with ID.
+func (c *ReviewController) GetReviewsByProductIDPaginated(ctx *gin.Context) {
+	productIDString := ctx.Query("productId")
+	productID, err := strconv.ParseUint(productIDString, 10, 64)
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
@@ -72,13 +81,13 @@ func (c *reviewController) GetReviewsByProductIdPaginated(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusBadRequest)
 	}
 
-	request := &model.GetReviewsByProductIdRequest{
-		ProductID: uint(productId),
+	request := &model.GetReviewsByProductIDRequest{
+		ProductID: uint(productID),
 		Page:      uint(page),
 		PageSize:  uint(pageSize),
 	}
 
-	response, total, err := c.useCase.GetByProductId(ctx, request)
+	response, total, err := c.useCase.GetByProductIDPaginated(ctx, request)
 	if err != nil {
 		c.log.Error(err, "failed getting reviews")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
@@ -90,7 +99,7 @@ func (c *reviewController) GetReviewsByProductIdPaginated(ctx *gin.Context) {
 		TotalPages: uint(math.Ceil(float64(total) / float64(request.PageSize))),
 	}
 
-	ctx.JSON(http.StatusOK, model.HttpResponse[[]model.ReviewDescriptionResponse]{
+	ctx.JSON(http.StatusOK, model.HTTPResponse[[]model.ReviewDescriptionResponse]{
 		Payload:    response,
 		Pagination: pagination,
 	})

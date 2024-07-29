@@ -1,3 +1,4 @@
+// Package route provides route configuration and setup.
 package route
 
 import (
@@ -5,7 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type RouteConfig struct {
+// Config provides route configuration.
+type Config struct {
 	App               *gin.Engine
 	ListsController   IListsController
 	ProductController IProductController
@@ -15,17 +17,18 @@ type RouteConfig struct {
 	AuthMiddleware    gin.HandlerFunc
 }
 
-func (c *RouteConfig) Setup() {
-	c.SetupStaticRoute()
-	c.SetupPublicRoute()
-	c.SetupProtectedRoute()
+// Setup - method to setup static, public, private routes.
+func (c *Config) Setup() {
+	c.setupStaticRoute()
+	c.setupPublicRoute()
+	c.setupProtectedRoute()
 }
 
-func (c *RouteConfig) SetupStaticRoute() {
+func (c *Config) setupStaticRoute() {
 	c.App.Use(static.Serve("/static", static.LocalFile("./static", true)))
 }
 
-func (c *RouteConfig) SetupPublicRoute() {
+func (c *Config) setupPublicRoute() {
 	public := c.App.Group("/api")
 	public.Use()
 	{
@@ -35,13 +38,13 @@ func (c *RouteConfig) SetupPublicRoute() {
 		{
 			get.GET("/filter/lists", c.ListsController.GetFilterLists)
 
-			get.GET("/product", c.ProductController.GetProductDescriptionById)
+			get.GET("/product", c.ProductController.GetProductDescriptionByID)
 			get.GET("/products/suggested", c.ProductController.GetSuggestions)
 			get.POST("/products/by-filter/paginated", c.ProductController.GetProductsByFilterPaginated)
 
 			get.POST("/cart/items", c.OptionController.GetCartItems)
 
-			get.GET("/reviews/paginated", c.ReviewController.GetReviewsByProductIdPaginated)
+			get.GET("/reviews/paginated", c.ReviewController.GetReviewsByProductIDPaginated)
 		}
 
 		add := public.Group("/add")
@@ -51,9 +54,7 @@ func (c *RouteConfig) SetupPublicRoute() {
 	}
 }
 
-func (c *RouteConfig) SetupProtectedRoute() {
+func (c *Config) setupProtectedRoute() {
 	protected := c.App.Group("/api")
 	protected.Use(c.AuthMiddleware)
-	{
-	}
 }

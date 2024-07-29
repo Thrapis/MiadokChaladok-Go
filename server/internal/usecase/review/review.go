@@ -1,3 +1,4 @@
+// Package review provides description of review usecase.
 package review
 
 import (
@@ -9,25 +10,30 @@ import (
 	"miadok-chaladok/internal/model/converter"
 )
 
-var ErrGettingFromRepository = errors.New("getting from repository failed")
+var errGettingFromRepository = errors.New("getting from repository failed")
 
-type reviewUseCase struct {
+// UseCase - entity of review usecase.
+type UseCase struct {
 	storage          app.IStorage
 	log              app.ILogger
 	reviewRepository IReviewRepository
 }
 
+// NewReviewUseCase - returns review UseCase instance.
 func NewReviewUseCase(storage app.IStorage, logger app.ILogger,
 	reviewRepository IReviewRepository,
-) *reviewUseCase {
-	return &reviewUseCase{
+) *UseCase {
+	return &UseCase{
 		storage:          storage,
 		log:              logger,
 		reviewRepository: reviewRepository,
 	}
 }
 
-func (c *reviewUseCase) Create(ctx context.Context, request *model.CreateReviewRequest) error {
+// Create - creates review.
+//
+// WARNING: Unimplemented!
+func (c *UseCase) Create(_ context.Context, _ *model.CreateReviewRequest) error {
 	// items, err := cart.GetCartProductOptions(c.DB, request)
 	// if err != nil {
 	// 	c.Log.WithError(err).Error("failed to find options")
@@ -39,11 +45,13 @@ func (c *reviewUseCase) Create(ctx context.Context, request *model.CreateReviewR
 	return nil
 }
 
-func (c *reviewUseCase) GetByProductId(ctx context.Context, request *model.GetReviewsByProductIdRequest) ([]model.ReviewDescriptionResponse, int64, error) {
-	reviews, total, err := c.reviewRepository.GetReviewsByProductIdPaginated(request)
+// GetByProductIDPaginated - returns page of reviews and
+// count of all reviews that belong to the product by ID.
+func (c *UseCase) GetByProductIDPaginated(_ context.Context, request *model.GetReviewsByProductIDRequest) ([]model.ReviewDescriptionResponse, int64, error) {
+	reviews, total, err := c.reviewRepository.GetReviewsByProductIDPaginated(request)
 	if err != nil {
 		c.log.Error(err, "failed to find reviews")
-		return nil, 0, ErrGettingFromRepository
+		return nil, 0, errGettingFromRepository
 	}
 
 	responseReviews := make([]model.ReviewDescriptionResponse, len(reviews))

@@ -5,6 +5,7 @@ import (
 	"miadok-chaladok/internal/model"
 )
 
+// OptionToItemResponse - converts entity.Option into model.OptionItemResponse.
 func OptionToItemResponse(option *entity.Option) *model.OptionItemResponse {
 	converted := &model.OptionItemResponse{
 		ID:               option.ID,

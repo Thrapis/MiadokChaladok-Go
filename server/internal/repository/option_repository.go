@@ -7,24 +7,27 @@ import (
 	"gorm.io/gorm"
 )
 
-type optionRepository struct {
+// OptionRepository - entity of option repository.
+type OptionRepository struct {
 	repository[entity.Option]
 }
 
-func NewOptionRepository(db *gorm.DB) *optionRepository {
-	return &optionRepository{
+// NewOptionRepository - returns OptionRepository instance.
+func NewOptionRepository(db *gorm.DB) *OptionRepository {
+	return &OptionRepository{
 		repository: repository[entity.Option]{
 			db: db,
 		},
 	}
 }
 
-func (r *optionRepository) GetCartItemOptions(request *model.GetCartItemsRequest) ([]entity.Option, error) {
+// GetCartItemOptions - returns options by IDs.
+func (r *OptionRepository) GetCartItemOptions(request *model.GetCartItemsRequest) ([]entity.Option, error) {
 	var cartItems []entity.Option
 
 	result := r.db.Table("options as o").
 		Joins("INNER JOIN products as p ON p.id = o.product_id").
-		Where("o.id IN ?", request.OptionIds).
+		Where("o.id IN ?", request.OptionIDs).
 		Preload("ShopsOptions").Preload("Product").
 		Preload("Product.Category").Preload("Product.Taste").
 		Preload("Product.ShipmentMethods").

@@ -6,12 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
-type shipmentMethodRepository struct {
+// ShipmentMethodRepository - entity of shipment method repository.
+type ShipmentMethodRepository struct {
 	repository[entity.ShipmentMethod]
 }
 
-func NewShipmentMethodRepository(db *gorm.DB) *shipmentMethodRepository {
-	return &shipmentMethodRepository{
+// NewShipmentMethodRepository - returns ShipmentMethodRepository instance.
+func NewShipmentMethodRepository(db *gorm.DB) *ShipmentMethodRepository {
+	return &ShipmentMethodRepository{
 		repository: repository[entity.ShipmentMethod]{
 			db: db,
 		},

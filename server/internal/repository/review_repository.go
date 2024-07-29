@@ -7,19 +7,23 @@ import (
 	"gorm.io/gorm"
 )
 
-type reviewRepository struct {
+// ReviewRepository - entity of review repository.
+type ReviewRepository struct {
 	repository[entity.Review]
 }
 
-func NewReviewRepository(db *gorm.DB) *reviewRepository {
-	return &reviewRepository{
+// NewReviewRepository - returns ReviewRepository instance.
+func NewReviewRepository(db *gorm.DB) *ReviewRepository {
+	return &ReviewRepository{
 		repository: repository[entity.Review]{
 			db: db,
 		},
 	}
 }
 
-func (r *reviewRepository) GetReviewsByProductIdPaginated(request *model.GetReviewsByProductIdRequest) ([]entity.Review, int64, error) {
+// GetReviewsByProductIDPaginated - returns page of reviews and
+// count of all reviews that belong to the product by ID.
+func (r *ReviewRepository) GetReviewsByProductIDPaginated(request *model.GetReviewsByProductIDRequest) ([]entity.Review, int64, error) {
 	var total int64
 	var reviews []entity.Review
 

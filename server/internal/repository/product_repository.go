@@ -9,19 +9,22 @@ import (
 	"gorm.io/gorm"
 )
 
-type productRepository struct {
+// ProductRepository - entity of product repository.
+type ProductRepository struct {
 	repository[entity.Product]
 }
 
-func NewProductRepository(db *gorm.DB) *productRepository {
-	return &productRepository{
+// NewProductRepository - returns ProductRepository instance.
+func NewProductRepository(db *gorm.DB) *ProductRepository {
+	return &ProductRepository{
 		repository: repository[entity.Product]{
 			db: db,
 		},
 	}
 }
 
-func (r *productRepository) GetProductDescriptionById(request *model.GetProductDescriptionRequest) (*entity.Product, error) {
+// GetProductDescriptionByID - returns product description by ID.
+func (r *ProductRepository) GetProductDescriptionByID(request *model.GetProductDescriptionRequest) (*entity.Product, error) {
 	var product *entity.Product
 
 	result := r.db.Table("products").Where("id = ?", request.ProductID).
@@ -37,7 +40,8 @@ func (r *productRepository) GetProductDescriptionById(request *model.GetProductD
 	return product, nil
 }
 
-func (r *productRepository) GetSuggestedProducts(request *model.GetSuggestionsRequest) ([]entity.Product, error) {
+// GetSuggestedProducts - returns products that has link with suggestion.
+func (r *ProductRepository) GetSuggestedProducts(request *model.GetSuggestionsRequest) ([]entity.Product, error) {
 	var products []entity.Product
 
 	result := r.db.Select("p.*").Table("products as p").
@@ -51,7 +55,9 @@ func (r *productRepository) GetSuggestedProducts(request *model.GetSuggestionsRe
 	return products, nil
 }
 
-func (r *productRepository) GetProductsByFilterPaginated(request *model.GetProductsByFilterPaginatedRequest) ([]entity.Product, int64, error) {
+// GetProductsByFilterPaginated - returns page of products and
+// count of all products that match filters.
+func (r *ProductRepository) GetProductsByFilterPaginated(request *model.GetProductsByFilterPaginatedRequest) ([]entity.Product, int64, error) {
 	criteriaSQ := &gorm.DB{}
 	orderDirection := ""
 
@@ -91,16 +97,16 @@ func (r *productRepository) GetProductsByFilterPaginated(request *model.GetProdu
 
 	if !request.IgnoreFilters {
 		hasRequiredShipmentMethodsSQ := r.db.
-			Select("COUNT(*) = ? as b", len(request.ShipmentMethodIds)).
+			Select("COUNT(*) = ? as b", len(request.ShipmentMethodIDs)).
 			Table("products_shipment_methods psm").
 			Where("psm.product_id = p.id").
-			Where("psm.shipment_method_id IN ?", request.ShipmentMethodIds)
+			Where("psm.shipment_method_id IN ?", request.ShipmentMethodIDs)
 
 		query = query.
 			Where("o.price BETWEEN ? AND ?", request.PriceFrom, request.PriceTo).
 			Where("o.volume BETWEEN ? AND ?", request.VolumeFrom, request.VolumeTo).
-			Where("p.category_id IN ?", request.CategoryIds).
-			Where("p.taste_id IN ?", request.TasteIds).
+			Where("p.category_id IN ?", request.CategoryIDs).
+			Where("p.taste_id IN ?", request.TasteIDs).
 			Where("(?)", hasRequiredShipmentMethodsSQ)
 
 		if request.InStock {

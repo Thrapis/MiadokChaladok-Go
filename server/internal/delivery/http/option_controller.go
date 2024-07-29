@@ -10,23 +10,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// IOptionUseCase - interface of option usecase required for OptionController.
 type IOptionUseCase interface {
+	// GetCartItems - returns cart items.
 	GetCartItems(ctx context.Context, request *model.GetCartItemsRequest) ([]model.OptionItemResponse, error)
 }
 
-type optionController struct {
+// OptionController - entity of option controller.
+type OptionController struct {
 	useCase IOptionUseCase
 	log     app.ILogger
 }
 
-func NewOptionController(useCase IOptionUseCase, log app.ILogger) *optionController {
-	return &optionController{
+// NewOptionController - returns OptionController instance.
+func NewOptionController(useCase IOptionUseCase, log app.ILogger) *OptionController {
+	return &OptionController{
 		useCase: useCase,
 		log:     log,
 	}
 }
 
-func (c *optionController) GetCartItems(ctx *gin.Context) {
+// GetCartItems - returns cart items.
+func (c *OptionController) GetCartItems(ctx *gin.Context) {
 	request := new(model.GetCartItemsRequest)
 	if err := ctx.BindJSON(&request); err != nil {
 		c.log.Error(err, "error parsing request body")
@@ -39,5 +44,5 @@ func (c *optionController) GetCartItems(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	ctx.JSON(http.StatusOK, model.HttpResponse[[]model.OptionItemResponse]{Payload: response})
+	ctx.JSON(http.StatusOK, model.HTTPResponse[[]model.OptionItemResponse]{Payload: response})
 }

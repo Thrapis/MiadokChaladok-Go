@@ -2,6 +2,7 @@ package entity
 
 import "gorm.io/gorm"
 
+// Product - entity that represents product.
 type Product struct {
 	gorm.Model
 	CategoryID      uint

@@ -6,12 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
-type tasteRepository struct {
+// TasteRepository - entity of taste repository.
+type TasteRepository struct {
 	repository[entity.Taste]
 }
 
-func NewTasteRepository(db *gorm.DB) *tasteRepository {
-	return &tasteRepository{
+// NewTasteRepository - returns TasteRepository instance.
+func NewTasteRepository(db *gorm.DB) *TasteRepository {
+	return &TasteRepository{
 		repository: repository[entity.Taste]{
 			db: db,
 		},
