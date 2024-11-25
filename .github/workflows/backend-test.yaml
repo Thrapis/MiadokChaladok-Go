@@ -8,8 +8,7 @@ on:
       - bug/**
       - test/**
   pull_request:
-    branches:
-      - main
+    branches: [ ]
 jobs:
   lint-build-test:
     runs-on: ubuntu-latest
