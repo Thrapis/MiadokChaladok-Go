@@ -11,6 +11,8 @@ import (
 )
 
 // IListsUseCase - interface of lists usecase required for ListsController.
+//
+//go:generate go run github.com/vektra/mockery/v2@v2.46.0 --name IListsUseCase --output "../../../test/internal/delivery/http/mocks/"
 type IListsUseCase interface {
 	// GetFilterLists - returns filter lists.
 	GetFilterLists(ctx context.Context) (*model.FilterListsResponse, error)

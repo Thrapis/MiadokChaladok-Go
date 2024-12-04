@@ -46,6 +46,7 @@ func (c *SessionController) SetSession(ctx *gin.Context) {
 			ctx.JSON(http.StatusInternalServerError, model.HTTPResponse[any]{
 				Errors: err.Error(),
 			})
+			return
 		}
 	}
 

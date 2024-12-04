@@ -13,6 +13,8 @@ import (
 )
 
 // IReviewUseCase - interface of review usecase required for ReviewController.
+//
+//go:generate go run github.com/vektra/mockery/v2@v2.46.0 --name IReviewUseCase --output "../../../test/internal/delivery/http/mocks/"
 type IReviewUseCase interface {
 	// Create - creates review.
 	Create(ctx context.Context, request *model.CreateReviewRequest) error
@@ -46,12 +48,14 @@ func (c *ReviewController) AddReviewToProduct(ctx *gin.Context) {
 	if err := ctx.BindJSON(request); err != nil {
 		c.log.Error(err, "failed to parse request body")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	err := c.useCase.Create(ctx, request)
 	if err != nil {
 		c.log.Error(err, "failed to create review")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	ctx.Status(http.StatusOK)
@@ -65,6 +69,7 @@ func (c *ReviewController) GetReviewsByProductIDPaginated(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	pageString := ctx.Query("page")
@@ -72,6 +77,7 @@ func (c *ReviewController) GetReviewsByProductIDPaginated(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	pageSizeString := ctx.Query("pageSize")
@@ -79,6 +85,7 @@ func (c *ReviewController) GetReviewsByProductIDPaginated(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	request := &model.GetReviewsByProductIDRequest{
@@ -91,6 +98,7 @@ func (c *ReviewController) GetReviewsByProductIDPaginated(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed getting reviews")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	pagination := &model.PaginationMeta{

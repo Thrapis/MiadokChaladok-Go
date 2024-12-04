@@ -17,6 +17,7 @@ require (
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.9.0 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	golang.org/x/tools v0.6.0 // indirect
 	golang.org/x/tools/cmd/cover v0.1.0-deprecated // indirect
 )

@@ -6,6 +6,8 @@ import (
 )
 
 // IStorage - represent interface for application storage that can make operations over cache data.
+//
+//go:generate go run github.com/vektra/mockery/v2@v2.46.0 --name IStorage --output "../../test/internal/app/mocks/"
 type IStorage interface {
 	// Del - delete value by key.
 	Del(ctx context.Context, key string) error

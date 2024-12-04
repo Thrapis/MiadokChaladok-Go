@@ -13,6 +13,8 @@ import (
 )
 
 // IProductUseCase - interface of product usecase required for ProductController.
+//
+//go:generate go run github.com/vektra/mockery/v2@v2.46.0 --name IProductUseCase --output "../../../test/internal/delivery/http/mocks/"
 type IProductUseCase interface {
 	// GetProductDescription - returns detailed description of the product.
 	GetProductDescription(ctx context.Context, request *model.GetProductDescriptionRequest) (*model.ProductDescriptionResponse, error)
@@ -44,6 +46,7 @@ func (c *ProductController) GetProductDescriptionByID(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	request := &model.GetProductDescriptionRequest{ProductID: uint(productID)}
@@ -52,6 +55,7 @@ func (c *ProductController) GetProductDescriptionByID(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "error getting product description")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, model.HTTPResponse[*model.ProductDescriptionResponse]{Payload: response})
@@ -64,6 +68,7 @@ func (c *ProductController) GetSuggestions(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	request := &model.GetSuggestionsRequest{Limit: int(limit)}
@@ -72,6 +77,7 @@ func (c *ProductController) GetSuggestions(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "error getting suggested products")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	ctx.JSON(http.StatusOK, model.HTTPResponse[[]model.ProductPreviewResponse]{Payload: response})
@@ -85,6 +91,7 @@ func (c *ProductController) GetProductsByFilterPaginated(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	pageSizeString := ctx.Query("pageSize")
@@ -92,6 +99,7 @@ func (c *ProductController) GetProductsByFilterPaginated(ctx *gin.Context) {
 	if err != nil {
 		c.log.Error(err, "failed to parse request query")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	request := &model.GetProductsByFilterPaginatedRequest{
@@ -106,12 +114,14 @@ func (c *ProductController) GetProductsByFilterPaginated(ctx *gin.Context) {
 	if err := ctx.BindJSON(request); err != nil {
 		c.log.Error(err, "failed to parse request body")
 		ctx.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	response, total, err := c.useCase.GetProductsByFilterPaginated(ctx, request)
 	if err != nil {
 		c.log.Error(err, "error getting products by filter")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	pagination := &model.PaginationMeta{
